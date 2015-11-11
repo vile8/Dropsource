@@ -4,15 +4,19 @@ package Utility;
  * @author Jonathan
  */
 public class TestConfig {
-    public void setBrowser(String browser){
-        
+    
+    public static void setBrowser(String browser){
         switch(browser.toLowerCase()){
             case("chrome"):
-                System.setProperty("webdriver.chrome.driver", DropsourceConstants.chromeDriverPath);
+                if(System.getenv(browser).toLowerCase().contains("windows")){
+                    System.setProperty("webdriver.chrome.driver", DropsourceConstants.chromeDriverPathWin);
+                }else{
+                    System.setProperty("webdriver.chrome.driver", DropsourceConstants.chromeDriverPathMac);
+                }
                 break;
             default:
                 break;
         }
-        
     }
+    
 }
