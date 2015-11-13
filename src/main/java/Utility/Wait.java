@@ -10,7 +10,7 @@ public class Wait {
         
     }
     
-    public void waitSecs(int sec){
+    public void waitSecs(double sec){
         time = System.currentTimeMillis();
         while(System.currentTimeMillis() - time < sec * 1000);
     }

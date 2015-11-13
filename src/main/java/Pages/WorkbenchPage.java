@@ -1,5 +1,6 @@
 package Pages;
 
+import Utility.Wait;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,22 +11,24 @@ import org.openqa.selenium.interactions.Actions;
  * @author Jonathan Doll
  */
 
-public class Workbench extends Page{
+public class WorkbenchPage extends Page{
 
     private Actions action;
+    private Wait wait;
 
-    public Workbench(WebDriver driver) {
+    public WorkbenchPage(WebDriver driver) {
         super(driver);
         this.action = new Actions(driver);
+        wait = new Wait();
     }
 
     @Override
     public boolean elementExists() {
-        return driver.findElements(By.xpath("//button[@data-reactid='.0.0.1.$leftButtons.$pages\']")).size() > 0;
+        return driver.findElements(By.xpath("//button[@data-reactid='.0.0.1.$leftButtons.$pages']")).size() > 0;
     }
     
     public WebElement pagesDrawer() {
-        return driver.findElement(By.xpath("//button[@data-reactid='.0.0.1.$leftButtons.$pages\']"));
+        return driver.findElement(By.xpath("//button[@data-reactid='.0.0.1.$leftButtons.$pages']"));
     }
     
     public boolean pageDrawerActive(){
@@ -49,7 +52,8 @@ public class Workbench extends Page{
     }
     
     private List<WebElement> pages() {
-        return driver.findElements(By.cssSelector("div[data-sortable-id]"));
+        //return driver.findElements(By.cssSelector("div[data-sortable-id]"));
+        return driver.findElements(By.className("sortable-handle"));
     }
 
     private WebElement findPage(String pageName) {
@@ -137,9 +141,15 @@ public class Workbench extends Page{
     }
     
     public void addPage(String pageName){
+        wait.waitSecs(3);
+        if(!pageDrawerActive()){
+            pagesDrawer().click();
+        }
+        wait.waitSecs(3);
         addAPage().click();
         nameYourPage().sendKeys(pageName);
         btnCreate().click();
+        wait.waitSecs(3);
     }
 
 }
