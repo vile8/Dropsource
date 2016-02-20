@@ -18,7 +18,7 @@ public class Screenshot {
     public Screenshot(String folderLocation){
         this.folderLocation = folderLocation;
     }
-    
+
     public void takeScreenshot(WebDriver driver, String fileName){
         try{
         File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);

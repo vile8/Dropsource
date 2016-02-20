@@ -2,6 +2,7 @@ package Tests;
 
 import Pages.WorkbenchPage;
 import Utility.DropsourceConstants;
+import Utility.Fail;
 import Utility.Screenshot;
 import Utility.TestConfig;
 import java.awt.image.BufferedImage;
@@ -20,7 +21,7 @@ import org.testng.annotations.Test;
  */
 public class PageManager{
     
-    private WebDriver driver;
+    public WebDriver driver;
     private WorkbenchPage wb;
     private Screenshot ss;
     
@@ -29,7 +30,7 @@ public class PageManager{
         TestConfig.setBrowser("chrome");
         driver = new ChromeDriver();
         //driver.get(DropsourceConstants.workbenchURL);
-        driver.get("http://www.yahoo.com");
+        driver.get("http://www.hulu.com");
         wb = new WorkbenchPage(driver);
         ss = new Screenshot("/Users/jonathandoll/Documents");
     }
@@ -44,7 +45,10 @@ public class PageManager{
         //WorkbenchPage wb = new WorkbenchPage(driver);
         //wb.addPage("Page1");
         //assertTrue(!wb.pageExists("Page1"),"Page wasn't found");
-        ss.takeScreenshot(driver, "testTesttestTest1");
+        System.out.println("before fail");
+        Fail.Fail(driver, true);
+        System.out.println("after fail");
+        ss.takeScreenshot(driver, "testTesttestTest2");
     }
     
     /*@Test(groups = "rename", dependsOnGroups = "create", threadPoolSize = 3)
