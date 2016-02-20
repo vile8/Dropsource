@@ -2,6 +2,7 @@ package Tests;
 
 import Pages.WorkbenchPage;
 import Utility.DropsourceConstants;
+import Utility.Screenshot;
 import Utility.TestConfig;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,13 +22,16 @@ public class PageManager{
     
     private WebDriver driver;
     private WorkbenchPage wb;
+    private Screenshot ss;
     
     @BeforeClass
     public void setUp(){
         TestConfig.setBrowser("chrome");
         driver = new ChromeDriver();
-        driver.get(DropsourceConstants.workbenchURL);
+        //driver.get(DropsourceConstants.workbenchURL);
+        driver.get("http://www.yahoo.com");
         wb = new WorkbenchPage(driver);
+        ss = new Screenshot("/Users/jonathandoll/Documents");
     }
     
     @AfterClass
@@ -38,9 +42,9 @@ public class PageManager{
     @Test(groups = "create", threadPoolSize = 3)
     public void createPage(){
         //WorkbenchPage wb = new WorkbenchPage(driver);
-        wb.addPage("Page1");
-        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        assertTrue(!wb.pageExists("Page1"),"Page wasn't found");
+        //wb.addPage("Page1");
+        //assertTrue(!wb.pageExists("Page1"),"Page wasn't found");
+        ss.takeScreenshot(driver, "testTesttestTest1");
     }
     
     /*@Test(groups = "rename", dependsOnGroups = "create", threadPoolSize = 3)
