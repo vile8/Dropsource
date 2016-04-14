@@ -2,6 +2,7 @@ package Tests;
 
 import Pages.WorkbenchPage;
 import Utility.DropsourceConstants;
+import Utility.Screenshot;
 import Utility.TestConfig;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,7 +20,7 @@ import org.testng.annotations.Test;
  */
 public class PageManager{
     
-    private WebDriver driver;
+    public WebDriver driver;
     private WorkbenchPage wb;
     private TestConfig test;
     
@@ -28,7 +29,8 @@ public class PageManager{
         test = new TestConfig(driver);
         test.setBrowser("chrome");
         driver = new ChromeDriver();
-        driver.get(DropsourceConstants.workbenchURL);
+        //driver.get(DropsourceConstants.workbenchURL);
+        driver.get("http://www.hulu.com");
         wb = new WorkbenchPage(driver);
     }
     
