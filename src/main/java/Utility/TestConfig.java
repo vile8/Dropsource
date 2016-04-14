@@ -31,16 +31,4 @@ public class TestConfig {
                 break;
         }
     }
-    
-    public void takeScreenshot(WebDriver driver, String fileName){
-        try{
-        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File("src/test/results/screenshots/" + fileName + ".png"));
-        }catch(IOException e){
-            System.err.println(e);
-        }
-    }
-    
-    
-    
 }
