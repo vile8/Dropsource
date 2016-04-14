@@ -21,10 +21,12 @@ public class PageManager{
     
     private WebDriver driver;
     private WorkbenchPage wb;
+    private TestConfig test;
     
     @BeforeClass
     public void setUp(){
-        TestConfig.setBrowser("chrome");
+        test = new TestConfig(driver);
+        test.setBrowser("chrome");
         driver = new ChromeDriver();
         driver.get(DropsourceConstants.workbenchURL);
         wb = new WorkbenchPage(driver);
@@ -37,10 +39,12 @@ public class PageManager{
     
     @Test(groups = "create", threadPoolSize = 3)
     public void createPage(){
+        TestConfig t = new TestConfig(driver);
         //WorkbenchPage wb = new WorkbenchPage(driver);
         wb.addPage("Page1");
-        File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        assertTrue(!wb.pageExists("Page1"),"Page wasn't found");
+        //TestConfig.takeScreenshot(driver, "test");
+        //assertTrue(wb.pageExists("Page1"),"Page wasn't found");
+        //System.out.println(t.checkTrue(wb.pageExists("Page1"), "Page was found"));
     }
     
     /*@Test(groups = "rename", dependsOnGroups = "create", threadPoolSize = 3)
