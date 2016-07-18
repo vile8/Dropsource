@@ -16,11 +16,11 @@ public class LoginPage extends Page{
     
     @Override
     public boolean elementExists() {
-        return driver.findElements(By.name("Email")).size() > 0;
+        return driver.findElements(By.name("username")).size() > 0;
     }
     
     private WebElement email(){
-        return driver.findElement(By.name("Email"));
+        return driver.findElement(By.name("username"));
     }
     
     private WebElement password(){
@@ -28,7 +28,7 @@ public class LoginPage extends Page{
     }
     
     private WebElement btnLogin(){
-        return driver.findElement(By.className("loginButton"));
+        return driver.findElement(By.xpath("//button[@data-reactid='.0.1.4.1']"));
     }
     
     private WebElement signUp(){
