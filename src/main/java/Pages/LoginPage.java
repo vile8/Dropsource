@@ -1,8 +1,10 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 /**
  * @author jonathandoll
@@ -10,13 +12,20 @@ import org.openqa.selenium.WebElement;
 
 public class LoginPage extends Page{
 
+    private Actions action;
+    
     public LoginPage(WebDriver driver){
         super(driver);
+        this.action = new Actions(driver);
     }
     
     @Override
     public boolean elementExists() {
         return driver.findElements(By.name("username")).size() > 0;
+    }
+    
+    public void sync(){
+        super.sync(elementExists());
     }
     
     private WebElement email(){
@@ -39,7 +48,7 @@ public class LoginPage extends Page{
         return driver.findElement(By.linkText("Forgot Password?"));
     }
     
-    private void login(String email, String password){
+    public void loginInfo(String email, String password){
         email().clear();
         email().sendKeys(email);
         password().clear();
@@ -47,13 +56,13 @@ public class LoginPage extends Page{
     }
     
     public void loginClick(String email, String password){
-        login(email, password);
+        loginInfo(email, password);
         btnLogin().click();
     }
     
     public void loginEnter(String email, String password){
-        login(email, password);
-        password().submit();
+        loginInfo(email, password);
+        action.sendKeys(Keys.ENTER).perform();
     }
     
 }

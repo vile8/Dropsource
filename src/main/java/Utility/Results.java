@@ -1,6 +1,9 @@
 package Utility;
 
+import java.io.IOException;
 import org.openqa.selenium.WebDriver;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 /**
  * @author Jonathan
@@ -8,21 +11,20 @@ import org.openqa.selenium.WebDriver;
 public class Results {
     
     private WebDriver driver;
+    private Screenshot ss;
     
     public Results(WebDriver driver){
         this.driver = driver;
+        this.ss = new Screenshot(driver);
     }
     
-    public String checkTrue(boolean cond, String test){
-        /*try{
+    public void checkTrue(boolean cond, String test) throws IOException{
+        try{
             assertTrue(cond, test);
         }catch(AssertionError e){
-            takeScreenshot("test1");
+            ss.takeScreenshot(test);
             fail();
-            return test + ":\n" + e;
         }
-        return test;*/
-        return "";
     }
     
 }
