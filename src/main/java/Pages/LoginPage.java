@@ -1,5 +1,6 @@
 package Pages;
 
+import Utility.Wait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -13,10 +14,12 @@ import org.openqa.selenium.interactions.Actions;
 public class LoginPage extends Page{
 
     private Actions action;
+    private Wait wait;
     
     public LoginPage(WebDriver driver){
         super(driver);
         this.action = new Actions(driver);
+        this.wait = new Wait();
     }
     
     @Override
@@ -48,10 +51,38 @@ public class LoginPage extends Page{
         return driver.findElement(By.linkText("Forgot Password?"));
     }
     
+    public boolean emailErrorExists(){
+        return driver.findElements(By.xpath("//div[@data-reactid='.0.1.2.1.0.1.0']")).size() > 0;
+    }
+    
+    private WebElement emailError(){
+        return driver.findElement(By.xpath("//div[@data-reactid='.0.1.2.1.0.1.0']"));
+    }
+    
+    public void waitForEmailError(){
+        super.sync(passwordErrorExists());
+    }
+    
+    public boolean passwordErrorExists(){
+        return driver.findElements(By.xpath("//div[@data-reactid='.0.1.3.1.0.1.0']")).size() > 0;
+    }
+    
+    private WebElement passwordError(){
+        return driver.findElement(By.xpath("//div[@data-reactid='.0.1.3.1.0.1.0']"));
+    }
+    
+    public void waitForPasswordError(){
+        super.sync(passwordErrorExists());
+    }
+    
     public void loginInfo(String email, String password){
         email().clear();
+        email().sendKeys(" ");
+        email().sendKeys(Keys.BACK_SPACE);
         email().sendKeys(email);
         password().clear();
+        password().sendKeys(" ");
+        password().sendKeys(Keys.BACK_SPACE);
         password().sendKeys(password);
     }
     
@@ -63,6 +94,14 @@ public class LoginPage extends Page{
     public void loginEnter(String email, String password){
         loginInfo(email, password);
         action.sendKeys(Keys.ENTER).perform();
+    }
+    
+    public String emailErrorText(){
+        return emailError().getText();
+    }
+    
+    public String passwordErrorText(){
+        return passwordError().getText();
     }
     
 }

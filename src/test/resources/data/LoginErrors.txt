@@ -1,0 +1,10 @@
+jdoll+110@dropsource.com		You left the password field blank
+	Password1	You left the email field blank
+asdfhsdakjfhk@dropsource.com	Password1	This email doesn't exist in our records
+jdoll+110@dropsource.com	Wrongpassword1	This password doesn't match the above email
+email.com	Password1	This is not a valid email
+jdoll+110@dropsource.com	password1	"This is not a valid password. Passwords must be 8-64 characters and contain at least one uppercase letter, one lowercase letter, one number, and cannot contain any starting or ending spaces"
+jdoll+110@dropsource.com	Password	"This is not a valid password. Passwords must be 8-64 characters and contain at least one uppercase letter, one lowercase letter, one number, and cannot contain any starting or ending spaces"
+jdoll+110@dropsource.com	PASSWORD1	"This is not a valid password. Passwords must be 8-64 characters and contain at least one uppercase letter, one lowercase letter, one number, and cannot contain any starting or ending spaces"
+jdoll+110@dropsource.com	        	"This is not a valid password. Passwords must be 8-64 characters and contain at least one uppercase letter, one lowercase letter, one number, and cannot contain any starting or ending spaces"
+jdoll+110@dropsource.com	    Aaa1	"This is not a valid password. Passwords must be 8-64 characters and contain at least one uppercase letter, one lowercase letter, one number, and cannot contain any starting or ending spaces"
