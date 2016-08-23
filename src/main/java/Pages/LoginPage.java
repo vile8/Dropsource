@@ -1,6 +1,5 @@
 package Pages;
 
-import Utility.Wait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -14,12 +13,10 @@ import org.openqa.selenium.interactions.Actions;
 public class LoginPage extends Page{
 
     private Actions action;
-    private Wait wait;
     
     public LoginPage(WebDriver driver){
         super(driver);
         this.action = new Actions(driver);
-        this.wait = new Wait();
     }
     
     @Override
@@ -73,6 +70,16 @@ public class LoginPage extends Page{
     
     public void waitForPasswordError(){
         super.sync(passwordErrorExists());
+    }
+    
+    public void waitForError(){
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && !emailErrorExists() && !passwordErrorExists());
+    }
+    
+    public void errorVanishCheck(){
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 2000 && (emailErrorExists() || passwordErrorExists()));
     }
     
     public void loginInfo(String email, String password){

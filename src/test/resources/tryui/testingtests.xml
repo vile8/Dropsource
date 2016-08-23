@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Smoke-Tests">
+  <test name="Login">
+    <parameter name = "browser" value = "chrome" />
+    <groups>
+      <run>
+        <include name="loginErrors"/>
+        <include name="before"/>
+        <include name="after"/>
+      </run>
+    </groups>
+    <packages>
+      <package name="Tests" />
+    </packages>
+  </test>
+</suite>

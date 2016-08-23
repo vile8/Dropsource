@@ -23,7 +23,7 @@ public class Results {
             assertTrue(cond, test);
         }catch(AssertionError e){
             ss.takeScreenshot(test);
-            fail();
+            fail(test);
         }
     }
     
