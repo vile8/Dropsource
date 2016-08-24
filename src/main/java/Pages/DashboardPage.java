@@ -69,6 +69,10 @@ public class DashboardPage extends Page{
         return driver.findElement(By.xpath("//button[@data-reactid = '.0.3.1.$=1$modal-modal.1.0.1.$create']"));
     }
     
+    private boolean btnCreateExists(){
+        return driver.findElements(By.xpath("//button[@data-reactid = '.0.3.1.$=1$modal-modal.1.0.1.$create']")).size() > 0;
+    }
+    
     private WebElement successBanner(){
         return driver.findElement(By.xpath("//div[@data-reactid = '.0.2.1.0.1.0.0']"));
     }
@@ -90,21 +94,16 @@ public class DashboardPage extends Page{
         wait.waitMilliSecs(500);
         projectName().sendKeys(projectName);
         btnCreate().click();
-        wait.waitMilliSecs(3000);
-        System.out.println(successBanner().isDisplayed());
-        System.out.println(successBanner().isEnabled());
-        wait.waitSecs(3);
-        System.out.println(successBanner().isDisplayed());
-        System.out.println(successBanner().isEnabled());
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && btnCreateExists());
     }
     
     public boolean projectExists(String projectName){
         return driver.findElements(By.xpath("//span[contains(text(),'" + projectName + "')]")).size() > 0;
     }
     
-    public void waitForBanner(){
-        long timer = System.currentTimeMillis();
-        while(System.currentTimeMillis() - timer < 10000 && true);
+    public String getBannerText(){
+        return successBanner().getText();
     }
     
     public void deleteProject(String projectName){
