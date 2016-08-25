@@ -2,6 +2,7 @@ package Tests;
 
 import Pages.DashboardPage;
 import Pages.LoginPage;
+import Pages.WorkbenchPage;
 import Utility.DropsourceConstants;
 import Utility.Results;
 import Utility.TestConfig;
@@ -21,6 +22,7 @@ public abstract class TestSetup {
     public long uniqueID;
     public LoginPage login;
     public DashboardPage db;
+    public WorkbenchPage wb;
     
     public void setUp(String browser){
         test = new TestConfig(driver);
@@ -32,6 +34,7 @@ public abstract class TestSetup {
         uniqueID = System.currentTimeMillis();
         login = new LoginPage(driver);
         db = new DashboardPage(driver);
+        wb = new WorkbenchPage(driver);
     }
     
     public void tearDown(){
@@ -46,7 +49,7 @@ public abstract class TestSetup {
     }
     
     public void logout() throws IOException{
-        db.logout();
+        res.checkTrue(db.logout(), uniqueID++ + " - Logout link blocked");
         login.sync();
         res.checkTrue(login.elementExists(), uniqueID++ + " - Logout Attempt Failed");
     }

@@ -13,4 +13,5 @@ public class DropsourceConstants {
     public static int pageTimeoutLimit = 10;
     public static String loginEmail = "jdoll+130@dropsource.com";
     public static String loginPassword = "Password1";
+    public static int projectLimit = 20;
 }

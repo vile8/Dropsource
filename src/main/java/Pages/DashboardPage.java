@@ -26,6 +26,7 @@ public class DashboardPage extends Page{
 
     @Override
     public boolean elementExists() {
+        //Create new project button
         return driver.findElements(By.xpath("//button[@data-reactid='.0.2.0.0.0.1.0.0']")).size() > 0;
     }
     
@@ -116,14 +117,34 @@ public class DashboardPage extends Page{
         return driver.findElement(By.xpath("//div[@data-reactid = '.0.4.1.$=10.1']"));
     }
     
-    public void logout(){
+    private WebElement btnProjectLimitCancel(){
+        return driver.findElement(By.xpath("//button[@data-test = 'confirm-cancel-button']"));
+    }
+    
+    public boolean projectLimitReachedExists(){
+        return driver.findElements(By.xpath("//div[contains(text(), 'Project Limit Reached')]")).size() > 0;
+    }
+    
+    private boolean logoutVisible(){
+        return logoutLink().isDisplayed();
+    }
+    
+    public boolean logout(){
         action.moveToElement(profilePicture()).perform();
-        logoutLink().click();
+        if(logoutVisible()){
+            logoutLink().click();
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public void btnCreateNewProjectClick(){
+        btnCreateNewProject().click();
+        wait.waitMilliSecs(500);
     }
     
     public void createBlankProject(String projectName){
-        btnCreateNewProject().click();
-        wait.waitMilliSecs(500);
         blankTemplate().click();
         btnNext().click();
         wait.waitMilliSecs(500);
@@ -159,13 +180,9 @@ public class DashboardPage extends Page{
         return confirmDeleteText().getText();
     }
     
-    public void deleteAllProjects(){
-        
+    public void openProject(String projectName){
+        getProject(projectIndex(projectName)).click();
     }
     
-    public void openProject(String projectName){
-        int i = projectIndex(projectName);
-        
-        getProject(i).click();
-    }
+    
 }
