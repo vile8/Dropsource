@@ -1,7 +1,5 @@
 package Tests;
 
-import Pages.DashboardPage;
-import Pages.LoginPage;
 import Utility.DataReader;
 import Utility.DropsourceConstants;
 import java.io.FileNotFoundException;
@@ -13,28 +11,27 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-/**
- * @author jonathandoll
+/*
+ * @author Jonathan Doll
  */
+
 public class Login extends TestSetup{
     
-    @BeforeClass(groups = {"before", "beforesmoke"})
+    @BeforeClass(groups = {"before"})
     @Parameters("browser")
     public void setUp(@Optional("chrome") String browser){
         super.setUp(browser);
     }
     
-    @AfterClass(groups = {"after", "aftersmoke"})
+    @AfterClass(groups = {"after"})
     public void tearDown(){
       super.tearDown();
     }
     
     @Test(groups = {"login", "smoke"}, threadPoolSize = 3)
     public void ClickLoginTest() throws IOException{
-        LoginPage login = new LoginPage(driver);
         login.loginClick(DropsourceConstants.loginEmail, DropsourceConstants.loginPassword);
         
-        DashboardPage db = new DashboardPage(driver);
         db.waitForLoader();
         db.sync();
         
@@ -48,10 +45,8 @@ public class Login extends TestSetup{
     
     @Test(groups = {"login", "smoke"}, threadPoolSize = 3)
     public void EnterLoginTest() throws IOException{
-        LoginPage login = new LoginPage(driver);
         login.loginEnter(DropsourceConstants.loginEmail, DropsourceConstants.loginPassword);
         
-        DashboardPage db = new DashboardPage(driver);
         db.waitForLoader();
         db.sync();
         
@@ -71,7 +66,6 @@ public class Login extends TestSetup{
     
     @Test(groups = "loginErrors", dataProvider = "loginData", threadPoolSize = 3)
     public void errorCheck(String email, String password, String error) throws IOException{
-        LoginPage login = new LoginPage(driver);
         login.loginClick(email, password);
         login.waitForError();
         login.errorVanishCheck();

@@ -12,6 +12,7 @@ import org.testng.annotations.AfterClass;
 /*
  * @author Jonathan Doll
  */
+
 public abstract class TestSetup {
     
     public WebDriver driver;

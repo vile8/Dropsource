@@ -7,10 +7,10 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
-/**
- *
- * @author Jonathan
+/*
+ * @author Jonathan Doll
  */
+
 public class Screenshot {
     
     private WebDriver driver;

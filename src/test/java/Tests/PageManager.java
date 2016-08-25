@@ -2,24 +2,16 @@ package Tests;
 
 import Pages.DashboardPage;
 import Pages.LoginPage;
-import Pages.WorkbenchPage;
 import Utility.*;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import static org.testng.Assert.assertTrue;
 
 import org.testng.annotations.*;
 
-/**
- * @author jonathandoll
+/*
+ * @author Jonathan Doll
  */
+
 public class PageManager extends TestSetup{
     
     @BeforeClass(groups = {"before"})
@@ -33,7 +25,7 @@ public class PageManager extends TestSetup{
        super.tearDown();
     }
     
-    @Test(groups = {"login", "smoke"}, threadPoolSize = 3)
+    //@Test(groups = {"login", "smoke"}, threadPoolSize = 3)
     public void ClickLoginTest() throws IOException{
         LoginPage login = new LoginPage(driver);
         login.loginClick("jdoll+120@dropsource.com", "Password1");
@@ -66,7 +58,7 @@ public class PageManager extends TestSetup{
         return data.getData();
     }
 
-    @Test(groups = "loginErrors", dataProvider = "loginData", threadPoolSize = 3)
+    //@Test(groups = "loginErrors", dataProvider = "loginData", threadPoolSize = 3)
     public void errorCheck(String email, String password, String error) throws IOException{
         LoginPage login = new LoginPage(driver);
         login.loginClick(email, password);

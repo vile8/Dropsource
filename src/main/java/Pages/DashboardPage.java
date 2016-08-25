@@ -154,6 +154,7 @@ public class DashboardPage extends Page{
     }
     
     public void openProject(String projectName){
-        //project(projectName).click();
+        int i = projectIndex(projectName);
+        
     }
 }

@@ -7,8 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * @author John
+/*
+ * @author Jonathan Doll
  */
 
 public class DataReader {

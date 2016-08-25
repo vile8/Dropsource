@@ -4,9 +4,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-/**
- * @author Jonathan
+/*
+ * @author Jonathan Doll
  */
+
 public class TestConfig {
     
     private WebDriver driver;

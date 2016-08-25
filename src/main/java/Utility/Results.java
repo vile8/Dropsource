@@ -5,9 +5,10 @@ import org.openqa.selenium.WebDriver;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-/**
- * @author Jonathan
+/*
+ * @author Jonathan Doll
  */
+
 public class Results {
     
     private WebDriver driver;

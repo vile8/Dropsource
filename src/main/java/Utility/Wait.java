@@ -1,5 +1,9 @@
 package Utility;
 
+/*
+ * @author Jonathan Doll
+ */
+
 public class Wait {
 
     private long time;
