@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <suite name="Smoke-Tests">
-  <test name="Login">
+  <test name="Smoke Tests">
     <parameter name = "browser" value = "chrome" />
     <parameter name = "projectName" value = "TestTestTest" />
     <groups>
