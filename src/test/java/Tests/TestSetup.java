@@ -5,6 +5,7 @@ import Pages.LoginPage;
 import Utility.DropsourceConstants;
 import Utility.Results;
 import Utility.TestConfig;
+import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 
@@ -32,9 +33,21 @@ public abstract class TestSetup {
         db = new DashboardPage(driver);
     }
     
-    @AfterClass(groups = {"after"})
     public void tearDown(){
        driver.close();
+    }
+    
+    public void login() throws IOException{
+        login.loginClick(DropsourceConstants.loginEmail, DropsourceConstants.loginPassword);
+        db.waitForLoader();
+        db.sync();
+        res.checkTrue(db.elementExists(), uniqueID++ + " - Login Attempt Failed (By Click)");
+    }
+    
+    public void logout() throws IOException{
+        db.logout();
+        login.sync();
+        res.checkTrue(login.elementExists(), uniqueID++ + " - Logout Attempt Failed");
     }
     
 }

@@ -6,9 +6,9 @@
     <parameter name = "browser" value = "chrome" />
     <groups>
       <run>
-        <include name="loginErrors"/>
-        <include name="before"/>
-        <include name="after"/>
+        <include name="smoke"/>
+        <include name="beforesmoke"/>
+        <include name="aftersmoke"/>
       </run>
     </groups>
     <packages>

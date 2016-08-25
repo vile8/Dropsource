@@ -2,6 +2,8 @@ package Pages;
 
 import Utility.DropsourceConstants;
 import Utility.Wait;
+import java.util.Iterator;
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -77,6 +79,36 @@ public class DashboardPage extends Page{
         return driver.findElement(By.xpath("//div[@data-reactid = '.0.2.1.0.1.0.0']"));
     }
     
+    private List<WebElement> allProjects(){
+        return driver.findElements(By.className("project-entry-row"));
+    }
+    
+    private int projectIndex(String projectName){
+        for(int i = 0; i < allProjects().size(); i++){
+            if(allProjects().get(i).findElements(By.xpath(".//span[contains(text(), '" + projectName + "')]")).size() > 0){
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+    
+    private WebElement getProject(int projectIndex){
+        return allProjects().get(projectIndex);
+    }
+    
+    private WebElement moreOptions(int projectIndex){
+        return allProjects().get(projectIndex).findElement(By.className("icon-more-options"));
+    }
+    
+    private WebElement deleteOption(int projectIndex){
+        return allProjects().get(projectIndex).findElement(By.xpath(".//a[contains(text(), 'Delete Project')]"));
+    }
+    
+    private WebElement btnConfirmDelete(){
+        return driver.findElement(By.xpath("//button[contains(text(), 'Confirm Delete')]"));
+    }
+    
     public void logout(){
         action.moveToElement(profilePicture()).perform();
         logoutLink().click();
@@ -107,7 +139,14 @@ public class DashboardPage extends Page{
     }
     
     public void deleteProject(String projectName){
+        int i = projectIndex(projectName);
         
+        action.moveToElement(moreOptions(i)).perform();
+        deleteOption(i).click();
+    }
+    
+    public void confirmDelete(){
+        btnConfirmDelete().click();
     }
     
     public void deleteAllProjects(){
@@ -115,6 +154,6 @@ public class DashboardPage extends Page{
     }
     
     public void openProject(String projectName){
-        
+        //project(projectName).click();
     }
 }

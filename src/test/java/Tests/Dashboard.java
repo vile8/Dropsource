@@ -3,6 +3,7 @@ package Tests;
 import Pages.DashboardPage;
 import Pages.LoginPage;
 import Utility.DropsourceConstants;
+import Utility.Wait;
 import java.io.IOException;
 import java.util.Random;
 import org.testng.annotations.AfterClass;
@@ -27,24 +28,12 @@ public class Dashboard extends TestSetup{
     
     @AfterClass(groups = {"after"})
     public void tearDown(){
-       driver.close();
+       super.tearDown();
     }
     
-    public void login() throws IOException{
-        login.loginClick(DropsourceConstants.loginEmail, DropsourceConstants.loginPassword);
-        db.waitForLoader();
-        db.sync();
-        res.checkTrue(db.elementExists(), uniqueID++ + " - Login Attempt Failed (By Click)");
-    }
-    
-    public void logout() throws IOException{
-        db.logout();
-        login.sync();
-        res.checkTrue(login.elementExists(), uniqueID++ + " - Logout Attempt Failed");
-    }
-    
+    @Parameters("projectName")
     @Test(groups = {"smoke"}, threadPoolSize = 3)
-    public void createProject(@Optional("test project") String projectName) throws IOException{
+    public void createProject(@Optional("Test Project") String projectName) throws IOException{
         login();
         
         db.createBlankProject(projectName);
@@ -52,13 +41,16 @@ public class Dashboard extends TestSetup{
         res.checkTrue(db.getBannerText().equals("New Project Has Been Created"), uniqueID++ + " - Banner text does not match expected text");
         
         logout();
+        
     }
     
-    @Test(groups = {"smoke"}, threadPoolSize = 3)
-    public void deleteProject(@Optional("test project") String projectName) throws IOException{
+    @Parameters("projectName")
+    //@Test(groups = {"smoke"}, threadPoolSize = 3)
+    public void deleteProject(@Optional("Test Project") String projectName) throws IOException{
         login();
         
-        
+        db.deleteProject(projectName);
+        db.confirmDelete();
         
         logout();
     }

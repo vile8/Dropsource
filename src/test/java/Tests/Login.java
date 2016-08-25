@@ -18,13 +18,13 @@ import org.testng.annotations.Test;
  */
 public class Login extends TestSetup{
     
-    @BeforeClass(groups = {"before"})
+    @BeforeClass(groups = {"before", "beforesmoke"})
     @Parameters("browser")
     public void setUp(@Optional("chrome") String browser){
         super.setUp(browser);
     }
     
-    @AfterClass(groups = {"after"})
+    @AfterClass(groups = {"after", "aftersmoke"})
     public void tearDown(){
       super.tearDown();
     }
