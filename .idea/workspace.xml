@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="67cbc9a4-8507-41be-bdcc-3be0a2958951" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DropsourceTesting.iml" afterPath="$PROJECT_DIR$/DropsourceTesting.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/Tests/Login.java" afterPath="$PROJECT_DIR$/src/test/java/Tests/Login.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/resources/tryui/testingtests.xml" afterPath="$PROJECT_DIR$/src/test/resources/tryui/testingtests.xml" />
     </list>
     <ignored path="DropsourceTesting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,8 +26,8 @@
       <file leaf-file-name="Login.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/Tests/Login.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
+            <state relative-caret-position="285">
+              <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -41,7 +37,7 @@
         <entry file="file://$PROJECT_DIR$/src/test/java/Tests/PageManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="945">
-              <caret line="82" column="4" selection-start-line="82" selection-start-column="4" selection-end-line="82" selection-end-column="4" />
+              <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -52,7 +48,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
               <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-              <folding />
+              <folding>
+                <marker date="1472138602000" expanded="true" signature="167:199" ph="/**...*/" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,8 +58,8 @@
       <file leaf-file-name="testingtests.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/resources/tryui/testingtests.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
+            <state relative-caret-position="180">
+              <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -70,8 +68,8 @@
       <file leaf-file-name="Dashboard.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/Tests/Dashboard.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state relative-caret-position="300">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -80,8 +78,8 @@
       <file leaf-file-name="TestSetup.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/Tests/TestSetup.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+            <state relative-caret-position="465">
+              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -91,7 +89,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/Pages/DashboardPage.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
-              <caret line="14" column="3" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+              <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -102,7 +100,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="510">
               <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
-              <folding />
+              <folding>
+                <marker date="1472138601000" expanded="true" signature="155:187" ph="/**...*/" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -114,6 +114,7 @@
               <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding>
                 <element signature="e#722#723#0" expanded="true" />
+                <marker date="1472138632000" expanded="true" signature="207:238" ph="/**...*/" />
               </folding>
             </state>
           </provider>
@@ -187,6 +188,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -351,9 +353,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -733,9 +734,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="C__Users_John_Documents_NetBeansProjects_Dropsource_src_test_resources_tryui_testingtests_xml - 2016.08.23 at 15h 37m 09s.xml">
-      <configuration name="C:/Users/John/Documents/NetBeansProjects/Dropsource/src/test/resources/tryui/testingtests.xml" configurationId="TestNG" />
-    </history-entry>
     <history-entry file="C__Users_John_Documents_NetBeansProjects_Dropsource_src_test_resources_tryui_testingtests_xml - 2016.08.23 at 15h 39m 54s.xml">
       <configuration name="C:/Users/John/Documents/NetBeansProjects/Dropsource/src/test/resources/tryui/testingtests.xml" configurationId="TestNG" />
     </history-entry>
@@ -760,12 +758,15 @@
     <history-entry file="C__Users_John_Documents_NetBeansProjects_Dropsource_src_test_resources_tryui_testingtests_xml - 2016.08.25 at 11h 16m 32s.xml">
       <configuration name="C:/Users/John/Documents/NetBeansProjects/Dropsource/src/test/resources/tryui/testingtests.xml" configurationId="TestNG" />
     </history-entry>
+    <history-entry file="C__Users_John_Documents_NetBeansProjects_Dropsource_src_test_resources_tryui_testingtests_xml - 2016.08.25 at 11h 29m 46s.xml">
+      <configuration name="C:/Users/John/Documents/NetBeansProjects/Dropsource/src/test/resources/tryui/testingtests.xml" configurationId="TestNG" />
+    </history-entry>
     <history-entry file="Dashboard - 2016.08.25 at 11h 07m 55s.xml">
       <configuration name="Dashboard" configurationId="TestNG" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="724" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="724" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -828,7 +829,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
+          <folding>
+            <marker date="1472138602000" expanded="true" signature="167:199" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -852,7 +855,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
+          <folding>
+            <marker date="1472138602000" expanded="true" signature="167:199" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -876,7 +881,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
-          <folding />
+          <folding>
+            <marker date="1472138601000" expanded="true" signature="155:187" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -886,6 +893,7 @@
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
             <element signature="e#722#723#0" expanded="true" />
+            <marker date="1472138632000" expanded="true" signature="207:238" ph="/**...*/" />
           </folding>
         </state>
       </provider>
@@ -918,7 +926,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
+          <folding>
+            <marker date="1472138602000" expanded="true" signature="167:199" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -936,6 +946,7 @@
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
             <element signature="e#722#723#0" expanded="true" />
+            <marker date="1472138632000" expanded="true" signature="207:238" ph="/**...*/" />
           </folding>
         </state>
       </provider>
@@ -968,7 +979,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
+          <folding>
+            <marker date="1472138602000" expanded="true" signature="167:199" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -986,6 +999,7 @@
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
             <element signature="e#722#723#0" expanded="true" />
+            <marker date="1472138632000" expanded="true" signature="207:238" ph="/**...*/" />
           </folding>
         </state>
       </provider>
@@ -1018,7 +1032,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
+          <folding>
+            <marker date="1472138602000" expanded="true" signature="167:199" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1036,6 +1052,7 @@
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#722#723#0" expanded="true" />
+            <marker date="1472138632000" expanded="true" signature="207:238" ph="/**...*/" />
           </folding>
         </state>
       </provider>
@@ -1068,7 +1085,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
+          <folding>
+            <marker date="1472138602000" expanded="true" signature="167:199" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1086,6 +1105,7 @@
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#722#723#0" expanded="true" />
+            <marker date="1472138632000" expanded="true" signature="207:238" ph="/**...*/" />
           </folding>
         </state>
       </provider>
@@ -1118,7 +1138,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
+          <folding>
+            <marker date="1472138602000" expanded="true" signature="167:199" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1136,6 +1158,7 @@
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
             <element signature="e#722#723#0" expanded="true" />
+            <marker date="1472138632000" expanded="true" signature="207:238" ph="/**...*/" />
           </folding>
         </state>
       </provider>
@@ -1159,14 +1182,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-          <folding />
+          <folding>
+            <marker date="1472138602000" expanded="true" signature="167:199" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/Tests/PageManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="945">
-          <caret line="82" column="4" selection-start-line="82" selection-start-column="4" selection-end-line="82" selection-end-column="4" />
+          <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -1174,7 +1199,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Pages/DashboardPage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
-          <caret line="14" column="3" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+          <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
           <folding />
         </state>
       </provider>
@@ -1183,7 +1208,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
-          <folding />
+          <folding>
+            <marker date="1472138601000" expanded="true" signature="155:187" ph="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1193,6 +1220,7 @@
           <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding>
             <element signature="e#722#723#0" expanded="true" />
+            <marker date="1472138632000" expanded="true" signature="207:238" ph="/**...*/" />
           </folding>
         </state>
       </provider>
@@ -1207,32 +1235,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/Tests/TestSetup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+        <state relative-caret-position="465">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/Tests/Dashboard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+        <state relative-caret-position="300">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/Tests/Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="20" column="35" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
+        <state relative-caret-position="285">
+          <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/resources/tryui/testingtests.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
+        <state relative-caret-position="180">
+          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
           <folding />
         </state>
       </provider>

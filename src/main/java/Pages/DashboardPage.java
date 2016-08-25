@@ -75,7 +75,7 @@ public class DashboardPage extends Page{
         return driver.findElements(By.xpath("//button[@data-reactid = '.0.3.1.$=1$modal-modal.1.0.1.$create']")).size() > 0;
     }
     
-    private WebElement successBanner(){
+    private WebElement banner(){
         return driver.findElement(By.xpath("//div[@data-reactid = '.0.2.1.0.1.0.0']"));
     }
     
@@ -89,7 +89,6 @@ public class DashboardPage extends Page{
                 return i;
             }
         }
-        
         return -1;
     }
     
@@ -106,16 +105,20 @@ public class DashboardPage extends Page{
     }
     
     private WebElement btnConfirmDelete(){
-        return driver.findElement(By.xpath("//button[contains(text(), 'Confirm Delete')]"));
+        return driver.findElement(By.xpath("//button[@data-test = 'confirm-ok-button']"));
+    }
+    
+    private boolean btnConfirmDeleteExists(){
+        return driver.findElements(By.xpath("//button[@data-test = 'confirm-ok-button']")).size() > 0;
+    }
+    
+    private WebElement confirmDeleteText(){
+        return driver.findElement(By.xpath("//div[@data-reactid = '.0.4.1.$=10.1']"));
     }
     
     public void logout(){
         action.moveToElement(profilePicture()).perform();
         logoutLink().click();
-    }
-    
-    public boolean bannerExists(){
-        return driver.findElements(By.xpath("//div[@data-reactid = '.0.2.1.0.1.0.0']")).size() > 0;
     }
     
     public void createBlankProject(String projectName){
@@ -135,7 +138,7 @@ public class DashboardPage extends Page{
     }
     
     public String getBannerText(){
-        return successBanner().getText();
+        return banner().getText();
     }
     
     public void deleteProject(String projectName){
@@ -143,10 +146,17 @@ public class DashboardPage extends Page{
         
         action.moveToElement(moreOptions(i)).perform();
         deleteOption(i).click();
+        wait.waitMilliSecs(500);
     }
     
     public void confirmDelete(){
         btnConfirmDelete().click();
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && btnConfirmDeleteExists());
+    }
+    
+    public String getConfrimDeleteText(){
+        return confirmDeleteText().getText();
     }
     
     public void deleteAllProjects(){
@@ -156,5 +166,6 @@ public class DashboardPage extends Page{
     public void openProject(String projectName){
         int i = projectIndex(projectName);
         
+        getProject(i).click();
     }
 }
