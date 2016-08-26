@@ -24,6 +24,7 @@ public class WorkbenchPage extends Page {
 
     @Override
     public boolean elementExists() {
+        //android tab
         return driver.findElements(By.xpath("//div[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$java=1android.0.0']")).size() > 0;
     }
 
@@ -42,7 +43,7 @@ public class WorkbenchPage extends Page {
     }
 
     public WebElement pagesDrawer() {
-        return driver.findElement(By.xpath("//button[@data-reactid='.0.0.1.$leftButtons.$pages']"));
+        return driver.findElement(By.xpath("//button[@data-test='drawer-pages']"));
     }
 
     public boolean pageDrawerActive() {
@@ -50,7 +51,8 @@ public class WorkbenchPage extends Page {
     }
 
     public WebElement androidIcon() {
-        return driver.findElement(By.xpath("//div[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$java=1android.0.0']"));
+        //return driver.findElement(By.xpath("//div[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$java=1android.0.0']"));
+        return driver.findElement(By.xpath("//td[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$java=1android']"));
     }
 
     public boolean androidTabOpen() {
@@ -58,7 +60,7 @@ public class WorkbenchPage extends Page {
     }
 
     public WebElement iosIcon() {
-        return driver.findElement(By.xpath("//div[@data-reactid='.0.0.1.$leftCabinetDrawer.0.$pages.0.0.0.0:$ios.0.0']"));
+        return driver.findElement(By.xpath("//td[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$swift=1ios']"));
     }
 
     public boolean iosTabOpen() {
@@ -66,7 +68,6 @@ public class WorkbenchPage extends Page {
     }
 
     private List<WebElement> pages() {
-        //return driver.findElements(By.cssSelector("div[data-sortable-id]"));
         return driver.findElements(By.className("sortable-handle"));
     }
 
@@ -84,27 +85,39 @@ public class WorkbenchPage extends Page {
     }
 
     private WebElement ellipsis(String pageName) {
-        return findPage(pageName).findElement(By.className("ellipsis-icon"));
+        return findPage(pageName).findElement(By.className("icon-more-options"));
     }
 
-    private WebElement delPage(String pageName) {
+    private WebElement btnDelPage(String pageName) {
         return findPage(pageName).findElement(By.className("delete-button"));
     }
+    
+    private WebElement btnDelPage(){
+        return driver.findElement(By.className("delete-button"));
+    }
 
-    private WebElement confirmDelete() {
+    private WebElement btnConfirmDelete() {
         return driver.findElement(By.xpath("//button[contains(text(), 'Confirm Delete')]"));
     }
 
-    private WebElement addAPage() {
-        return driver.findElement(By.xpath("//button[@data-reactid='.0.0.1.$leftCabinetDrawer.0.$pages.0.1.0.0.1.1.0.0']"));
+    private WebElement btnAddPage() {
+        return driver.findElement(By.xpath("//button[@data-test='create-page-button']"));
     }
 
+    private WebElement btnNext(){
+        return driver.findElement(By.xpath("//button[contains(text(), 'Next')]"));
+    }
+    
     private WebElement nameYourPage() {
         return driver.findElement(By.xpath("//input[@placeholder='Page Name']"));
     }
 
     private WebElement btnCreate() {
         return driver.findElement(By.xpath("//button[contains(text(), 'Create')]"));
+    }
+    
+    private boolean btnCreateExists(){
+        return driver.findElements(By.xpath("//button[contains(text(), 'Create')]")).size() > 0;
     }
 
     public boolean pageExists(String pageName) {
@@ -117,14 +130,6 @@ public class WorkbenchPage extends Page {
 
     private boolean savedHeader() {
         return driver.findElements(By.className("saved")).size() > 0;
-    }
-
-    public boolean loadingCoverExists() {
-        return driver.findElements(By.className("loading-cover")).size() > 0;
-    }
-
-    public boolean pageDrawerOpened() {
-        return androidIcon().isDisplayed();
     }
 
     public String[] getPageNames() {
@@ -149,20 +154,24 @@ public class WorkbenchPage extends Page {
     public void deletePage(String pageName) {
         action.moveToElement(pagesDrawer()).perform();
         action.moveToElement(ellipsis(pageName)).perform();
-        action.moveToElement(delPage(pageName)).click().perform();
-        confirmDelete().click();
+        action.moveToElement(btnDelPage(pageName)).click().perform();
+        //btnDelPage().click();
+        btnConfirmDelete().click();
     }
 
     public void addPage(String pageName) {
-        wait.waitSecs(3);
         if (!pageDrawerActive()) {
             pagesDrawer().click();
         }
-        wait.waitSecs(3);
-        addAPage().click();
+        wait.waitMilliSecs(500);
+        btnAddPage().click();
+        wait.waitMilliSecs(500);
+        btnNext().click();
+        wait.waitMilliSecs(500);
         nameYourPage().sendKeys(pageName);
         btnCreate().click();
-        wait.waitSecs(3);
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && btnCreateExists());
     }
 
 }

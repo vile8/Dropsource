@@ -15,8 +15,8 @@ import org.testng.annotations.Test;
  */
 public class Dashboard extends TestSetup {
 
-    @BeforeClass(groups = {"before"})
     @Parameters("browser")
+    @BeforeClass(groups = {"before"})
     public void setUp(@Optional("chrome") String browser) {
         super.setUp(browser);
         try {

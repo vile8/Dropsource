@@ -2,7 +2,6 @@ package Pages;
 
 import Utility.DropsourceConstants;
 import Utility.Wait;
-import java.util.Iterator;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +10,7 @@ import org.openqa.selenium.interactions.Actions;
 
 /**
  *
- * @author Jonathan
+ * @author Jonathan Doll
  */
 public class DashboardPage extends Page{
     
@@ -84,25 +83,23 @@ public class DashboardPage extends Page{
         return driver.findElements(By.className("project-entry-row"));
     }
     
-    private int projectIndex(String projectName){
-        for(int i = 0; i < allProjects().size(); i++){
-            if(allProjects().get(i).findElements(By.xpath(".//span[contains(text(), '" + projectName + "')]")).size() > 0){
-                return i;
+    private WebElement getProject(String projectName){
+        WebElement project = null;
+        for(WebElement p: allProjects()){
+            if(p.findElements(By.xpath(".//span[contains(text(), '" + projectName + "')]")).size() > 0){
+                project = p;
+                break;
             }
         }
-        return -1;
+        return project;
     }
     
-    private WebElement getProject(int projectIndex){
-        return allProjects().get(projectIndex);
+    private WebElement moreOptions(String projectName){
+        return getProject(projectName).findElement(By.className("icon-more-options"));
     }
     
-    private WebElement moreOptions(int projectIndex){
-        return allProjects().get(projectIndex).findElement(By.className("icon-more-options"));
-    }
-    
-    private WebElement deleteOption(int projectIndex){
-        return allProjects().get(projectIndex).findElement(By.xpath(".//a[contains(text(), 'Delete Project')]"));
+    private WebElement deleteOption(String projectName){
+        return getProject(projectName).findElement(By.xpath(".//a[contains(text(), 'Delete Project')]"));
     }
     
     private WebElement btnConfirmDelete(){
@@ -163,10 +160,8 @@ public class DashboardPage extends Page{
     }
     
     public void deleteProject(String projectName){
-        int i = projectIndex(projectName);
-        
-        action.moveToElement(moreOptions(i)).perform();
-        deleteOption(i).click();
+        action.moveToElement(moreOptions(projectName)).perform();
+        deleteOption(projectName).click();
         wait.waitMilliSecs(500);
     }
     
@@ -181,7 +176,7 @@ public class DashboardPage extends Page{
     }
     
     public void openProject(String projectName){
-        getProject(projectIndex(projectName)).click();
+        getProject(projectName).click();
     }
     
     
