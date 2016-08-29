@@ -2,7 +2,6 @@ package Pages;
 
 import Utility.DropsourceConstants;
 import Utility.Wait;
-import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -120,17 +119,16 @@ public class WorkbenchPage extends Page {
     }
 
     public void deletePage(String pageName) {
-        /*if (!pageDrawerActive()) {
+        if (!pageDrawerActive()) {
             pagesDrawer().click();
             wait.animation();
-        }*/
-        wait.waitSecs(3);
+        }
+        action.moveToElement(pagesDrawer()).perform();
         action.moveToElement(ellipsis(pageName)).perform();
-        wait.waitSecs(3);
         btnDelPage().click();
-        wait.waitSecs(3);
+        wait.animation();
         btnConfirmDelete().click();
-        wait.waitSecs(3);
+        wait.animation();
     }
 
     public void addPage(String pageName) {

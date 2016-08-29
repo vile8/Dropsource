@@ -1,6 +1,5 @@
 package Tests;
 
-import Pages.WorkbenchPage;
 import Utility.DropsourceConstants;
 import java.io.IOException;
 import java.util.ArrayList;

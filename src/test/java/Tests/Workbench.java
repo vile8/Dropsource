@@ -1,6 +1,5 @@
 package Tests;
 
-import Utility.Wait;
 import java.io.IOException;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -38,14 +37,19 @@ public class Workbench extends TestSetup{
     }
     
     @Parameters({"projectName", "pageName"})
-    @Test
-    public void AddDeletePage(@Optional ("Test Project")String projectName,  @Optional ("i1") String pageName) throws IOException{
-        Wait wait = new Wait();
+    @Test(groups = {"create page"}, threadPoolSize = 3)
+    public void addPage(@Optional ("Test Project")String projectName,  @Optional ("i1") String pageName) throws IOException{
         openProject(projectName);
         wb.addPage(pageName);
+        res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not create successfully");
         
-        wait.waitSecs(5);
+    }
+    
+    @Parameters( "pageName")
+    @Test(groups = {"delete page"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void deletePage(@Optional ("i1") String pageName) throws IOException{
         wb.deletePage(pageName);
+        res.checkTrue(!wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not create successfully");
         closeProject();
     }
     

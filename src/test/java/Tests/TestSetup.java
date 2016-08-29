@@ -9,8 +9,6 @@ import Utility.TestConfig;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Optional;
 
 /*
  * @author Jonathan Doll
