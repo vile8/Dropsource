@@ -22,4 +22,8 @@ public class Wait {
         while(System.currentTimeMillis() - time < millisecs);
     }
     
+    public void animation(){
+        waitMilliSecs(500);
+    }
+    
 }

@@ -24,10 +24,6 @@ public class LoginPage extends Page{
         return driver.findElements(By.name("username")).size() > 0;
     }
     
-    public void sync(){
-        super.sync(elementExists());
-    }
-    
     private WebElement email(){
         return driver.findElement(By.name("username"));
     }
@@ -56,20 +52,12 @@ public class LoginPage extends Page{
         return driver.findElement(By.xpath("//div[@data-reactid='.0.1.2.1.0.1.0']"));
     }
     
-    public void waitForEmailError(){
-        super.sync(passwordErrorExists());
-    }
-    
     public boolean passwordErrorExists(){
         return driver.findElements(By.xpath("//div[@data-reactid='.0.1.3.1.0.1.0']")).size() > 0;
     }
     
     private WebElement passwordError(){
         return driver.findElement(By.xpath("//div[@data-reactid='.0.1.3.1.0.1.0']"));
-    }
-    
-    public void waitForPasswordError(){
-        super.sync(passwordErrorExists());
     }
     
     public void waitForError(){

@@ -42,7 +42,6 @@ public class Workbench extends TestSetup{
     public void AddDeletePage(@Optional ("Test Project")String projectName,  @Optional ("i1") String pageName) throws IOException{
         Wait wait = new Wait();
         openProject(projectName);
-        //wait.waitSecs(5);
         wb.addPage(pageName);
         
         wait.waitSecs(5);

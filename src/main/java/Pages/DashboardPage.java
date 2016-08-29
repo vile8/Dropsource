@@ -8,10 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-/**
- *
+/*
  * @author Jonathan Doll
  */
+
 public class DashboardPage extends Page{
     
     private Actions action;
@@ -29,16 +29,11 @@ public class DashboardPage extends Page{
         return driver.findElements(By.xpath("//button[@data-reactid='.0.2.0.0.0.1.0.0']")).size() > 0;
     }
     
-    public void sync(){
-        super.sync(elementExists());
-    }
-    
     private boolean loader(){
         return driver.findElements(By.xpath("//div[@data-reactid='.0.0.0']")).size() > 0;
     }
     
     public void waitForLoader(){
-        super.sync(loader());
         long time = System.currentTimeMillis();
         while(System.currentTimeMillis() - time < DropsourceConstants.pageTimeoutLimit * 1000 && loader());
     }
@@ -138,13 +133,13 @@ public class DashboardPage extends Page{
     
     public void btnCreateNewProjectClick(){
         btnCreateNewProject().click();
-        wait.waitMilliSecs(500);
+        wait.animation();
     }
     
     public void createBlankProject(String projectName){
         blankTemplate().click();
         btnNext().click();
-        wait.waitMilliSecs(500);
+        wait.animation();
         projectName().sendKeys(projectName);
         btnCreate().click();
         long timer = System.currentTimeMillis();
@@ -162,7 +157,7 @@ public class DashboardPage extends Page{
     public void deleteProject(String projectName){
         action.moveToElement(moreOptions(projectName)).perform();
         deleteOption(projectName).click();
-        wait.waitMilliSecs(500);
+        wait.animation();
     }
     
     public void confirmDelete(){

@@ -76,6 +76,7 @@ public class Dashboard extends TestSetup {
 
     @Test(groups = {"max projects"}, dependsOnGroups = "delete project", threadPoolSize = 3)
     //@Test(groups = {"max projects"}, threadPoolSize = 3)
+    //Need to add checker for trying to create project once limit is reached
     public void createMaxProjects() throws IOException {
         for (int i = 0; i < DropsourceConstants.projectLimit; i++) {
             String projectName = "Test " + i;

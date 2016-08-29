@@ -28,16 +28,11 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//div[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$java=1android.0.0']")).size() > 0;
     }
 
-    public void sync() {
-        super.sync(elementExists());
-    }
-
     private boolean loader() {
         return driver.findElements(By.xpath("//div[@data-test='loading-message']")).size() > 0;
     }
 
     public void waitForLoader() {
-        super.sync(loader());
         long time = System.currentTimeMillis();
         while (System.currentTimeMillis() - time < DropsourceConstants.pageTimeoutLimit * 1000 && loader());
     }
@@ -51,7 +46,6 @@ public class WorkbenchPage extends Page {
     }
 
     public WebElement androidIcon() {
-        //return driver.findElement(By.xpath("//div[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$java=1android.0.0']"));
         return driver.findElement(By.xpath("//td[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$java=1android']"));
     }
 
@@ -67,33 +61,16 @@ public class WorkbenchPage extends Page {
         return iosIcon().getAttribute("class").contains("active");
     }
 
-    private List<WebElement> pages() {
-        return driver.findElements(By.className("sortable-handle"));
-    }
-
-    private WebElement findPage(String pageName) {
-        WebElement page = null;
-        if (pages().size() > 0) {
-            for (WebElement p : pages()) {
-                if (p.getText().equals(pageName)) {
-                    page = p;
-                    break;
-                }
-            }
-        }
-        return page;
+    private WebElement getPage(String pageName){
+        return driver.findElement(By.xpath("//tr[@data-test='page-manager-" + pageName + "']"));
     }
 
     private WebElement ellipsis(String pageName) {
-        return findPage(pageName).findElement(By.className("icon-more-options"));
+        return getPage(pageName).findElement(By.className("icon-more-options"));
     }
 
-    private WebElement btnDelPage(String pageName) {
-        return findPage(pageName).findElement(By.className("delete-button"));
-    }
-    
     private WebElement btnDelPage(){
-        return driver.findElement(By.className("delete-button"));
+        return driver.findElement(By.xpath("//button[@data-test='item-delete']"));
     }
 
     private WebElement btnConfirmDelete() {
@@ -120,25 +97,16 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//button[contains(text(), 'Create')]")).size() > 0;
     }
 
-    public boolean pageExists(String pageName) {
-        return (findPage(pageName) != null);
+    public boolean pageExists(String pageName){
+        return driver.findElements(By.xpath("//tr[@data-test='page-manager-" + pageName + "']")).size() > 0;
     }
-
+    
     private boolean savingHeader() {
         return driver.findElements(By.className("saving")).size() > 0;
     }
 
     private boolean savedHeader() {
         return driver.findElements(By.className("saved")).size() > 0;
-    }
-
-    public String[] getPageNames() {
-        String[] names = new String[pages().size()];
-        int i = 0;
-        for (WebElement p : pages()) {
-            names[i++] = p.getText();
-        }
-        return names;
     }
 
     public boolean checkIfSaved(int timeout) {
@@ -152,22 +120,28 @@ public class WorkbenchPage extends Page {
     }
 
     public void deletePage(String pageName) {
-        action.moveToElement(pagesDrawer()).perform();
+        /*if (!pageDrawerActive()) {
+            pagesDrawer().click();
+            wait.animation();
+        }*/
+        wait.waitSecs(3);
         action.moveToElement(ellipsis(pageName)).perform();
-        action.moveToElement(btnDelPage(pageName)).click().perform();
-        //btnDelPage().click();
+        wait.waitSecs(3);
+        btnDelPage().click();
+        wait.waitSecs(3);
         btnConfirmDelete().click();
+        wait.waitSecs(3);
     }
 
     public void addPage(String pageName) {
         if (!pageDrawerActive()) {
             pagesDrawer().click();
         }
-        wait.waitMilliSecs(500);
+        wait.animation();
         btnAddPage().click();
-        wait.waitMilliSecs(500);
+        wait.animation();
         btnNext().click();
-        wait.waitMilliSecs(500);
+        wait.animation();
         nameYourPage().sendKeys(pageName);
         btnCreate().click();
         long timer = System.currentTimeMillis();
