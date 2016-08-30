@@ -41,7 +41,7 @@ public class Workbench extends TestSetup{
     }
     
     @Parameters({"workbenchProject", "pageName"})
-    @Test(groups = {"create page"}, threadPoolSize = 3)
+    @Test(groups = {"smoke", "create page"}, threadPoolSize = 3)
     public void addPage(@Optional ("Workbench Testing")String workbenchProject,  @Optional ("i1") String pageName) throws IOException{
         openProject(workbenchProject);
         wb.addPage(pageName);
@@ -49,7 +49,7 @@ public class Workbench extends TestSetup{
     }
     
     @Parameters( "pageName")
-    @Test(groups = {"delete page"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    @Test(groups = {"smoke", "delete page"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void deletePage(@Optional ("i1") String pageName) throws IOException{
         wb.deletePage(pageName);
         res.checkTrue(!wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not create successfully");

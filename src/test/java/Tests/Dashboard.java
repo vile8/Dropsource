@@ -47,7 +47,7 @@ public class Dashboard extends TestSetup {
     }
 
     @Parameters("projectName")
-    @Test(groups = {"smoke end", "delete project"}, dependsOnGroups = "open project", threadPoolSize = 3)
+    @Test(groups = {"smoke", "delete project"}, dependsOnGroups = "open project", threadPoolSize = 3)
     public void deleteProject(@Optional("Test Project") String projectName) throws IOException {
         db.deleteProject(projectName);
         String expectedConfirmText = "Deleting this project will permanently remove it which includes the iOS and Android apps, unlink any used plugins, and remove it from your project list.";
