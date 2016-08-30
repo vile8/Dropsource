@@ -23,6 +23,7 @@ public abstract class TestSetup {
     public DashboardPage db;
     public WorkbenchPage wb;
     private ArrayList<String> tabs;
+    private ArrayList<String> closeTabs;
 
     public void setUp(String browser) {
         test = new TestConfig(driver);
@@ -67,6 +68,36 @@ public abstract class TestSetup {
     public void closeProject(){
         driver.close();
         driver.switchTo().window(tabs.get(0));
+    }
+    
+    public void createProject(String projectName) throws IOException{
+        db.btnCreateNewProjectClick();
+        res.checkTrue(!db.projectLimitReachedExists(), uniqueID++ + " - Project limit error appeared");
+        db.createBlankProject(projectName);
+        res.checkTrue(db.projectExists(projectName), uniqueID++ + " - Project just created (" + projectName + ") not found in list");
+        res.checkTrue(db.getBannerText().equals("New Project Has Been Created"), uniqueID++ + " - Banner text does not match expected text");
+    }
+    
+    public void deleteProject(String projectName) throws IOException{
+        db.deleteProject(projectName);
+        String expectedConfirmText = "Deleting this project will permanently remove it which includes the iOS and Android apps, unlink any used plugins, and remove it from your project list.";
+        res.checkTrue(db.getConfirmDeleteText().equals(expectedConfirmText), uniqueID++ + " - Confirm delete text doesn't match expected text");
+
+        db.confirmDelete();
+        res.checkTrue(!db.projectExists(projectName), uniqueID++ + " - Project just deleted (" + projectName + ") is still found in list");
+        res.checkTrue(db.getBannerText().equals("A project has been deleted"), uniqueID++ + " - Banner text does not match expected text");
+    }
+    
+    public void tearDownCloseAllTabsExceptDashboard(){
+        closeTabs = new ArrayList<String>(driver.getWindowHandles());
+        int tabs = closeTabs.size();
+        
+        for(int i = tabs - 1; i > 0; i--){
+            driver.switchTo().window(closeTabs.get(i));
+            driver.close();
+        }
+        
+        driver.switchTo().window(closeTabs.get(0));
     }
 
 }

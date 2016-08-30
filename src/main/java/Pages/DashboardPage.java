@@ -113,6 +113,10 @@ public class DashboardPage extends Page{
         return driver.findElement(By.xpath("//button[@data-test = 'confirm-cancel-button']"));
     }
     
+    private WebElement projectLimitText(){
+        return driver.findElement(By.className("content"));
+    }
+    
     public boolean projectLimitReachedExists(){
         return driver.findElements(By.xpath("//div[contains(text(), 'Project Limit Reached')]")).size() > 0;
     }
@@ -166,12 +170,20 @@ public class DashboardPage extends Page{
         while(System.currentTimeMillis() - timer < 10000 && btnConfirmDeleteExists());
     }
     
-    public String getConfrimDeleteText(){
+    public String getConfirmDeleteText(){
         return confirmDeleteText().getText();
     }
     
     public void openProject(String projectName){
         getProject(projectName).click();
+    }
+    
+    public void closeMaxProjectAlert(){
+        btnProjectLimitCancel().click();
+    }
+    
+    public String getMaxProjectAlertText(){
+        return projectLimitText().getText();
     }
     
     

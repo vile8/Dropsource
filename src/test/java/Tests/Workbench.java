@@ -14,20 +14,24 @@ import org.testng.annotations.Test;
 public class Workbench extends TestSetup{
     
     
-    @Parameters("browser")
+    @Parameters({"browser", "workbenchProject"})
     @BeforeClass(groups = {"before"})
-    public void setUp(@Optional("chrome") String browser) {
+    public void setUp(@Optional("chrome") String browser, @Optional("Workbench Testing") String workbenchProject) {
         super.setUp(browser);
         try {
             login();
+            createProject(workbenchProject);
         } catch (IOException e) {
             System.err.println(e);
         }
     }
 
+    @Parameters("workbenchProject")
     @AfterClass(groups = {"after"})
-    public void tearDown() {
+    public void tearDown(@Optional("Workbench Testing") String workbenchProject) {
         try {
+            tearDownCloseAllTabsExceptDashboard();
+            deleteProject(workbenchProject);
             logout();
         } catch (IOException e) {
             System.err.println(e);
@@ -36,13 +40,12 @@ public class Workbench extends TestSetup{
         }
     }
     
-    @Parameters({"projectName", "pageName"})
+    @Parameters({"workbenchProject", "pageName"})
     @Test(groups = {"create page"}, threadPoolSize = 3)
-    public void addPage(@Optional ("Test Project")String projectName,  @Optional ("i1") String pageName) throws IOException{
-        openProject(projectName);
+    public void addPage(@Optional ("Workbench Testing")String workbenchProject,  @Optional ("i1") String pageName) throws IOException{
+        openProject(workbenchProject);
         wb.addPage(pageName);
         res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not create successfully");
-        
     }
     
     @Parameters( "pageName")

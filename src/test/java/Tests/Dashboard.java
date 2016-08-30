@@ -51,7 +51,7 @@ public class Dashboard extends TestSetup {
     public void deleteProject(@Optional("Test Project") String projectName) throws IOException {
         db.deleteProject(projectName);
         String expectedConfirmText = "Deleting this project will permanently remove it which includes the iOS and Android apps, unlink any used plugins, and remove it from your project list.";
-        res.checkTrue(db.getConfrimDeleteText().equals(expectedConfirmText), uniqueID++ + " - Confirm delete text doesn't match expected text");
+        res.checkTrue(db.getConfirmDeleteText().equals(expectedConfirmText), uniqueID++ + " - Confirm delete text doesn't match expected text");
 
         db.confirmDelete();
         res.checkTrue(!db.projectExists(projectName), uniqueID++ + " - Project just deleted (" + projectName + ") is still found in list");
@@ -75,7 +75,6 @@ public class Dashboard extends TestSetup {
 
     @Test(groups = {"max projects"}, dependsOnGroups = "delete project", threadPoolSize = 3)
     //@Test(groups = {"max projects"}, threadPoolSize = 3)
-    //Need to add checker for trying to create project once limit is reached
     public void createMaxProjects() throws IOException {
         for (int i = 0; i < DropsourceConstants.projectLimit; i++) {
             String projectName = "Test " + i;
@@ -85,7 +84,10 @@ public class Dashboard extends TestSetup {
             res.checkTrue(db.projectExists(projectName), uniqueID++ + " - Project just created (" + projectName + ") not found in list");
             res.checkTrue(db.getBannerText().equals("New Project Has Been Created"), uniqueID++ + " - Banner text does not match expected text");
         }
-
+        String maxProjectsText = "You reached the project limit for your account type. No worries, click the button below to upgrade your account to create more projects!";
+        db.btnCreateNewProjectClick();
+        res.checkTrue(db.projectLimitReachedExists(), uniqueID++ + " - Project limit alert didn't appear");
+        res.checkTrue(db.getMaxProjectAlertText().equals(maxProjectsText), uniqueID++ + " - Project limit alert text doesn't match the expected");
     }
 
     @Test(groups = {"delete all projects"}, dependsOnGroups = "max projects", threadPoolSize = 3)
