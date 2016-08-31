@@ -59,15 +59,20 @@ public class Workbench extends TestSetup{
     }
     
     @Parameters({"pageName", "newPageName"})
-    @Test(groups = {"smoke", "rename page"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    @Test(groups = {"smoke", "rename page"}, dependsOnGroups = "rearrange page", threadPoolSize = 3)
     public void renamePage(@Optional ("i1") String pageName, @Optional ("rename name") String newPageName) throws IOException{
         wb.renamePage(pageName, newPageName);
         res.checkTrue(wb.pageExists(newPageName), uniqueID++ + " - Page (" + newPageName + ") was not renamed successfully");
         res.checkTrue(wb.checkIfSaved(10), uniqueID++ + " - Workbench did not save changes");
     }
     
-    public void rearrangePages(){
-        
+    @Parameters({"pageName", "pageName2"})
+    @Test(groups = {"smoke", "rearrange page"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void rearrangePages(@Optional ("i1") String pageName, @Optional ("i2") String pageName2) throws IOException{
+        wb.addPage(pageName2);
+        res.checkTrue(wb.pageExists(pageName2), uniqueID++ + " - Page (" + pageName2 + ") was not created successfully");
+        res.checkTrue(wb.checkIfSaved(10), uniqueID++ + " - Workbench did not save changes");
+        wb.rearrangePage(pageName, pageName2);
     }
     
     public void addButtonToCanvas(){

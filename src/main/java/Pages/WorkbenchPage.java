@@ -36,12 +36,20 @@ public class WorkbenchPage extends Page {
         while (System.currentTimeMillis() - time < DropsourceConstants.pageTimeoutLimit * 1000 && loader());
     }
 
-    public WebElement pagesDrawer() {
+    private WebElement pagesDrawer() {
         return driver.findElement(By.xpath("//button[@data-test='drawer-pages']"));
     }
 
-    public boolean pageDrawerActive() {
+    private boolean pageDrawerActive() {
         return pagesDrawer().getAttribute("class").contains("active");
+    }
+    
+    private WebElement elementsDrawer(){
+        return driver.findElement(By.xpath("//button[@data-test='drawer-elements']"));
+    }
+    
+    private boolean elementsDrawerActive(){
+        return elementsDrawer().getAttribute("class").contains("active");
     }
 
     public WebElement androidIcon() {
@@ -120,6 +128,18 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//button[contains(text(), 'Rename')]")).size() > 0;
     }
     
+    private WebElement dragHandle(String pageName){
+        return getPage(pageName).findElement(By.className("icon-drag-handle"));
+    }
+    
+    private WebElement getElement(String elementName){
+        return driver.findElement(By.xpath("//div[@data-test='draggables-dropsource-" + elementName + "']"));
+    }
+    
+    private WebElement canvas(){
+        return driver.findElement(By.xpath("//div[@data-test='canvas-root']"));
+    }
+    
     public boolean checkIfSaved(int timeout) {
         timeout *= 1000;
         long time = System.currentTimeMillis();
@@ -173,6 +193,21 @@ public class WorkbenchPage extends Page {
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && btnRenameExists());
         
+    }
+    
+    public void rearrangePage(String pageName, String newPageSlot){
+        if (!pageDrawerActive()) {
+            pagesDrawer().click();
+            wait.animation();
+        }
+        action.dragAndDrop(dragHandle(pageName), dragHandle(newPageSlot)).perform();
+    }
+    
+    public void addElementToCanvas(String elementName){
+        if (!elementsDrawerActive()) {
+            pagesDrawer().click();
+            wait.animation();
+        }
     }
 
 }
