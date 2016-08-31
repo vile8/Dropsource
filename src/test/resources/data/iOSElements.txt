@@ -1,0 +1,16 @@
+button
+segmented-control
+slider
+stepper
+switch
+text-field
+scroll-view
+image
+activity-indicator
+label
+text-view
+page-controller
+table
+table-cell
+view
+web-view

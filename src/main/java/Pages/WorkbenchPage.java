@@ -2,7 +2,12 @@ package Pages;
 
 import Utility.DropsourceConstants;
 import Utility.Wait;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+import java.util.List;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -136,15 +141,26 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//div[@data-test='draggables-dropsource-" + elementName + "']"));
     }
     
+    private boolean elementExists(String elementName){
+        return driver.findElements(By.xpath("//div[@data-test='draggables-dropsource-" + elementName + "']")).size() > 0;
+    }
+    
     private WebElement canvas(){
         return driver.findElement(By.xpath("//div[@data-test='canvas-root']"));
+    }
+    
+    //not really future proof.  Need a better identifier for pages that isn't based off their name.
+    private List<WebElement> pageList(){
+        //return driver.findElements(By.className("affordance-clickable"));
+        return driver.findElements(By.xpath("//div//table//tbody//tr//td//div//div"));
     }
     
     public boolean checkIfSaved(int timeout) {
         timeout *= 1000;
         long time = System.currentTimeMillis();
-        long diff = 0;
+        long diff = timeout + 1;
         if (savingHeader() || !savedHeader()) {
+            if(diff == timeout + 1) diff = 0;
             while ((diff = System.currentTimeMillis() - time) < (timeout) && !savedHeader());
         }
         return diff < timeout;
@@ -166,8 +182,8 @@ public class WorkbenchPage extends Page {
     public void addPage(String pageName) {
         if (!pageDrawerActive()) {
             pagesDrawer().click();
+            wait.animation();
         }
-        wait.animation();
         btnAddPage().click();
         wait.animation();
         btnNext().click();
@@ -200,14 +216,48 @@ public class WorkbenchPage extends Page {
             pagesDrawer().click();
             wait.animation();
         }
-        action.dragAndDrop(dragHandle(pageName), dragHandle(newPageSlot)).perform();
+        action.dragAndDrop(dragHandle(newPageSlot), dragHandle(pageName)).perform();
     }
     
-    public void addElementToCanvas(String elementName){
+    //Works for windows at least but isn't reliable unless window is visible
+    public void addElementToCanvas(String elementName) throws AWTException{
         if (!elementsDrawerActive()) {
+            elementsDrawer().click();
+            wait.animation();
+        }
+        Point thing = driver.manage().window().getPosition();
+        Robot r = new Robot();
+        int offX = thing.x + 10;
+        int offY = thing.y + 80;
+        int elx = getElement(elementName).getLocation().getX() + offX;
+        int ely = getElement(elementName).getLocation().getY() + offY;
+        int clx = canvas().getLocation().getX() + offX;
+        int cly = canvas().getLocation().getY() + offY;
+        r.mouseMove(elx, ely);
+        wait.animation();
+        r.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        wait.animation();
+        r.mouseMove((clx + elx) / 2, (cly + ely) / 2);
+        wait.animation();
+        r.mouseMove(clx, cly);
+        wait.animation();
+        r.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+    }
+    
+    public boolean checkElementExists(String elementName){
+        if (!elementsDrawerActive()) {
+            elementsDrawer().click();
+            wait.animation();
+        }
+        return elementExists(elementName);
+    }
+    
+    public String getFirstPageName(){
+        if (!pageDrawerActive()) {
             pagesDrawer().click();
             wait.animation();
         }
+        return pageList().get(0).getText();
     }
 
 }
