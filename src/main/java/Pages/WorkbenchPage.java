@@ -107,7 +107,19 @@ public class WorkbenchPage extends Page {
     private boolean savedHeader() {
         return driver.findElements(By.className("saved")).size() > 0;
     }
-
+    
+    private WebElement btnRenamePage(){
+        return driver.findElement(By.xpath("//button[@data-test='item-rename']"));
+    }
+    
+    private WebElement btnRename(){
+        return driver.findElement(By.xpath("//button[contains(text(), 'Rename')]"));
+    }
+    
+    private boolean btnRenameExists(){
+        return driver.findElements(By.xpath("//button[contains(text(), 'Rename')]")).size() > 0;
+    }
+    
     public boolean checkIfSaved(int timeout) {
         timeout *= 1000;
         long time = System.currentTimeMillis();
@@ -144,6 +156,23 @@ public class WorkbenchPage extends Page {
         btnCreate().click();
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && btnCreateExists());
+    }
+    
+    public void renamePage(String pageName, String newPageName){
+        if (!pageDrawerActive()) {
+            pagesDrawer().click();
+            wait.animation();
+        }
+        action.moveToElement(pagesDrawer()).perform();
+        action.moveToElement(ellipsis(pageName)).perform();
+        btnRenamePage().click();
+        wait.animation();
+        nameYourPage().clear();
+        nameYourPage().sendKeys(newPageName);
+        btnRename().click();
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && btnRenameExists());
+        
     }
 
 }

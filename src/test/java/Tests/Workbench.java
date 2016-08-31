@@ -45,15 +45,43 @@ public class Workbench extends TestSetup{
     public void addPage(@Optional ("Workbench Testing")String workbenchProject,  @Optional ("i1") String pageName) throws IOException{
         openProject(workbenchProject);
         wb.addPage(pageName);
-        res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not create successfully");
+        res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not created successfully");
+        res.checkTrue(wb.checkIfSaved(10), uniqueID++ + " - Workbench did not save changes");
     }
     
-    @Parameters( "pageName")
-    @Test(groups = {"smoke", "delete page"}, dependsOnGroups = "create page", threadPoolSize = 3)
-    public void deletePage(@Optional ("i1") String pageName) throws IOException{
-        wb.deletePage(pageName);
-        res.checkTrue(!wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not create successfully");
+    @Parameters( "newPageName")
+    @Test(groups = {"smoke", "delete page"}, dependsOnGroups = "rename page", threadPoolSize = 3)
+    public void deletePage(@Optional ("rename name") String newPageName) throws IOException{
+        wb.deletePage(newPageName);
+        res.checkTrue(!wb.pageExists(newPageName), uniqueID++ + " - Page (" + newPageName + ") was not deleted successfully");
+        res.checkTrue(wb.checkIfSaved(10), uniqueID++ + " - Workbench did not save changes");
         closeProject();
     }
+    
+    @Parameters({"pageName", "newPageName"})
+    @Test(groups = {"smoke", "rename page"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void renamePage(@Optional ("i1") String pageName, @Optional ("rename name") String newPageName) throws IOException{
+        wb.renamePage(pageName, newPageName);
+        res.checkTrue(wb.pageExists(newPageName), uniqueID++ + " - Page (" + newPageName + ") was not renamed successfully");
+        res.checkTrue(wb.checkIfSaved(10), uniqueID++ + " - Workbench did not save changes");
+    }
+    
+    public void rearrangePages(){
+        
+    }
+    
+    public void addButtonToCanvas(){
+        
+    }
+    
+    public void deleteButton(){
+        
+    }
+    
+    public void checkElements(){
+        
+    }
+    
+    
     
 }
