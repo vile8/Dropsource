@@ -155,6 +155,34 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//div//table//tbody//tr//td//div//div"));
     }
     
+    private WebElement run(){
+        return driver.findElement(By.xpath("//div[contains(text(), 'Run')]"));
+    }
+    
+    private WebElement iOSSimulator(){
+        return driver.findElement(By.xpath("//button[contains(text(), 'iOS Simulator')]"));
+    }
+    
+    private boolean iOSSimulatorExists(){
+        return driver.findElements(By.xpath("//button[contains(text(), 'iOS Simulator')]")).size() > 0;
+    }
+    
+    private WebElement btnCancel(){
+        return driver.findElement(By.xpath("//button[contains(text(), 'Cancel')]"));
+    }
+    
+    private WebElement cover(){
+        return driver.findElement(By.className("cover"));
+    }
+    
+    public boolean btnCancelExists(){
+        return driver.findElements(By.xpath("//button[contains(text(), 'Cancel')]")).size() > 0;
+    }
+    
+    public boolean buildSuccess(){
+        return driver.findElements(By.className("build-result-success")).size() > 0;
+    }
+    
     public boolean checkIfSaved(int timeout) {
         timeout *= 1000;
         long time = System.currentTimeMillis();
@@ -219,7 +247,7 @@ public class WorkbenchPage extends Page {
         action.dragAndDrop(dragHandle(newPageSlot), dragHandle(pageName)).perform();
     }
     
-    //Works for windows at least but isn't reliable unless window is visible
+    //Works for Windows at least but isn't reliable unless window is visible
     public void addElementToCanvas(String elementName) throws AWTException{
         if (!elementsDrawerActive()) {
             elementsDrawer().click();
@@ -228,7 +256,7 @@ public class WorkbenchPage extends Page {
         Point thing = driver.manage().window().getPosition();
         Robot r = new Robot();
         int offX = thing.x + 10;
-        int offY = thing.y + 80;
+        int offY = thing.y + 85;
         int elx = getElement(elementName).getLocation().getX() + offX;
         int ely = getElement(elementName).getLocation().getY() + offY;
         int clx = canvas().getLocation().getX() + offX;
@@ -242,6 +270,7 @@ public class WorkbenchPage extends Page {
         r.mouseMove(clx, cly);
         wait.animation();
         r.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        wait.waitSecs(10);
     }
     
     public boolean checkElementExists(String elementName){
@@ -259,5 +288,24 @@ public class WorkbenchPage extends Page {
         }
         return pageList().get(0).getText();
     }
-
+    
+    public void initiateIOSBrowserBuild(){
+        run().click();
+        iOSSimulator().click();
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && iOSSimulatorExists());
+        
+    }
+    
+    public void waitForBuild(){
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 600000 && btnCancelExists());
+    }
+    
+    public void closeRunMenu(){
+        if(iOSSimulatorExists() || buildSuccess() || btnCancelExists()){
+            cover().click();
+        }
+    }
+    
 }

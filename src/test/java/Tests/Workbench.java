@@ -2,7 +2,6 @@ package Tests;
 
 import Utility.DataReader;
 import Utility.DropsourceConstants;
-import java.awt.AWTException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.testng.annotations.AfterClass;
@@ -78,6 +77,7 @@ public class Workbench extends TestSetup{
         res.checkTrue(wb.pageExists(pageName2), uniqueID++ + " - Page (" + pageName2 + ") was not created successfully");
         wb.rearrangePage(pageName, pageName2);
         res.checkTrue(wb.getFirstPageName().equals(pageName2), uniqueID++ + " - Pages weren't rearranged successfully. " + pageName2 + " should be first.");
+        res.checkTrue(wb.checkIfSaved(10), uniqueID++ + " - Changes weren't saved");
     }
     
     @DataProvider
@@ -91,5 +91,14 @@ public class Workbench extends TestSetup{
     public void checkIOSElements(String elementName) throws IOException{
         res.checkTrue(wb.checkElementExists(elementName), uniqueID++ + " - Element (" + elementName + ") isn't in the element list");
     }
-       
+    
+    @Test(groups = {"smoke", "build"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void buildIOSBrowser() throws IOException{
+        wb.initiateIOSBrowserBuild();
+        res.checkTrue(wb.btnCancelExists(), uniqueID++ + " - Build did not initiate successfully");
+        wb.waitForBuild();
+        res.checkTrue(wb.buildSuccess(), uniqueID++ + " - Build was not sucessful");
+        wb.closeRunMenu();
+    }
+    
 }
