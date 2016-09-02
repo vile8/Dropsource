@@ -5,6 +5,7 @@ import Utility.Wait;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
@@ -55,6 +56,14 @@ public class WorkbenchPage extends Page {
     
     private boolean elementsDrawerActive(){
         return elementsDrawer().getAttribute("class").contains("active");
+    }
+    
+    private WebElement todoDrawer(){
+        return driver.findElement(By.xpath("//button[@data-test='drawer-todo']"));
+    }
+    
+    private boolean todoDrawerActive(){
+        return todoDrawer().getAttribute("class").contains("active");
     }
 
     public WebElement androidIcon() {
@@ -183,6 +192,10 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.className("build-result-success")).size() > 0;
     }
     
+    private List<WebElement> todoErrors(){
+        return driver.findElements(By.className("item-message"));
+    }
+    
     public boolean checkIfSaved(int timeout) {
         timeout *= 1000;
         long time = System.currentTimeMillis();
@@ -306,6 +319,35 @@ public class WorkbenchPage extends Page {
         if(iOSSimulatorExists() || buildSuccess() || btnCancelExists()){
             cover().click();
         }
+    }
+    
+    public int checkTodoErrorAmount(){
+        if (!todoDrawerActive()) {
+            todoDrawer().click();
+            wait.animation();
+        }
+        return todoErrors().size();
+        
+    }
+    
+    public ArrayList<String> getTodoErrors(){
+        if (!todoDrawerActive()) {
+            todoDrawer().click();
+            wait.animation();
+        }
+        
+        ArrayList<String> errors = new ArrayList<String>();
+        
+        for(WebElement e : todoErrors()){
+            errors.add(e.findElement(By.xpath(".//span")).getText());
+        }
+        
+        /*
+        for(int i = 0; i < todoErrors().size(); i++){
+            errors[i] = todoErrors().get(i).findElement(By.xpath(".//span")).getText();
+        }*/
+        
+        return errors;
     }
     
 }
