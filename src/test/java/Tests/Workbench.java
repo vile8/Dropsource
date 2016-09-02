@@ -47,7 +47,6 @@ public class Workbench extends TestSetup {
 
     @Test(groups = {"smoke", "todo"}, threadPoolSize = 3)
     public void todoPreCreate() throws IOException {
-        System.out.println(wb.checkTodoErrorAmount());
         res.checkTrue(wb.checkTodoErrorAmount() > 0, uniqueID++ + " - No todo errors are displayed");
 
         ArrayList<String> errors = wb.getTodoErrors();
@@ -63,6 +62,11 @@ public class Workbench extends TestSetup {
     public void addPage(@Optional("i1") String pageName) throws IOException {
         wb.addPage(pageName);
         res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not created successfully");
+    }
+    
+    @Test(groups = {"smoke", "no todo"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void todoPostCreate() throws IOException{
+        res.checkTrue(wb.checkTodoErrorAmount() == 0, uniqueID++ + " - Error exist(s) in the todo list when there shouldn't be any");
     }
 
     @Parameters("deletePageName")

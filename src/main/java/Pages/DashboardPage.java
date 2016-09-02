@@ -180,6 +180,7 @@ public class DashboardPage extends Page{
     
     public void closeMaxProjectAlert(){
         btnProjectLimitCancel().click();
+        wait.animation();
     }
     
     public String getMaxProjectAlertText(){

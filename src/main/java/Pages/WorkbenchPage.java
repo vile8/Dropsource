@@ -283,7 +283,6 @@ public class WorkbenchPage extends Page {
         r.mouseMove(clx, cly);
         wait.animation();
         r.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-        wait.waitSecs(10);
     }
     
     public boolean checkElementExists(String elementName){
@@ -304,6 +303,7 @@ public class WorkbenchPage extends Page {
     
     public void initiateIOSBrowserBuild(){
         run().click();
+        wait.animation();
         iOSSimulator().click();
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && iOSSimulatorExists());
@@ -335,18 +335,10 @@ public class WorkbenchPage extends Page {
             todoDrawer().click();
             wait.animation();
         }
-        
-        ArrayList<String> errors = new ArrayList<String>();
-        
+        ArrayList<String> errors = new ArrayList<>();
         for(WebElement e : todoErrors()){
             errors.add(e.findElement(By.xpath(".//span")).getText());
         }
-        
-        /*
-        for(int i = 0; i < todoErrors().size(); i++){
-            errors[i] = todoErrors().get(i).findElement(By.xpath(".//span")).getText();
-        }*/
-        
         return errors;
     }
     
