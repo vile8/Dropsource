@@ -66,6 +66,8 @@ public class AccountManagementPage extends Page{
         firstNameField().sendKeys(firstName);
         lastNameField().sendKeys(lastName);
         btnSave().click();
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && btnSaveExists());
     }
     
     public void changePassword(){
