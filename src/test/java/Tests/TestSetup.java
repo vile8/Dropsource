@@ -80,7 +80,7 @@ public abstract class TestSetup {
     
     public void deleteProject(String projectName) throws IOException{
         db.deleteProject(projectName);
-        String expectedConfirmText = "Deleting this project will permanently remove it which includes the iOS and Android apps, unlink any used plugins, and remove it from your project list.";
+        String expectedConfirmText = "Deleting this project will permanently remove it, unlink any used plugins, and remove it from your project list.";
         res.checkTrue(db.getConfirmDeleteText().equals(expectedConfirmText), uniqueID++ + " - Confirm delete text doesn't match expected text");
 
         db.confirmDelete();

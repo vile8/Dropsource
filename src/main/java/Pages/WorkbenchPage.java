@@ -29,8 +29,8 @@ public class WorkbenchPage extends Page {
 
     @Override
     public boolean elementExists() {
-        //android tab
-        return driver.findElements(By.xpath("//div[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$java=1android.0.0']")).size() > 0;
+        //run button
+        return driver.findElements(By.xpath("//div[contains(text(), 'Run')]")).size() > 0;
     }
 
     private boolean loader() {
@@ -66,22 +66,6 @@ public class WorkbenchPage extends Page {
         return todoDrawer().getAttribute("class").contains("active");
     }
 
-    public WebElement androidIcon() {
-        return driver.findElement(By.xpath("//td[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$java=1android']"));
-    }
-
-    public boolean androidTabOpen() {
-        return androidIcon().getAttribute("class").contains("active");
-    }
-
-    public WebElement iosIcon() {
-        return driver.findElement(By.xpath("//td[@data-reactid='.0.0.0.0.1.0.0.0.0.0:$swift=1ios']"));
-    }
-
-    public boolean iosTabOpen() {
-        return iosIcon().getAttribute("class").contains("active");
-    }
-
     private WebElement getPage(String pageName){
         return driver.findElement(By.xpath("//tr[@data-test='page-manager-" + pageName + "']"));
     }
@@ -114,7 +98,7 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//button[contains(text(), 'Create')]"));
     }
     
-    private boolean btnCreateExists(){
+    public boolean btnCreateExists(){
         return driver.findElements(By.xpath("//button[contains(text(), 'Create')]")).size() > 0;
     }
 
@@ -138,7 +122,7 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//button[contains(text(), 'Rename')]"));
     }
     
-    private boolean btnRenameExists(){
+    public boolean btnRenameExists(){
         return driver.findElements(By.xpath("//button[contains(text(), 'Rename')]")).size() > 0;
     }
     

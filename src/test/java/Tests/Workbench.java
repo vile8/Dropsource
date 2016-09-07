@@ -47,6 +47,7 @@ public class Workbench extends TestSetup {
 
     @Test(groups = {"smoke", "todo"}, threadPoolSize = 3)
     public void todoPreCreate() throws IOException {
+        System.out.println(wb.checkTodoErrorAmount());
         res.checkTrue(wb.checkTodoErrorAmount() > 0, uniqueID++ + " - No todo errors are displayed");
 
         ArrayList<String> errors = wb.getTodoErrors();
@@ -61,18 +62,15 @@ public class Workbench extends TestSetup {
     @Test(groups = {"smoke", "create page"}, dependsOnGroups = "todo", threadPoolSize = 3)
     public void addPage(@Optional("i1") String pageName) throws IOException {
         wb.addPage(pageName);
+        res.checkTrue(!wb.btnCreateExists(), uniqueID++ + " - Create page modal never closed");
         res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not created successfully");
-    }
-    
-    @Test(groups = {"smoke", "no todo"}, dependsOnGroups = "create page", threadPoolSize = 3)
-    public void todoPostCreate() throws IOException{
-        res.checkTrue(wb.checkTodoErrorAmount() == 0, uniqueID++ + " - Error exist(s) in the todo list when there shouldn't be any");
     }
 
     @Parameters("deletePageName")
     @Test(groups = {"smoke", "delete page"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void deletePage(@Optional("delete name") String deletePageName) throws IOException {
         wb.addPage(deletePageName);
+        res.checkTrue(!wb.btnCreateExists(), uniqueID++ + " - Create page modal never closed");
         res.checkTrue(wb.pageExists(deletePageName), uniqueID++ + " - Page (" + deletePageName + ") was not created successfully");
         wb.deletePage(deletePageName);
         res.checkTrue(!wb.pageExists(deletePageName), uniqueID++ + " - Page (" + deletePageName + ") was not deleted successfully");
@@ -82,8 +80,10 @@ public class Workbench extends TestSetup {
     @Test(groups = {"smoke", "rename page"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void renamePage(@Optional("i3") String pageName3, @Optional("rename name") String newPageName) throws IOException {
         wb.addPage(pageName3);
+        res.checkTrue(!wb.btnCreateExists(), uniqueID++ + " - Create page modal never closed");
         res.checkTrue(wb.pageExists(pageName3), uniqueID++ + " - Page (" + pageName3 + ") was not created successfully");
         wb.renamePage(pageName3, newPageName);
+        res.checkTrue(!wb.btnRenameExists(), uniqueID++ + " - Rename page modal never closed");
         res.checkTrue(wb.pageExists(newPageName), uniqueID++ + " - Page (" + newPageName + ") was not renamed successfully");
     }
 
@@ -94,7 +94,6 @@ public class Workbench extends TestSetup {
         res.checkTrue(wb.pageExists(pageName2), uniqueID++ + " - Page (" + pageName2 + ") was not created successfully");
         wb.rearrangePage(pageName, pageName2);
         res.checkTrue(wb.getFirstPageName().equals(pageName2), uniqueID++ + " - Pages weren't rearranged successfully. " + pageName2 + " should be first.");
-        res.checkTrue(wb.checkIfSaved(10), uniqueID++ + " - Changes weren't saved");
     }
 
     @DataProvider

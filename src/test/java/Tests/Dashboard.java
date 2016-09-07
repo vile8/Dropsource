@@ -50,7 +50,7 @@ public class Dashboard extends TestSetup {
     @Test(groups = {"smoke", "delete project"}, dependsOnGroups = "open project", threadPoolSize = 3)
     public void deleteProject(@Optional("Test Project") String projectName) throws IOException {
         db.deleteProject(projectName);
-        String expectedConfirmText = "Deleting this project will permanently remove it which includes the iOS and Android apps, unlink any used plugins, and remove it from your project list.";
+        String expectedConfirmText = "Deleting this project will permanently remove it, unlink any used plugins, and remove it from your project list.";
         res.checkTrue(db.getConfirmDeleteText().equals(expectedConfirmText), uniqueID++ + " - Confirm delete text doesn't match expected text");
 
         db.confirmDelete();
