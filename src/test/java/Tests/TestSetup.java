@@ -1,5 +1,6 @@
 package Tests;
 
+import Pages.AccountManagementPage;
 import Pages.DashboardPage;
 import Pages.LoginPage;
 import Pages.WorkbenchPage;
@@ -22,6 +23,7 @@ public abstract class TestSetup {
     public LoginPage login;
     public DashboardPage db;
     public WorkbenchPage wb;
+    public AccountManagementPage am;
     private ArrayList<String> tabs;
     private ArrayList<String> closeTabs;
 
@@ -36,6 +38,7 @@ public abstract class TestSetup {
         login = new LoginPage(driver);
         db = new DashboardPage(driver);
         wb = new WorkbenchPage(driver);
+        am = new AccountManagementPage(driver);
     }
 
     public void tearDown() {

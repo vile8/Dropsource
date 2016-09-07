@@ -93,8 +93,8 @@ public class AccountManagementPage extends Page{
         while(System.currentTimeMillis() - timer < 10000 && btnSaveExists());
     }
     
-    public void addProfilePhoto(){
-        profilePicture().sendKeys();
+    public void addProfilePhoto(String filePath){
+        profilePicture().sendKeys(filePath);
     }
     
 }
