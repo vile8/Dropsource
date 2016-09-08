@@ -180,6 +180,14 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.className("item-message"));
     }
     
+    private WebElement elementSearchbar(){
+        return driver.findElement(By.xpath("//input[@placeholder='Search Elements']"));
+    }
+    
+    private WebElement btnClearSearch(){
+        return driver.findElement(By.xpath("//button[@data-reactid='.0.0.0.1.$leftCabinet.0.$elements.$elements.1.1.0.0.0.2.0']"));
+    }
+    
     public boolean checkIfSaved(int timeout) {
         timeout *= 1000;
         long time = System.currentTimeMillis();
@@ -324,6 +332,24 @@ public class WorkbenchPage extends Page {
             errors.add(e.findElement(By.xpath(".//span")).getText());
         }
         return errors;
+    }
+    
+    public void elementSearch(String search){
+        if (!elementsDrawerActive()) {
+            elementsDrawer().click();
+            wait.animation();
+        }
+        elementSearchbar().sendKeys(search);
+        wait.animation();
+    }
+    
+    public void clearElementSearch(){
+        if (!elementsDrawerActive()) {
+            elementsDrawer().click();
+            wait.animation();
+        }
+        btnClearSearch().click();
+        wait.animation();
     }
     
 }

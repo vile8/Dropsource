@@ -45,6 +45,7 @@ public class Workbench extends TestSetup {
         }
     }
 
+    /*
     @Test(groups = {"smoke", "todo"}, threadPoolSize = 3)
     public void todoPreCreate() throws IOException {
         System.out.println(wb.checkTodoErrorAmount());
@@ -120,6 +121,25 @@ public class Workbench extends TestSetup {
         } finally {
             wb.closeRunMenu();
         }
+    }
+    */
+    
+    @DataProvider
+    public Object[][] searchElements() throws FileNotFoundException, IOException{
+        DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "SearchElements.txt");
+        return data.getData();
+    }
+    
+    //add in datasheet
+    @Test(groups = {"smoke", "search"}, dataProvider = "searchElements", threadPoolSize = 3)
+    public void elementSearch(String search, String result, String result2){
+        /*wb.elementSearch(search);
+        for(String s : result){
+            System.out.println(wb.checkElementExists(s));
+        }
+        wb.clearElementSearch();
+        System.out.println(wb.checkElementExists("switch"));*/
+        System.out.println(result);
     }
 
 }
