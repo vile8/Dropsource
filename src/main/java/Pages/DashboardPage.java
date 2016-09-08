@@ -125,6 +125,10 @@ public class DashboardPage extends Page{
         return logoutLink().isDisplayed();
     }
     
+    private WebElement accountManagement(){
+        return driver.findElement(By.xpath("//a[contains(text(), 'Account')]"));
+    }
+    
     public boolean logout(){
         action.moveToElement(profilePicture()).perform();
         if(logoutVisible()){
@@ -187,5 +191,9 @@ public class DashboardPage extends Page{
         return projectLimitText().getText();
     }
     
+    public void openAccountManagement(){
+        action.moveToElement(profilePicture()).perform();
+        accountManagement().click();
+    }
     
 }

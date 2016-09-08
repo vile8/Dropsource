@@ -59,6 +59,14 @@ public class AccountManagementPage extends Page{
         return driver.findElement(By.xpath("//div[@data-test='profile-image']"));
     }
     
+    private WebElement inputProfilePicture(){
+        return driver.findElement(By.xpath("//input[@data-test='input-profile-image']"));
+    }
+    
+    private WebElement editProfilePicture(){
+        return driver.findElement(By.xpath("//span[@data-test='edit-profile-image']"));
+    }
+    
     private WebElement currentPasswordField(){
         return driver.findElement(By.xpath("//input[@data-test='previous-password-input']"));
     }
@@ -75,7 +83,9 @@ public class AccountManagementPage extends Page{
         action.moveToElement(name()).perform();
         edit().click();
         wait.animation();
+        firstNameField().clear();
         firstNameField().sendKeys(firstName);
+        lastNameField().clear();
         lastNameField().sendKeys(lastName);
         btnSave().click();
         long timer = System.currentTimeMillis();
@@ -94,7 +104,7 @@ public class AccountManagementPage extends Page{
     }
     
     public void addProfilePhoto(String filePath){
-        profilePicture().sendKeys(filePath);
+        inputProfilePicture().sendKeys(System.getProperty("user.dir") + "/" + filePath);
     }
     
 }

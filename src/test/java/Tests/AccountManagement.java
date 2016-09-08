@@ -36,9 +36,4 @@ public class AccountManagement extends TestSetup{
         }
     }
     
-    @Test
-    public void thing(){
-        am.addProfilePhoto(DropsourceConstants.dataSheetLocation + "profilepicture.jpg");
-    }
-    
 }
