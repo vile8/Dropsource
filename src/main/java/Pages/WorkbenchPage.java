@@ -339,6 +339,7 @@ public class WorkbenchPage extends Page {
             elementsDrawer().click();
             wait.animation();
         }
+        elementSearchbar().clear();
         elementSearchbar().sendKeys(search);
         wait.animation();
     }

@@ -45,7 +45,6 @@ public class Workbench extends TestSetup {
         }
     }
 
-    /*
     @Test(groups = {"smoke", "todo"}, threadPoolSize = 3)
     public void todoPreCreate() throws IOException {
         System.out.println(wb.checkTodoErrorAmount());
@@ -122,7 +121,6 @@ public class Workbench extends TestSetup {
             wb.closeRunMenu();
         }
     }
-    */
     
     @DataProvider
     public Object[][] searchElements() throws FileNotFoundException, IOException{
@@ -130,16 +128,19 @@ public class Workbench extends TestSetup {
         return data.getData();
     }
     
-    //add in datasheet
     @Test(groups = {"smoke", "search"}, dataProvider = "searchElements", threadPoolSize = 3)
-    public void elementSearch(String search, String result, String result2){
-        /*wb.elementSearch(search);
-        for(String s : result){
-            System.out.println(wb.checkElementExists(s));
+    public void elementSearch(String... searchAndResults) throws IOException{
+        wb.elementSearch(searchAndResults[0]);
+        for(int i = 1; i < searchAndResults.length-1; i++){
+            res.checkTrue(wb.checkElementExists(searchAndResults[i]), uniqueID++ + " - Element (" + searchAndResults[i] + ") was not found in the results list");
         }
+        res.checkTrue(!wb.checkElementExists(searchAndResults[searchAndResults.length-1]), uniqueID++ + " - Element (" + searchAndResults[searchAndResults.length-1] + ") was found in the results list");
         wb.clearElementSearch();
-        System.out.println(wb.checkElementExists("switch"));*/
-        System.out.println(result);
+        DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "iOSElements.txt");
+        String[][] elements = data.getData();
+        for(String element: elements[0]){
+            res.checkTrue(wb.checkElementExists(element), uniqueID++ + " - Element (" + element + ") isn't in the element list");
+        }
     }
 
 }
