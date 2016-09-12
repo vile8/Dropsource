@@ -217,15 +217,19 @@ public class WorkbenchPage extends Page {
     }
     
     private WebElement btnMedia(){
-        
+        return driver.findElement(By.className("icon-media"));
     }
     
     private WebElement btnUpload(){
-        
+        return driver.findElement(By.id("media-manager-file-input"));
     }
     
     private boolean progressBarExists(){
-        
+        return driver.findElements(By.xpath("//progress[@max='100']")).size() > 0;
+    }
+    
+    private WebElement btnX(){
+        return driver.findElement(By.className("icon-cancel"));
     }
     
     public boolean checkIfSaved(int timeout) {
@@ -409,7 +413,7 @@ public class WorkbenchPage extends Page {
         return appName().getText();
     }
     
-    public void mediaModalUpload(String filePath){
+    public void uploadImage(String filePath){
         btnMedia().click();
         wait.animation();
         btnUpload().sendKeys(DropsourceConstants.codeDir + filePath);
@@ -417,8 +421,12 @@ public class WorkbenchPage extends Page {
         while(System.currentTimeMillis() - timer < 10000 && progressBarExists());
     }
     
-    public boolean imageExists(String fileName){
+    public boolean checkImageExists(String fileName){
         return driver.findElements(By.xpath("//span[contains(text(), '" + fileName + "')]")).size() > 0;
+    }
+    
+    public void closeModal(){
+        btnX().click();
     }
     
 }

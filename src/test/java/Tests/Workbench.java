@@ -45,7 +45,7 @@ public class Workbench extends TestSetup {
         }
     }
 
-    @Test(groups = {"smoke", "todo"}, threadPoolSize = 3)
+    /*@Test(groups = {"smoke", "todo"}, threadPoolSize = 3)
     public void todoPreCreate() throws IOException {
         System.out.println(wb.checkTodoErrorAmount());
         res.checkTrue(wb.checkTodoErrorAmount() > 0, uniqueID++ + " - No todo errors are displayed");
@@ -149,6 +149,13 @@ public class Workbench extends TestSetup {
         wb.changeAppName(appName);
         res.checkTrue(!wb.btnSaveExists(), uniqueID++ + " - Preferences modal never closed");
         res.checkTrue(wb.getAppNameText().equals(appName), uniqueID++ + " - The app name doesn't match the expected name (" + appName + ")");
+    }*/
+    
+    @Test(groups = {"smoke", "upload image"}, threadPoolSize = 3)
+    public void uploadImage(){
+        wb.uploadImage(DropsourceConstants.dataSheetLocation + "profilepicture.png");
+        wb.checkImageExists("profilepicture.png");
+        wb.closeModal();
     }
 
 }
