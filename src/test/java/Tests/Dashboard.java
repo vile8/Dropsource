@@ -38,7 +38,7 @@ public class Dashboard extends TestSetup {
 
     @Parameters("projectName")
     @Test(groups = {"smoke", "create project"}, threadPoolSize = 3)
-    public void createProject(@Optional("Test Project") String projectName) throws IOException {
+    public void createIOSProject(@Optional("Test Project") String projectName) throws IOException {
         db.btnCreateNewProjectClick();
         res.checkTrue(!db.projectLimitReachedExists(), uniqueID++ + " - Project limit error appeared");
         db.createBlankProject(projectName);
@@ -84,10 +84,10 @@ public class Dashboard extends TestSetup {
             res.checkTrue(db.projectExists(projectName), uniqueID++ + " - Project just created (" + projectName + ") not found in list");
             res.checkTrue(db.getBannerText().equals("New Project Has Been Created"), uniqueID++ + " - Banner text does not match expected text");
         }
-        String maxProjectsText = "You reached the project limit for your account type. No worries, click the button below to upgrade your account to create more projects!";
         db.btnCreateNewProjectClick();
         res.checkTrue(db.projectLimitReachedExists(), uniqueID++ + " - Project limit alert didn't appear");
         //commented out until it is fixed
+        //String maxProjectsText = "You reached the project limit for your account type. No worries, click the button below to upgrade your account to create more projects!";
         //res.checkTrue(db.getMaxProjectAlertText().equals(maxProjectsText), uniqueID++ + " - Project limit alert text doesn't match the expected");
         db.closeMaxProjectAlert();
     }

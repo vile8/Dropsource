@@ -188,6 +188,46 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//button[@data-reactid='.0.0.0.1.$leftCabinet.0.$elements.$elements.1.1.0.0.0.2.0']"));
     }
     
+    private WebElement settingsDrawer(){
+        return driver.findElement(By.xpath("//button[@data-test='drawer-settings']"));
+    }
+    
+    private boolean settingsDrawerActive(){
+        return settingsDrawer().getAttribute("class").contains("active");
+    }
+    
+    private WebElement btnEdit(){
+        return driver.findElement(By.xpath("//button[contains(text(), 'Edit')]"));
+    }
+    
+    private WebElement appNameField(){
+        return driver.findElement(By.id("input-name"));
+    }
+    
+    private WebElement btnSave(){
+        return driver.findElement(By.xpath("//button[@data-test='dialog-button']"));
+    }
+    
+    public boolean btnSaveExists(){
+        return driver.findElements(By.xpath("//button[@data-test='dialog-button']")).size() > 0;
+    }
+    
+    private WebElement appName(){
+        return driver.findElement(By.className("title"));
+    }
+    
+    private WebElement btnMedia(){
+        
+    }
+    
+    private WebElement btnUpload(){
+        
+    }
+    
+    private boolean progressBarExists(){
+        
+    }
+    
     public boolean checkIfSaved(int timeout) {
         timeout *= 1000;
         long time = System.currentTimeMillis();
@@ -241,7 +281,6 @@ public class WorkbenchPage extends Page {
         btnRename().click();
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && btnRenameExists());
-        
     }
     
     public void rearrangePage(String pageName, String newPageSlot){
@@ -351,6 +390,35 @@ public class WorkbenchPage extends Page {
         }
         btnClearSearch().click();
         wait.animation();
+    }
+    
+    public void changeAppName(String appName){
+        if (!settingsDrawerActive()) {
+            settingsDrawer().click();
+            wait.animation();
+        }
+        btnEdit().click();
+        appNameField().clear();
+        appNameField().sendKeys(appName);
+        btnSave().click();
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && btnSaveExists());
+    }
+    
+    public String getAppNameText(){
+        return appName().getText();
+    }
+    
+    public void mediaModalUpload(String filePath){
+        btnMedia().click();
+        wait.animation();
+        btnUpload().sendKeys(DropsourceConstants.codeDir + filePath);
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && progressBarExists());
+    }
+    
+    public boolean imageExists(String fileName){
+        return driver.findElements(By.xpath("//span[contains(text(), '" + fileName + "')]")).size() > 0;
     }
     
 }

@@ -14,4 +14,5 @@ public class DropsourceConstants {
     public static String loginEmail = "jdoll+130@dropsource.com";
     public static String loginPassword = "Password1";
     public static int projectLimit = 20;
+    public static String codeDir = System.getProperty("user.dir") + "/";
 }

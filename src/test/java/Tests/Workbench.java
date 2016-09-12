@@ -142,5 +142,13 @@ public class Workbench extends TestSetup {
             res.checkTrue(wb.checkElementExists(element), uniqueID++ + " - Element (" + element + ") isn't in the element list");
         }
     }
+    
+    @Parameters("appName")
+    @Test(groups = {"smoke", "change app name"}, threadPoolSize = 3)
+    public void changeAppName(@Optional ("Best App Ever") String appName) throws IOException{
+        wb.changeAppName(appName);
+        res.checkTrue(!wb.btnSaveExists(), uniqueID++ + " - Preferences modal never closed");
+        res.checkTrue(wb.getAppNameText().equals(appName), uniqueID++ + " - The app name doesn't match the expected name (" + appName + ")");
+    }
 
 }

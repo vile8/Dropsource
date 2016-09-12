@@ -1,5 +1,6 @@
 package Pages;
 
+import Utility.DropsourceConstants;
 import Utility.Wait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -104,7 +105,7 @@ public class AccountManagementPage extends Page{
     }
     
     public void addProfilePhoto(String filePath){
-        inputProfilePicture().sendKeys(System.getProperty("user.dir") + "/" + filePath);
+        inputProfilePicture().sendKeys(DropsourceConstants.codeDir + filePath);
     }
     
 }
