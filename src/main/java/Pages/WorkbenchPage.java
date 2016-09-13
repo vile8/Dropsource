@@ -224,12 +224,16 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.id("media-manager-file-input"));
     }
     
-    private boolean progressBarExists(){
+    public boolean progressBarExists(){
         return driver.findElements(By.xpath("//progress[@max='100']")).size() > 0;
     }
     
     private WebElement btnX(){
         return driver.findElement(By.className("icon-cancel"));
+    }
+    
+    public boolean failedUpload(){
+        return driver.findElements(By.xpath("//div[contains(text(), 'Upload error. Please retry.')]")).size() > 0;
     }
     
     public boolean checkIfSaved(int timeout) {
@@ -417,6 +421,7 @@ public class WorkbenchPage extends Page {
         btnMedia().click();
         wait.animation();
         btnUpload().sendKeys(DropsourceConstants.codeDir + filePath);
+        System.out.println(DropsourceConstants.codeDir);
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && progressBarExists());
     }
