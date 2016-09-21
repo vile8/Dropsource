@@ -6,7 +6,8 @@ package Utility;
 
 public class DropsourceConstants {
 
-    public static String loginURL = "https://app.dropsource.biz/login/";
+    //public static String loginURL = "https://app.dropsource.biz/login/";
+    public static String loginURL = "https://sdevworkbench.dropsource.biz/login/";
     public static String chromeDriverPathWin = "src/test/resources/chromedriver.exe";
     public static String chromeDriverPathMac = "src/test/resources/chromedriver";
     public static String dataSheetLocation = "src/test/resources/data/";

@@ -129,6 +129,22 @@ public class DashboardPage extends Page{
         return driver.findElement(By.xpath("//a[contains(text(), 'Account')]"));
     }
     
+    private WebElement docs(){
+        return driver.findElement(By.linkText("Docs"));
+    }
+    
+    public boolean docsLoaded(){
+        return driver.findElements(By.xpath("//h1[contains(text(), 'Documentation')]")).size() > 0;
+    }
+    
+    private WebElement forum(){
+        return driver.findElement(By.linkText("Forum"));
+    }
+    
+    public boolean forumLoaded(){
+        return driver.findElements(By.linkText("Categories")).size() > 0;
+    }
+    
     public boolean logout(){
         action.moveToElement(profilePicture()).perform();
         if(logoutVisible()){
@@ -194,6 +210,14 @@ public class DashboardPage extends Page{
     public void openAccountManagement(){
         action.moveToElement(profilePicture()).perform();
         accountManagement().click();
+    }
+    
+    public void clickDocs(){
+        docs().click();
+    }
+    
+    public void clickForum(){
+        forum().click();
     }
     
 }

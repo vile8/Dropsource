@@ -200,7 +200,7 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//button[contains(text(), 'Edit')]"));
     }
     
-    private WebElement appNameField(){
+    private WebElement nameField(){
         return driver.findElement(By.id("input-name"));
     }
     
@@ -232,8 +232,76 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.className("icon-cancel"));
     }
     
+    private WebElement pageVariableTab(){
+        return driver.findElement(By.xpath("//td[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.0.0.0.0.$variables']"));
+    }
+    
+    private boolean pageVariableTabActive(){
+        return pageVariableTab().getAttribute("class").contains("active");
+    }
+    
+    private WebElement pageVariablePlaceholderText(){
+        return driver.findElement(By.xpath("//div[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.1.0.1']"));
+    }
+    
+    private WebElement btnAddPageVariable(){
+        return driver.findElement(By.xpath("//button[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.0.1.0.0.0']"));
+    }
+    
     public boolean failedUpload(){
         return driver.findElements(By.xpath("//div[contains(text(), 'Upload error. Please retry.')]")).size() > 0;
+    }
+    
+    public WebElement btnType(){
+        return driver.findElement(By.className("context-selector-trigger"));
+    }
+    
+    private WebElement primitivesContainer(){
+        return driver.findElement(By.xpath("//span[contains(text(),'Primitives')]"));
+    }
+    
+    private WebElement primitive(String type){
+        return driver.findElement(By.xpath("//div[@title='" + type + "']"));
+    }
+    
+    private WebElement btnDone(){
+        return driver.findElement(By.className("done"));
+    }
+    
+    private List<WebElement> pageVariableList(){
+        return driver.findElements(By.className("variable-item"));
+    }
+    
+    private WebElement pageVariableMoreOptions(String name){
+        List<WebElement> pvList = pageVariableList();
+        for(WebElement pv: pvList){
+            if(pv.findElements(By.xpath(".//span[contains(text(), '" + name + "')]")).size() > 0){
+                return pv.findElement(By.className("icon-more-options"));
+            }
+        }
+        return null;
+    }
+    
+    public boolean pageVariableExists(String name){
+        boolean found = false;
+        List<WebElement> pvList = pageVariableList();
+        for(WebElement pv: pvList){
+            if(pv.findElements(By.xpath(".//span[contains(text(), '" + name + "')]")).size() > 0){
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+    
+    public boolean correctPageVariableType(String name, String type){
+        List<WebElement> pvList = pageVariableList();
+        for(WebElement pv: pvList){
+            if(pv.findElements(By.xpath(".//span[contains(text(), '" + name + "')]")).size() > 0){
+                return pv.findElement(By.className("type")).getText().equals(type);
+            }
+        }
+        return false;
     }
     
     public boolean checkIfSaved(int timeout) {
@@ -256,6 +324,9 @@ public class WorkbenchPage extends Page {
         action.moveToElement(ellipsis(pageName)).perform();
         btnDelPage().click();
         wait.animation();
+    }
+    
+    public void confirmDelete(){
         btnConfirmDelete().click();
         wait.animation();
     }
@@ -406,8 +477,8 @@ public class WorkbenchPage extends Page {
             wait.animation();
         }
         btnEdit().click();
-        appNameField().clear();
-        appNameField().sendKeys(appName);
+        nameField().clear();
+        nameField().sendKeys(appName);
         btnSave().click();
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && btnSaveExists());
@@ -432,6 +503,52 @@ public class WorkbenchPage extends Page {
     
     public void closeModal(){
         btnX().click();
+    }
+    
+    public String getPageVariablePlaceholderText(){
+        return pageVariablePlaceholderText().getText();
+    }
+    
+    public void addPageVariable(String name, String type){
+        if (!pageVariableTabActive()) {
+            pageVariableTab().click();
+        }
+        btnAddPageVariable().click();
+        wait.animation();
+        nameField().sendKeys(name);
+        btnType().click();
+        primitivesContainer().click();
+        primitive(type).click();
+        btnDone().click();
+        btnSave().click();
+        wait.animation();
+    }
+    
+    public void editPageVariable(String name, String newName, String type){
+        if (!pageVariableTabActive()) {
+            pageVariableTab().click();
+        }
+        action.moveToElement(pagesDrawer()).perform();
+        action.moveToElement(pageVariableMoreOptions(name)).perform();
+        btnRenamePage().click();
+        wait.animation();
+        nameField().clear();
+        nameField().sendKeys(newName);
+        btnType().click();
+        primitive(type).click();
+        btnDone().click();
+        btnSave().click();
+        wait.animation();
+    }
+    
+    public void deletePageVariable(String name){
+        if (!pageVariableTabActive()) {
+            pageVariableTab().click();
+        }
+        action.moveToElement(pagesDrawer()).perform();
+        action.moveToElement(pageVariableMoreOptions(name)).perform();
+        btnDelPage().click();
+        wait.animation();
     }
     
 }

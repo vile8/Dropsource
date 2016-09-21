@@ -50,8 +50,9 @@ public class Dashboard extends TestSetup {
     @Test(groups = {"smoke", "delete project"}, dependsOnGroups = "open project", threadPoolSize = 3)
     public void deleteProject(@Optional("Test Project") String projectName) throws IOException {
         db.deleteProject(projectName);
-        String expectedConfirmText = "Deleting this project will permanently remove it, unlink any used plugins, and remove it from your project list.";
-        res.checkTrue(db.getConfirmDeleteText().equals(expectedConfirmText), uniqueID++ + " - Confirm delete text doesn't match expected text");
+        //String expectedConfirmText = "Deleting this project will permanently remove it, unlink any used plugins, and remove it from your project list.";
+        String expectedConfirmText17 = "Deleting this project will permanently remove it which includes the iOS and Android apps, unlink any used plugins, and remove it from your project list.";
+        res.checkTrue(db.getConfirmDeleteText().equals(expectedConfirmText17), uniqueID++ + " - Confirm delete text doesn't match expected text");
 
         db.confirmDelete();
         res.checkTrue(!db.projectExists(projectName), uniqueID++ + " - Project just deleted (" + projectName + ") is still found in list");
@@ -102,6 +103,26 @@ public class Dashboard extends TestSetup {
             res.checkTrue(!db.projectExists(projectName), uniqueID++ + " - Project just deleted (" + projectName + ") is still found in list");
             res.checkTrue(db.getBannerText().equals("A project has been deleted"), uniqueID++ + " - Banner text does not match expected text");
         }
+    }
+    
+    @Test(groups = {"smoke", "links"}, threadPoolSize = 3)
+    public void links() throws IOException{
+        db.openAccountManagement();
+        res.checkTrue(am.elementExists(), uniqueID++ + " - Account management page didn't successfully open");
+        am.clickDropsourceLogo();
+        res.checkTrue(db.elementExists(), uniqueID++ + " - Dropsource logo didn't load the projects page");
+        db.openAccountManagement();
+        res.checkTrue(am.elementExists(), uniqueID++ + " - Account management page didn't successfully open");
+        am.clickProjectsLink();
+        res.checkTrue(db.elementExists(), uniqueID++ + " - Projects link didn't load the projects page");
+        db.clickDocs();
+        super.switchToNewTab();
+        res.checkTrue(db.docsLoaded(), uniqueID++ + " - Docs page didn't load successfully");
+        super.tearDownCloseAllTabsExceptDashboard();
+        db.clickForum();
+        super.switchToNewTab();
+        res.checkTrue(db.forumLoaded(), uniqueID++ + " - Forum page didn't load successfully");
+        super.tearDownCloseAllTabsExceptDashboard();
     }
 
 }

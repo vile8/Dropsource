@@ -80,6 +80,14 @@ public class AccountManagementPage extends Page{
         return driver.findElement(By.xpath("//input[@data-test='verify-password-input']"));
     }
     
+    private WebElement dropsourceLogo(){
+        return driver.findElement(By.xpath("//div[@data-test='logo-link-img']"));
+    }
+    
+    private WebElement projects(){
+        return driver.findElement(By.linkText("Projects"));
+    }
+    
     public void changeName(String firstName, String lastName){
         action.moveToElement(name()).perform();
         edit().click();
@@ -106,6 +114,14 @@ public class AccountManagementPage extends Page{
     
     public void addProfilePhoto(String filePath){
         inputProfilePicture().sendKeys(DropsourceConstants.codeDir + filePath);
+    }
+    
+    public void clickDropsourceLogo(){
+        dropsourceLogo().click();
+    }
+    
+    public void clickProjectsLink(){
+        projects().click();
     }
     
 }

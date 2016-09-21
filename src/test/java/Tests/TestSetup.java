@@ -83,8 +83,9 @@ public abstract class TestSetup {
     
     public void deleteProject(String projectName) throws IOException{
         db.deleteProject(projectName);
-        String expectedConfirmText = "Deleting this project will permanently remove it, unlink any used plugins, and remove it from your project list.";
-        res.checkTrue(db.getConfirmDeleteText().equals(expectedConfirmText), uniqueID++ + " - Confirm delete text doesn't match expected text");
+        //String expectedConfirmText = "Deleting this project will permanently remove it, unlink any used plugins, and remove it from your project list.";
+        String expectedConfirmText17 = "Deleting this project will permanently remove it which includes the iOS and Android apps, unlink any used plugins, and remove it from your project list.";
+        res.checkTrue(db.getConfirmDeleteText().equals(expectedConfirmText17), uniqueID++ + " - Confirm delete text doesn't match expected text");
 
         db.confirmDelete();
         res.checkTrue(!db.projectExists(projectName), uniqueID++ + " - Project just deleted (" + projectName + ") is still found in list");
@@ -101,6 +102,11 @@ public abstract class TestSetup {
         }
         
         driver.switchTo().window(closeTabs.get(0));
+    }
+    
+    public void switchToNewTab(){
+        ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(1));
     }
 
 }

@@ -47,7 +47,6 @@ public class Workbench extends TestSetup {
 
     @Test(groups = {"smoke", "todo"}, threadPoolSize = 3)
     public void todoPreCreate() throws IOException {
-        System.out.println(wb.checkTodoErrorAmount());
         res.checkTrue(wb.checkTodoErrorAmount() > 0, uniqueID++ + " - No todo errors are displayed");
 
         ArrayList<String> errors = wb.getTodoErrors();
@@ -66,6 +65,7 @@ public class Workbench extends TestSetup {
         res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not created successfully");
     }
 
+    //Need to add check for confirm delete text
     @Parameters("deletePageName")
     @Test(groups = {"smoke", "delete page"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void deletePage(@Optional("delete name") String deletePageName) throws IOException {
@@ -73,6 +73,7 @@ public class Workbench extends TestSetup {
         res.checkTrue(!wb.btnCreateExists(), uniqueID++ + " - Create page modal never closed");
         res.checkTrue(wb.pageExists(deletePageName), uniqueID++ + " - Page (" + deletePageName + ") was not created successfully");
         wb.deletePage(deletePageName);
+        wb.confirmDelete();
         res.checkTrue(!wb.pageExists(deletePageName), uniqueID++ + " - Page (" + deletePageName + ") was not deleted successfully");
     }
 
@@ -160,4 +161,35 @@ public class Workbench extends TestSetup {
         wb.closeModal();
     }
     
+    @Parameters({"pvName", "pvType"})
+    @Test(groups = {"smoke", "create page variable"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void createPageVariable(@Optional ("pvString") String pvName, @Optional ("String") String pvType) throws IOException{
+        wb.addPageVariable(pvName, pvType);
+        res.checkTrue(wb.pageVariableExists(pvName), uniqueID++ + " - Page variable (" + pvName + ") wasn't created successfully");
+        res.checkTrue(wb.correctPageVariableType(pvName, pvType), uniqueID++ + " - Page variabe (" + pvName + ") was not of the correct type (" + pvType + ")");
+    }
+    
+    @Parameters({"pvOldName", "pvOldType", "pvNewName", "pvNewType"})
+    @Test(groups = {"smoke", "edit page variable"}, dependsOnGroups = "create page variable", threadPoolSize = 3)
+    public void editPageVariable(@Optional ("pvOld") String pvOldName, @Optional ("Number") String pvOldType, @Optional ("pvNew") String pvNewName, @Optional ("Boolean") String pvNewType) throws IOException{
+        wb.addPageVariable(pvOldName, pvOldType);
+        res.checkTrue(wb.pageVariableExists(pvOldName), uniqueID++ + " - Page variable (" + pvOldName + ") wasn't created successfully");
+        res.checkTrue(wb.correctPageVariableType(pvOldName, pvOldType), uniqueID++ + " - Page variabe (" + pvOldName + ") was not of the correct type (" + pvOldType + ")");
+        wb.editPageVariable(pvOldName, pvNewName, pvNewType);
+        res.checkTrue(wb.pageVariableExists(pvNewName), uniqueID++ + " - Page variable (" + pvNewName + ") wasn't edited successfully");
+        res.checkTrue(wb.correctPageVariableType(pvNewName, pvNewType), uniqueID++ + " - Page variabe (" + pvNewName + ") was not of the correct type (" + pvNewType + ")");
+    }
+    
+    
+    //Need to add check for delete message
+    @Parameters({"pvDelName", "pvDelType"})
+    @Test(groups = {"smoke", "delete page variable"}, dependsOnGroups = "create page variable", threadPoolSize = 3)
+    public void deletePageVariable(@Optional ("delete") String pvDelName, @Optional ("String") String pvDelType) throws IOException{
+        wb.addPageVariable(pvDelName, pvDelType);
+        res.checkTrue(wb.pageVariableExists(pvDelName), uniqueID++ + " - Page variable (" + pvDelName + ") wasn't created successfully");
+        res.checkTrue(wb.correctPageVariableType(pvDelName, pvDelType), uniqueID++ + " - Page variabe (" + pvDelName + ") was not of the correct type (" + pvDelType + ")");
+        wb.deletePageVariable(pvDelName);
+        wb.confirmDelete();
+        res.checkTrue(!wb.pageVariableExists(pvDelName), uniqueID++ + " - Page variable (" + pvDelName + ") wasn't deleted successfully");
+    }
 }
