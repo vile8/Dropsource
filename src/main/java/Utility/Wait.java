@@ -23,7 +23,7 @@ public class Wait {
     }
     
     public void animation(){
-        waitMilliSecs(500);
+        waitMilliSecs(DropsourceConstants.animationWaitTimeMilli);
     }
     
 }

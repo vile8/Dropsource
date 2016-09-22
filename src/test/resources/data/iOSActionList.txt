@@ -1,0 +1,35 @@
+Begin Refreshing a Table View
+Change Variant
+End Refreshing a Table View
+Evaluate Logic Expression
+Go Back a Page
+Go Back in a Web View
+Go Forward
+Go Forward in a Web View
+Go to First Page in a Page Controller
+Go to Next Page in a Page Controller
+Go to Page in a Page Controller
+Go to Previous Page in a Page Controller
+Go to the Top of a Scroll View
+Go to the top of a Table View
+Hide Keyboard
+Log In with Facebook
+Make a Phone Call
+Navigate a Web View
+Open a Web Page
+Pick an Image
+Refresh a Web View
+Run Request
+Send a Text Message
+Send an Email
+Set a Variable Value
+Set Image From URL
+Set Position of a Switch
+Set Text of a Text Field
+Set Text of a Text View
+Set Value of a Slider
+Set Value of a Stepper
+Show Action Sheet
+Show Alert
+Stop a Web View
+Take a Photo

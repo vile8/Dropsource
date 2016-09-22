@@ -168,12 +168,20 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.className("cover"));
     }
     
+    private boolean coverExists(){
+        return driver.findElements(By.className("cover")).size() > 0;
+    }
+    
     public boolean btnCancelExists(){
         return driver.findElements(By.xpath("//button[contains(text(), 'Cancel')]")).size() > 0;
     }
     
     public boolean buildSuccess(){
         return driver.findElements(By.className("build-result-success")).size() > 0;
+    }
+    
+    public boolean buildFailure(){
+        return driver.findElements(By.className("build-result-failure")).size() > 0;
     }
     
     private List<WebElement> todoErrors(){
@@ -272,6 +280,10 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.className("variable-item"));
     }
     
+    private WebElement alertContent(){
+        return driver.findElement(By.className("content"));
+    }
+    
     private WebElement pageVariableMoreOptions(String name){
         List<WebElement> pvList = pageVariableList();
         for(WebElement pv: pvList){
@@ -280,6 +292,40 @@ public class WorkbenchPage extends Page {
             }
         }
         return null;
+    }
+    
+    private List<WebElement> elementList(){
+        return driver.findElements(By.className("draggable-element"));
+    }
+    
+    private WebElement events(){
+        return driver.findElement(By.xpath("//td[contains(text(), 'events')]"));
+    }
+    
+    private List<WebElement> eventList(){
+        return driver.findElements(By.className("event-list-item"));
+    }
+    
+    private WebElement btnEventManage(String eventName){
+        List<WebElement> eventList = eventList();
+        for(WebElement event: eventList){
+            if(event.findElements(By.xpath(".//div[contains(text(), '" + eventName + "')]")).size() > 0){
+                return event.findElement(By.xpath(".//button[contains(text(), 'Manage')]"));
+            }
+        }
+        return null;
+    }
+    
+    private WebElement btnAddAction(){
+        return driver.findElement(By.xpath("//button[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.0.1:$trigger-add.0']"));
+    }
+    
+    public boolean actionExists(String actionName){
+        return driver.findElements(By.xpath("//div[contains(text(), '" + actionName + "')]")).size() > 0;
+    }
+    
+    private List<WebElement> actionList(){
+        return driver.findElements(By.className("trigger-add-action"));
     }
     
     public boolean pageVariableExists(String name){
@@ -324,6 +370,10 @@ public class WorkbenchPage extends Page {
         action.moveToElement(ellipsis(pageName)).perform();
         btnDelPage().click();
         wait.animation();
+    }
+    
+    public String getAlertText(){
+        return alertContent().getText();
     }
     
     public void confirmDelete(){
@@ -426,9 +476,7 @@ public class WorkbenchPage extends Page {
     }
     
     public void closeRunMenu(){
-        if(iOSSimulatorExists() || buildSuccess() || btnCancelExists()){
-            cover().click();
-        }
+        cover().click();
     }
     
     public int checkTodoErrorAmount(){
@@ -503,6 +551,7 @@ public class WorkbenchPage extends Page {
     
     public void closeModal(){
         btnX().click();
+        wait.animation();
     }
     
     public String getPageVariablePlaceholderText(){
@@ -550,5 +599,36 @@ public class WorkbenchPage extends Page {
         btnDelPage().click();
         wait.animation();
     }
+    
+    public int getIOSElementCount(){
+        if (!elementsDrawerActive()) {
+            elementsDrawer().click();
+            wait.animation();
+        }
+        return elementList().size();
+    }
+    
+    public int getIOSActionCount(){
+        return actionList().size();
+    }
+    
+    public void openEventsTab(){
+        canvas().click();
+        canvas().click();
+        events().click();
+    }
+    
+    public void openEventsModal(String event){
+        openEventsTab();
+        btnEventManage(event).click();
+        wait.animation();
+    }
+    
+    public void openActionList(){
+        btnAddAction().click();
+        wait.animation();
+    }
+    
+    
     
 }
