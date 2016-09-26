@@ -1,0 +1,3 @@
+page controller	Go to Page in a Page Controller	Go to First Page in a Page Controller	Go to Next Page in a Page Controller	Go to Previous Page in a Page Controller	Show Alert	Show Action Sheet	Take a Photo
+web view	Navigate a Web View	Refresh a Web View	Stop a Web View	Go Back in a Web View	Go Forward in a Web View	Take a Photo
+image	Pick an Image	Set Image From URL	Take a Photo	Run Request

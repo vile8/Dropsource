@@ -65,7 +65,7 @@ public class Workbench extends TestSetup {
         res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not created successfully");
     }
 
-    /*@Parameters("deletePageName")
+    @Parameters("deletePageName")
     @Test(groups = {"smoke", "delete page"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void deletePage(@Optional("delete name") String deletePageName) throws IOException {
         wb.addPage(deletePageName);
@@ -241,16 +241,24 @@ public class Workbench extends TestSetup {
     //@Test(groups = {"smoke", "search actions"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void searchActions() {
         
-    }*/
+    }
     
+    @Parameters("actionName")
     @Test(groups = {"smoke", "add action"}, dependsOnGroups = "create page", threadPoolSize = 3)
-    public void addAction() throws IOException {
+    public void addAction(@Optional ("Hide Keyboard") String actionName) throws IOException {
         wb.openEventsTab();
         wb.openEventsModal("Page Loaded");
         wb.openActionList();
-        wb.addAction("Change Variant");
-        res.checkTrue(wb.lpActionExists("Change Variant"), uniqueID++ + " - Action wasn't successfully added");
-        wb.closeModal();
+        wb.addAction(actionName);
+        try{
+            res.checkTrue(wb.lpActionExists(actionName), uniqueID++ + " - Action (" + actionName + ") wasn't successfully added");
+        }catch(AssertionError e){
+            fail(e.toString());
+        }finally{
+            wb.closeModal();
+        }
     }
+    
+    //Add invalid search tests for actions and elements
 
 }
