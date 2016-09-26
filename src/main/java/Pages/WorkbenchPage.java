@@ -644,8 +644,7 @@ public class WorkbenchPage extends Page {
     }
     
     public void addAction(String actionName){
-        lpAction(actionName).click();
-        wait.waitSecs(10);
+        rpAction(actionName).click();
     }
     
 }
