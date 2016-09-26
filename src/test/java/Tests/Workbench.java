@@ -226,7 +226,7 @@ public class Workbench extends TestSetup {
         
         for (String[] action : actions) {
             try{
-                res.checkTrue(wb.actionExists(action[0]), uniqueID++ + " - Action (" + action[0] + ") doesn't exist in the list");
+                res.checkTrue(wb.rpActionExists(action[0]), uniqueID++ + " - Action (" + action[0] + ") doesn't exist in the list");
             }catch(AssertionError e){
                 missingActions += action[0] + " is missing, ";
                 failed = true;
@@ -241,6 +241,14 @@ public class Workbench extends TestSetup {
     //@Test(groups = {"smoke", "search actions"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void searchActions() {
         
+    }
+    
+    @Test(groups = {"smoke", "add action"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void addAction() throws IOException {
+        wb.openEventsTab();
+        wb.openActionList();
+        wb.addAction("Change Variant");
+        res.checkTrue(wb.lpActionExists("Change Variant"), uniqueID++ + " - Action wasn't successfully added");
     }
 
 }

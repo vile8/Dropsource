@@ -18,6 +18,6 @@ public class DropsourceConstants {
     public static String codeDir = System.getProperty("user.dir") + "/";
     public static int iOSElementCount = 16;
     public static int androidElementCount = 18;
-    public static int iOSActionCount = 36;
+    public static int iOSActionCount = 35;
     public static int animationWaitTimeMilli = 500;
 }

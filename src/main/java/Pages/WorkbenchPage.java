@@ -320,8 +320,22 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//button[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.0.1:$trigger-add.0']"));
     }
     
-    public boolean actionExists(String actionName){
+    //left panel
+    public boolean lpActionExists(String actionName){
+        return driver.findElements(By.xpath("//button[contains(text(), '" + actionName + "')]")).size() > 0;
+    }
+    
+    private WebElement lpAction(String actionName){
+        return driver.findElement(By.xpath("//button[contains(text(), '" + actionName + "')]"));
+    }
+    
+    //right panel    
+    public boolean rpActionExists(String actionName){
         return driver.findElements(By.xpath("//div[contains(text(), '" + actionName + "')]")).size() > 0;
+    }
+    
+    private WebElement rpAction(String actionName){
+        return driver.findElement(By.xpath("//div[contains(text(), '" + actionName + "')]"));
     }
     
     private List<WebElement> actionList(){
@@ -629,6 +643,9 @@ public class WorkbenchPage extends Page {
         wait.animation();
     }
     
-    
+    public void addAction(String actionName){
+        lpAction(actionName).click();
+        wait.waitSecs(10);
+    }
     
 }
