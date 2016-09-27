@@ -192,7 +192,7 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//input[@placeholder='Search Elements']"));
     }
     
-    private WebElement btnClearSearch(){
+    private WebElement btnClearElementSearch(){
         return driver.findElement(By.xpath("//button[@data-reactid='.0.0.0.1.$leftCabinet.0.$elements.$elements.1.1.0.0.0.2.0']"));
     }
     
@@ -344,6 +344,14 @@ public class WorkbenchPage extends Page {
     
     private List<WebElement> actionList(){
         return driver.findElements(By.className("trigger-add-action"));
+    }
+    
+    private WebElement actionSearchbar(){
+        return driver.findElement(By.xpath("//input[@placeholder='Search Actions']"));
+    }
+    
+    private WebElement btnClearActionSearch(){
+        return driver.findElement(By.xpath("//button[@data-reactid='.0.1.1.$=1$modal-modal.1.2.0.0.1.0.0.0.2.0']"));
     }
     
     public boolean pageVariableExists(String name){
@@ -533,7 +541,7 @@ public class WorkbenchPage extends Page {
             elementsDrawer().click();
             wait.animation();
         }
-        btnClearSearch().click();
+        btnClearElementSearch().click();
         wait.animation();
     }
     
@@ -649,6 +657,18 @@ public class WorkbenchPage extends Page {
     
     public void addAction(String actionName){
         rpAction(actionName).click();
+    }
+    
+    public void actionSearch(String search){
+        actionSearchbar().clear();
+        actionSearchbar().sendKeys(search);
+        //hard wait since dynamic search removes in chunks with no indicator of when finished
+        wait.waitSecs(750);
+    }
+    
+    public void clearActionSearch(){
+        btnClearActionSearch().click();
+        wait.animation();
     }
     
 }
