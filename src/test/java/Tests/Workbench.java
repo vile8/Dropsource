@@ -7,7 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
@@ -43,6 +47,11 @@ public class Workbench extends TestSetup {
         } finally {
             super.tearDown();
         }
+    }
+
+    @AfterMethod
+    public void cleanUp() {
+        cleanUpPage();
     }
 
     @Test(groups = {"smoke", "todo"}, threadPoolSize = 3)
@@ -117,16 +126,11 @@ public class Workbench extends TestSetup {
 
     @Test(groups = {"smoke", "build"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void buildIOSBrowser() throws IOException {
-        try {
-            wb.initiateIOSBrowserBuild();
-            res.checkTrue(wb.btnCancelExists(), uniqueID++ + " - Build did not initiate successfully");
-            wb.waitForBuild();
-            res.checkTrue(wb.buildSuccess(), uniqueID++ + " - Build was not sucessful");
-        } catch (AssertionError e) {
-            fail(e.toString());
-        } finally {
-            wb.closeRunMenu();
-        }
+        wb.initiateIOSBrowserBuild();
+        res.checkTrue(wb.btnCancelExists(), uniqueID++ + " - Build did not initiate successfully");
+        wb.waitForBuild();
+        res.checkTrue(wb.buildSuccess(), uniqueID++ + " - Build was not sucessful");
+        wb.closeRunMenu();
     }
 
     @DataProvider
@@ -160,15 +164,10 @@ public class Workbench extends TestSetup {
 
     @Test(groups = {"smoke", "upload image"}, threadPoolSize = 3)
     public void uploadImage() throws IOException {
-        try {
-            wb.uploadImage(DropsourceConstants.dataSheetLocation + "profilepicture.jpg");
-            res.checkTrue(wb.checkImageExists("profilepicture.jpg"), uniqueID++ + " - Image was not uploaded successfully");
-            res.checkTrue(!wb.progressBarExists(), uniqueID++ + " - Image was still uploading after 10 seconds or failed to upload");
-        } catch (AssertionError e) {
-            fail(e.toString());
-        } finally {
-            wb.closeModal();
-        }
+        wb.uploadImage(DropsourceConstants.dataSheetLocation + "profilepicture.jpg");
+        res.checkTrue(wb.checkImageExists("profilepicture.jpg"), uniqueID++ + " - Image was not uploaded successfully");
+        res.checkTrue(!wb.progressBarExists(), uniqueID++ + " - Image was still uploading after 10 seconds or failed to upload");
+        wb.closeModal();
     }
 
     @Parameters({"pvName", "pvType"})
@@ -203,7 +202,6 @@ public class Workbench extends TestSetup {
         res.checkTrue(!wb.pageVariableExists(pvDelName), uniqueID++ + " - Page variable (" + pvDelName + ") wasn't deleted successfully");
     }
 
-    
     //Test is slightly flawed since it checks substring so Go Forward might trigger
     //inside Go Forward in a Web View.  Will need to make a test tag based off name
     //similar to the way elements was done in order to accurately test this.
@@ -213,52 +211,48 @@ public class Workbench extends TestSetup {
         wb.openActionList();
         boolean failed = false;
         String missingActions = "";
-        
-        try{
-        res.checkTrue(wb.getIOSActionCount() == DropsourceConstants.iOSActionCount, uniqueID++ + " - " + wb.getIOSActionCount() + " actions found but expected " + DropsourceConstants.iOSActionCount);
-        }catch(AssertionError e){
+
+        try {
+            res.checkTrue(wb.getIOSActionCount() == DropsourceConstants.iOSActionCount, uniqueID++ + " - " + wb.getIOSActionCount() + " actions found but expected " + DropsourceConstants.iOSActionCount);
+        } catch (AssertionError e) {
             missingActions = e.toString() + ", ";
             failed = true;
         }
-        
+
         DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "iOSActionList.txt");
         String[][] actions = data.getData();
-        
+
         for (String[] action : actions) {
-            try{
+            try {
                 res.checkTrue(wb.rpActionExists(action[0]), uniqueID++ + " - Action (" + action[0] + ") doesn't exist in the list");
-            }catch(AssertionError e){
+            } catch (AssertionError e) {
                 missingActions += action[0] + " is missing, ";
                 failed = true;
             }
         }
-        
+
         wb.closeModal();
-        
-        if(failed)fail(missingActions);
+
+        if (failed) {
+            fail(missingActions);
+        }
     }
 
     //@Test(groups = {"smoke", "search actions"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void searchActions() {
-        
+
     }
-    
+
     @Parameters("actionName")
     @Test(groups = {"smoke", "add action"}, dependsOnGroups = "create page", threadPoolSize = 3)
-    public void addAction(@Optional ("Hide Keyboard") String actionName) throws IOException {
+    public void addAction(@Optional("Hide Keyboard") String actionName) throws IOException {
         wb.openEventsTab();
         wb.openEventsModal("Page Loaded");
         wb.openActionList();
         wb.addAction(actionName);
-        try{
-            res.checkTrue(wb.lpActionExists(actionName), uniqueID++ + " - Action (" + actionName + ") wasn't successfully added");
-        }catch(AssertionError e){
-            fail(e.toString());
-        }finally{
-            wb.closeModal();
-        }
+        res.checkTrue(wb.lpActionExists(actionName), uniqueID++ + " - Action (" + actionName + ") wasn't successfully added");
+        wb.closeModal();
     }
-    
-    //Add invalid search tests for actions and elements
 
+    //Add invalid search tests for actions and elements
 }

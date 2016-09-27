@@ -168,7 +168,7 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.className("cover"));
     }
     
-    private boolean coverExists(){
+    public boolean coverExists(){
         return driver.findElements(By.className("cover")).size() > 0;
     }
     
@@ -238,6 +238,10 @@ public class WorkbenchPage extends Page {
     
     private WebElement btnX(){
         return driver.findElement(By.className("icon-cancel"));
+    }
+    
+    public boolean btnXExists(){
+        return driver.findElements(By.className("icon-cancel")).size() > 0;
     }
     
     private WebElement pageVariableTab(){
