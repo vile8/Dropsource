@@ -354,6 +354,22 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//button[@data-reactid='.0.1.1.$=1$modal-modal.1.2.0.0.1.0.0.0.2.0']"));
     }
     
+    private WebElement noElementResultsPlaceholder(){
+        return driver.findElement(By.xpath("//div[@data-reactid='.0.0.0.1.$leftCabinet.0.$elements.$elements.1.2.0.1']"));
+    }
+        
+    public boolean noElementResultsPlaceholderExists(){
+        return driver.findElements(By.xpath("//div[@data-reactid='.0.0.0.1.$leftCabinet.0.$elements.$elements.1.2.0.1']")).size() > 0;
+    }
+    
+    private WebElement noActionResultsPlaceholder(){
+        return driver.findElement(By.xpath("//div[@data-reactid='.0.1.1.$=1$modal-modal.1.2.0.1.0.1']"));
+    }
+    
+    public boolean noActionResultsPlaceholderExists(){
+        return driver.findElements(By.xpath("//div[@data-reactid='.0.1.1.$=1$modal-modal.1.2.0.1.0.1']")).size() > 0;
+    }
+    
     public boolean pageVariableExists(String name){
         boolean found = false;
         List<WebElement> pvList = pageVariableList();
@@ -444,6 +460,7 @@ public class WorkbenchPage extends Page {
             wait.animation();
         }
         action.dragAndDrop(dragHandle(newPageSlot), dragHandle(pageName)).perform();
+        wait.animation();
     }
     
     //Works for Windows at least but isn't reliable unless window is visible
@@ -663,12 +680,20 @@ public class WorkbenchPage extends Page {
         actionSearchbar().clear();
         actionSearchbar().sendKeys(search);
         //hard wait since dynamic search removes in chunks with no indicator of when finished
-        wait.waitSecs(750);
+        wait.waitMilliSecs(750);
     }
     
     public void clearActionSearch(){
         btnClearActionSearch().click();
         wait.animation();
+    }
+    
+    public String getNoElementResultsPlaceholderText(){
+        return noElementResultsPlaceholder().getText();
+    }
+    
+    public String getNoActionResultsPlaceholderText(){
+        return noActionResultsPlaceholder().getText();
     }
     
 }
