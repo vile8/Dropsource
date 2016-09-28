@@ -370,6 +370,58 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//div[@data-reactid='.0.1.1.$=1$modal-modal.1.2.0.1.0.1']")).size() > 0;
     }
     
+    private WebElement apiTab(){
+        return driver.findElement(By.xpath("//td[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.0.0.0.0.$api']"));
+    }
+    
+    private boolean apiTabActive(){
+        return apiTab().getAttribute("class").contains("active");
+    }
+    
+    private WebElement btnAddAPI(){
+        return driver.findElement(By.xpath("//button[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.0.0.1.0.0.0']"));
+    }
+    
+    public boolean apiModalExists(){
+        return driver.findElements(By.className("api-adder-container")).size() > 0;
+    }
+    
+    private WebElement demoAPISelectBox(){
+        return driver.findElement(By.className("custom-select-input"));
+    }
+    
+    private List<WebElement> demoAPIList(){
+        return driver.findElements(By.xpath(".//option"));
+    }
+    
+    private WebElement btnAddDemoAPI(){
+        return driver.findElement(By.xpath("//button[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.1.1.0']"));
+    }
+    
+    private WebElement apiUrlField(){
+        return driver.findElement(By.xpath("//input[@placeholder='Enter API Spec URL']"));
+    }
+    
+    private WebElement btnAddUrlAPI(){
+        return driver.findElement(By.xpath("//button[@data-reactid='.0.1.1.$=1$modal-modal.1.1.2.1.1.0']"));
+    }
+    
+    private WebElement btnUploadAPI(){
+        return driver.findElement(By.id("swagger-file-input"));
+    }
+    
+    private boolean addingAPIMessageExists(){
+        return driver.findElements(By.xpath("//div[contains(text(), 'Adding to your project...')]")).size() > 0;
+    }
+    
+    private boolean refreshAPIMessageExists(){
+        return driver.findElements(By.xpath("//div[contains(text(), 'Refreshing your list of APIs')]")).size() > 0;
+    }
+    
+    public boolean successAPIMessageExists(){
+        return driver.findElements(By.xpath("//div[contains(text(), 'Success!')]")).size() > 0;
+    }
+    
     public boolean pageVariableExists(String name){
         boolean found = false;
         List<WebElement> pvList = pageVariableList();
@@ -583,7 +635,6 @@ public class WorkbenchPage extends Page {
         btnMedia().click();
         wait.animation();
         btnUpload().sendKeys(DropsourceConstants.codeDir + filePath);
-        System.out.println(DropsourceConstants.codeDir);
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && progressBarExists());
     }
@@ -696,4 +747,54 @@ public class WorkbenchPage extends Page {
         return noActionResultsPlaceholder().getText();
     }
     
+    public void openAddAPIModal(){
+        if (!apiTabActive()) {
+            apiTab().click();
+        }
+        btnAddAPI().click();
+        wait.animation();
+    }
+    
+    public void addDemoAPI(String API){
+        demoAPISelectBox().sendKeys(API);
+        btnAddDemoAPI().click();
+        uploadProcess();
+    }
+    
+    public void addUrlAPI(String url){
+        openAddAPIModal();
+        //apiUrlField().clear();
+        apiUrlField().sendKeys(url);
+        btnAddUrlAPI().click();
+        uploadProcess();
+    }
+    
+    public void uploadAPI(String filepath){
+        openAddAPIModal();
+        btnUploadAPI().sendKeys(DropsourceConstants.codeDir + filepath);
+        uploadProcess();
+    }
+    
+    public ArrayList<String> getDemoAPIList(){
+        ArrayList<String> apis = new ArrayList<>();
+        for(WebElement api: demoAPIList()){
+            apis.add(api.getText());
+        }
+        return apis;
+    }
+    
+    public int getDemoAPIListSize(){
+        return demoAPIList().size();
+    }
+    
+    public void uploadProcess(){
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && !addingAPIMessageExists());
+        timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && addingAPIMessageExists());
+        timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && refreshAPIMessageExists());
+        timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && !successAPIMessageExists());
+    }
 }

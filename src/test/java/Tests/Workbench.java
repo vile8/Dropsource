@@ -285,4 +285,41 @@ public class Workbench extends TestSetup {
         res.checkTrue(wb.noActionResultsPlaceholderExists(), uniqueID++ + " - No action results placeholder didn't appear with an invalid search term");
         res.checkTrue(wb.getNoActionResultsPlaceholderText().equals(expectedText), uniqueID++ + " - No action search results placeholder text was incorrect");
     }
+    
+    //need to add checker for API in API list to all 3 upload API tests
+    @Test(groups = {"smoke", "add demo api"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void addDemoAPI() throws IOException{
+        wb.openAddAPIModal();
+        res.checkTrue(wb.apiModalExists(), uniqueID++ + " - Add API modal didn't open successfully");
+        ArrayList<String> expectedAPIs = new ArrayList<>();
+        expectedAPIs.add("Buzzfeed API");
+        expectedAPIs.add("Slack Channels API");
+        expectedAPIs.add("Open Weather Map API");
+        expectedAPIs.add("Google Places API");
+        res.checkTrue(expectedAPIs.size() == wb.getDemoAPIListSize(), uniqueID++ + " - The number of expected demo APIs (" + expectedAPIs.size() + ") doesn't match the actual count (" + wb.getDemoAPIListSize() + ")");
+        
+        ArrayList<String> actualAPIs = wb.getDemoAPIList();
+        for(String api: actualAPIs){
+            res.checkTrue(expectedAPIs.contains(api), uniqueID++ + " - " + api + " was not found in the expected API list");
+        }
+        wb.addDemoAPI("Open Weather Map API");
+        res.checkTrue(wb.successAPIMessageExists(), uniqueID++ + " - API was not uploaded successfully");
+        wb.closeModal();
+    }
+    
+    @Test(groups = {"smoke", "add url api"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void addUrlAPI() throws IOException{
+        //Google places
+        String url = "https://api.stoplight.io/v1/versions/ryDPQuGG5NZZFN2bW/export/oas.json";
+        wb.addUrlAPI(url);
+        res.checkTrue(wb.successAPIMessageExists(), uniqueID++ + " - API was not uploaded successfully");
+        wb.closeModal();
+    }
+    
+    @Test(groups = {"smoke", "add file api"}, dependsOnGroups = "create page", threadPoolSize = 3)
+    public void addFileAPI() throws IOException{
+        wb.uploadAPI(DropsourceConstants.dataSheetLocation + "optimalprint.json");
+        res.checkTrue(wb.successAPIMessageExists(), uniqueID++ + " - API was not uploaded successfully");
+        wb.closeModal();
+    }
 }
