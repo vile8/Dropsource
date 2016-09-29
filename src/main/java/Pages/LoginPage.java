@@ -24,6 +24,10 @@ public class LoginPage extends Page{
         return driver.findElements(By.name("username")).size() > 0;
     }
     
+    public WebElement syncElement(){
+        return email();
+    }
+    
     private WebElement email(){
         return driver.findElement(By.name("username"));
     }

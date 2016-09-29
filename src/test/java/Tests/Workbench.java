@@ -6,6 +6,7 @@ import static com.thoughtworks.selenium.SeleneseTestBase.fail;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -70,7 +71,7 @@ public class Workbench extends TestSetup {
         res.checkTrue(!wb.btnCreateExists(), uniqueID++ + " - Create page modal never closed");
         res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not created successfully");
     }
-
+/*
     @Parameters("deletePageName")
     @Test(groups = {"smoke", "delete page"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void deletePage(@Optional("delete name") String deletePageName) throws IOException {
@@ -285,7 +286,7 @@ public class Workbench extends TestSetup {
         res.checkTrue(wb.noActionResultsPlaceholderExists(), uniqueID++ + " - No action results placeholder didn't appear with an invalid search term");
         res.checkTrue(wb.getNoActionResultsPlaceholderText().equals(expectedText), uniqueID++ + " - No action search results placeholder text was incorrect");
     }
-    
+    */
     //need to add checker for API in API list to all 3 upload API tests
     @Test(groups = {"smoke", "add demo api"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void addDemoAPI() throws IOException{
@@ -329,11 +330,11 @@ public class Workbench extends TestSetup {
     @Test(groups = {"smoke", "delete api"}, dependsOnGroups = "add demo api", threadPoolSize = 3)
     public void deleteAPI() throws IOException{
         wb.openAddAPIModal();
-        wb.addDemoAPI("Slack Channels API");
+        wb.addDemoAPI("Buzzfeed API");
         res.checkTrue(wb.successAPIMessageExists(), uniqueID++ + " - API was not uploaded successfully");
         wb.closeModal();
-        res.checkTrue(wb.apiExists("Slack Channels API"), uniqueID++ + " - API (Slack Channels API) wasn't found in the API list");
-        wb.deleteAPI("Slack Channels API");
-        wb.confirmDelete();
+        res.checkTrue(wb.apiExists("Buzzfeed Api"), uniqueID++ + " - API (Buzzfeed API) wasn't found in the API list");
+        wb.deleteAPI("Buzzfeed Api");
+        wb.confirmDeleteAPI();
     }
 }

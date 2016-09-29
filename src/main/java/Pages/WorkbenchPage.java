@@ -12,6 +12,8 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * @author Jonathan Doll
@@ -31,6 +33,11 @@ public class WorkbenchPage extends Page {
     public boolean elementExists() {
         //run button
         return driver.findElements(By.xpath("//div[contains(text(), 'Run')]")).size() > 0;
+    }
+    
+    @Override
+    public WebElement syncElement(){
+        return run();
     }
 
     private boolean loader() {
@@ -79,7 +86,12 @@ public class WorkbenchPage extends Page {
     }
 
     private WebElement btnConfirmDelete() {
-        return driver.findElement(By.xpath("//button[contains(text(), 'Confirm Delete')]"));
+        //return driver.findElement(By.xpath("//button[contains(text(), 'Confirm Delete')]"));
+        return driver.findElement(By.xpath("//button[@data-test='confirm-ok-button']"));
+    }
+    
+    private boolean btnConfirmDeleteExists(){
+        return driver.findElements(By.xpath("//button[@data-test='confirm-ok-button']")).size() > 0;
     }
 
     private WebElement btnAddPage() {
@@ -821,7 +833,16 @@ public class WorkbenchPage extends Page {
     }
     
     public void deleteAPI(String apiName){
+        action.moveToElement(pagesDrawer()).perform();
         action.moveToElement(apiMoreOptions(apiName)).perform();
         deleteAPIIcon().click();
+        wait.animation();
+    }
+    
+    public void confirmDeleteAPI(){
+        btnConfirmDelete().click();
+        //long timer = System.currentTimeMillis();
+        //while(System.currentTimeMillis() - timer < 10000 && btnConfirmDeleteExists());
+        wdw.until(ExpectedConditions.stalenessOf(btnConfirmDelete()));
     }
 }
