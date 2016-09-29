@@ -305,6 +305,7 @@ public class Workbench extends TestSetup {
         wb.addDemoAPI("Open Weather Map API");
         res.checkTrue(wb.successAPIMessageExists(), uniqueID++ + " - API was not uploaded successfully");
         wb.closeModal();
+        res.checkTrue(wb.apiExists("OpenWeatherMap"), uniqueID++ + " - API (OpenWeatherMap) wasn't found in the API list");
     }
     
     @Test(groups = {"smoke", "add url api"}, dependsOnGroups = "create page", threadPoolSize = 3)
@@ -314,6 +315,7 @@ public class Workbench extends TestSetup {
         wb.addUrlAPI(url);
         res.checkTrue(wb.successAPIMessageExists(), uniqueID++ + " - API was not uploaded successfully");
         wb.closeModal();
+        res.checkTrue(wb.apiExists("Google Places"), uniqueID++ + " - API (Google Places) wasn't found in the API list");
     }
     
     @Test(groups = {"smoke", "add file api"}, dependsOnGroups = "create page", threadPoolSize = 3)
@@ -321,5 +323,6 @@ public class Workbench extends TestSetup {
         wb.uploadAPI(DropsourceConstants.dataSheetLocation + "optimalprint.json");
         res.checkTrue(wb.successAPIMessageExists(), uniqueID++ + " - API was not uploaded successfully");
         wb.closeModal();
+        res.checkTrue(wb.apiExists("Optimalprint API"), uniqueID++ + " - API (Optimalprint API) wasn't found in the API list");
     }
 }

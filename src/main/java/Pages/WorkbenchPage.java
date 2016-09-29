@@ -422,6 +422,10 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//div[contains(text(), 'Success!')]")).size() > 0;
     }
     
+    public boolean apiExists(String apiName){
+        return driver.findElements(By.xpath("//span[contains(text(), '" + apiName + "')]")).size() > 0;
+    }
+    
     public boolean pageVariableExists(String name){
         boolean found = false;
         List<WebElement> pvList = pageVariableList();
