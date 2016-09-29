@@ -325,4 +325,15 @@ public class Workbench extends TestSetup {
         wb.closeModal();
         res.checkTrue(wb.apiExists("Optimalprint API"), uniqueID++ + " - API (Optimalprint API) wasn't found in the API list");
     }
+    
+    @Test(groups = {"smoke", "delete api"}, dependsOnGroups = "add demo api", threadPoolSize = 3)
+    public void deleteAPI() throws IOException{
+        wb.openAddAPIModal();
+        wb.addDemoAPI("Slack Channels API");
+        res.checkTrue(wb.successAPIMessageExists(), uniqueID++ + " - API was not uploaded successfully");
+        wb.closeModal();
+        res.checkTrue(wb.apiExists("Slack Channels API"), uniqueID++ + " - API (Slack Channels API) wasn't found in the API list");
+        wb.deleteAPI("Slack Channels API");
+        wb.confirmDelete();
+    }
 }

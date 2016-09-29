@@ -426,6 +426,24 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//span[contains(text(), '" + apiName + "')]")).size() > 0;
     }
     
+    private List<WebElement> apiList(){
+        return driver.findElements(By.className("api"));
+    }
+    
+    private WebElement apiMoreOptions(String apiName){
+        List<WebElement> list = apiList();
+        for(WebElement api: apiList()){
+            if(api.findElements(By.xpath(".//span[contains(text(), '" + apiName + "')]")).size() > 0){
+                return api.findElement(By.className("icon-more-options"));
+            }
+        }
+        return null;
+    }
+    
+    private WebElement deleteAPIIcon(){
+        return driver.findElement(By.className("icon-delete"));
+    }
+    
     public boolean pageVariableExists(String name){
         boolean found = false;
         List<WebElement> pvList = pageVariableList();
@@ -800,5 +818,10 @@ public class WorkbenchPage extends Page {
         while(System.currentTimeMillis() - timer < 10000 && refreshAPIMessageExists());
         timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && !successAPIMessageExists());
+    }
+    
+    public void deleteAPI(String apiName){
+        action.moveToElement(apiMoreOptions(apiName)).perform();
+        deleteAPIIcon().click();
     }
 }
