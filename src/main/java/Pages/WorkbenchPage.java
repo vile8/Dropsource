@@ -12,8 +12,6 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * @author Jonathan Doll
@@ -35,11 +33,6 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//div[contains(text(), 'Run')]")).size() > 0;
     }
     
-    @Override
-    public WebElement syncElement(){
-        return run();
-    }
-
     private boolean loader() {
         return driver.findElements(By.xpath("//div[@data-test='loading-message']")).size() > 0;
     }
@@ -841,8 +834,7 @@ public class WorkbenchPage extends Page {
     
     public void confirmDeleteAPI(){
         btnConfirmDelete().click();
-        //long timer = System.currentTimeMillis();
-        //while(System.currentTimeMillis() - timer < 10000 && btnConfirmDeleteExists());
-        wdw.until(ExpectedConditions.stalenessOf(btnConfirmDelete()));
+        long timer = System.currentTimeMillis();
+        while(System.currentTimeMillis() - timer < 10000 && btnConfirmDeleteExists());
     }
 }

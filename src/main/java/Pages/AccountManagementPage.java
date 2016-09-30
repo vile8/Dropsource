@@ -28,11 +28,6 @@ public class AccountManagementPage extends Page{
         return driver.findElements(By.xpath("//span[contains(text(), 'Profile')]")).size() > 0;
     }
     
-    @Override
-    public WebElement syncElement(){
-        return driver.findElement(By.xpath("//span[contains(text(), 'Profile')]"));
-    }
-    
     private WebElement name(){
         return driver.findElement(By.xpath("//div[@data-test='profile-name']"));
     }

@@ -29,13 +29,12 @@ public class DashboardPage extends Page{
         return driver.findElements(By.xpath("//button[@data-reactid='.0.2.0.0.0.1.0.0']")).size() > 0;
     }
     
-    @Override
-    public WebElement syncElement(){
-        return btnCreateNewProject();
-    }
-    
     private boolean loader(){
         return driver.findElements(By.xpath("//div[@data-reactid='.0.0.0']")).size() > 0;
+    }
+    
+    private WebElement loader1(){
+        return driver.findElement(By.xpath("//div[@data-reactid='.0.0.0']"));
     }
     
     public void waitForLoader(){
