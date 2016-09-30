@@ -124,7 +124,7 @@ public class Workbench extends TestSetup {
     @Test(groups = {"smoke", "build"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void buildIOSBrowser() throws IOException {
         wb.initiateIOSBrowserBuild();
-        res.checkTrue(wb.btnCancelExists(), uniqueID++ + " - Build did not initiate successfully");
+        res.checkTrue(wb.btnBuildCancelExists(), uniqueID++ + " - Build did not initiate successfully");
         wb.waitForBuild();
         res.checkTrue(wb.buildSuccess(), uniqueID++ + " - Build was not successful");
         wb.closeRunMenu();
@@ -334,6 +334,8 @@ public class Workbench extends TestSetup {
         wb.closeModal();
         res.checkTrue(wb.apiExists("Buzzfeed Api"), uniqueID++ + " - API (Buzzfeed API) wasn't found in the API list");
         wb.deleteAPI("Buzzfeed Api");
+        String errorMessage = "Deleting this API will permanently remove it from this project. You will no longer be able to reference it on any pages in your app. Are you sure you want to delete it?";
+        res.checkTrue(wb.getAlertText().equals(errorMessage), uniqueID++ + " - Delete API alert text doesn't match expected text");
         wb.confirmDeleteAPI();
     }
 }

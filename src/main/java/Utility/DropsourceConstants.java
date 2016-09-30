@@ -12,7 +12,7 @@ public class DropsourceConstants {
     public static String chromeDriverPathMac = "src/test/resources/chromedriver";
     public static String dataSheetLocation = "src/test/resources/data/";
     public static int pageTimeoutLimit = 10;
-    public static String loginEmail = "jdoll+135@dropsource.com";
+    public static String loginEmail = "jdoll+130@dropsource.com";
     public static String loginPassword = "Password1";
     public static int projectLimit = 20;
     public static String codeDir = System.getProperty("user.dir") + "/";

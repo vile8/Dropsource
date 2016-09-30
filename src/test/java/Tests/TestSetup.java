@@ -113,6 +113,9 @@ public abstract class TestSetup {
         if(wb.btnXExists()){
             wb.closeModal();
         }
+        if(wb.btnCancelExists()){
+            wb.clickCancel();
+        }
         if(wb.coverExists()){
             wb.closeRunMenu();
         }

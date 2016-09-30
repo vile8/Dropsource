@@ -165,7 +165,7 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//button[contains(text(), 'iOS Simulator')]")).size() > 0;
     }
     
-    private WebElement btnCancel(){
+    private WebElement btnBuildCancel(){
         return driver.findElement(By.xpath("//button[contains(text(), 'Cancel')]"));
     }
     
@@ -177,8 +177,16 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.className("cover")).size() > 0;
     }
     
-    public boolean btnCancelExists(){
+    public boolean btnBuildCancelExists(){
         return driver.findElements(By.xpath("//button[contains(text(), 'Cancel')]")).size() > 0;
+    }
+    
+    private WebElement btnCancel(){
+        return driver.findElement(By.xpath("//button[@data-test='confirm-cancel-button']"));
+    }
+    
+    public boolean btnCancelExists(){
+        return driver.findElements(By.xpath("//button[@data-test='confirm-cancel-button']")).size() > 0;
     }
     
     public boolean buildSuccess(){
@@ -594,7 +602,7 @@ public class WorkbenchPage extends Page {
     
     public void waitForBuild(){
         long timer = System.currentTimeMillis();
-        while(System.currentTimeMillis() - timer < 600000 && btnCancelExists());
+        while(System.currentTimeMillis() - timer < 600000 && btnBuildCancelExists());
     }
     
     public void closeRunMenu(){
@@ -837,4 +845,11 @@ public class WorkbenchPage extends Page {
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && btnConfirmDeleteExists());
     }
+    
+    public void clickCancel(){
+        btnCancel().click();
+        wait.animation();
+    }
+    
+    
 }
