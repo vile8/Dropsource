@@ -47,19 +47,19 @@ public class DashboardPage extends Page{
     }
     
     private WebElement logoutLink(){
-        return driver.findElement(By.xpath("//a[contains(text(), 'Log Out')]"));
+        return driver.findElement(By.xpath("//a[text() = 'Log Out']"));
     }
     
     private WebElement btnCreateNewProject(){
-        return driver.findElement(By.xpath("//div[contains(text(), 'Create New Project')]"));
+        return driver.findElement(By.xpath("//div[text() = 'Create New Project']"));
     }
     
     private WebElement btnNext(){
-        return driver.findElement(By.xpath("//button[contains(text(), 'Next')]"));
+        return driver.findElement(By.xpath("//button[text() = 'Next']"));
     }
     
     private WebElement blankTemplate(){
-        return driver.findElement(By.xpath("//div[contains(text(), 'Blank')]"));
+        return driver.findElement(By.xpath("//div[text() = 'Blank']"));
     }
     
     private WebElement projectName(){
@@ -85,7 +85,7 @@ public class DashboardPage extends Page{
     private WebElement getProject(String projectName){
         WebElement project = null;
         for(WebElement p: allProjects()){
-            if(p.findElements(By.xpath(".//span[contains(text(), '" + projectName + "')]")).size() > 0){
+            if(p.findElements(By.xpath(".//span[text() = '" + projectName + "']")).size() > 0){
                 project = p;
                 break;
             }
@@ -98,7 +98,7 @@ public class DashboardPage extends Page{
     }
     
     private WebElement deleteOption(String projectName){
-        return getProject(projectName).findElement(By.xpath(".//a[contains(text(), 'Delete Project')]"));
+        return getProject(projectName).findElement(By.xpath(".//a[text() = 'Delete Project']"));
     }
     
     private WebElement btnConfirmDelete(){
@@ -122,7 +122,7 @@ public class DashboardPage extends Page{
     }
     
     public boolean projectLimitReachedExists(){
-        return driver.findElements(By.xpath("//div[contains(text(), 'Project Limit Reached')]")).size() > 0;
+        return driver.findElements(By.xpath("//div[text() = 'Project Limit Reached']")).size() > 0;
     }
     
     private boolean logoutVisible(){
@@ -130,7 +130,7 @@ public class DashboardPage extends Page{
     }
     
     private WebElement accountManagement(){
-        return driver.findElement(By.xpath("//a[contains(text(), 'Account')]"));
+        return driver.findElement(By.xpath("//a[text() = 'Account']"));
     }
     
     private WebElement docs(){
@@ -175,7 +175,7 @@ public class DashboardPage extends Page{
     }
     
     public boolean projectExists(String projectName){
-        return driver.findElements(By.xpath("//span[contains(text(),'" + projectName + "')]")).size() > 0;
+        return driver.findElements(By.xpath("//span[text() ='" + projectName + "']")).size() > 0;
     }
     
     public String getBannerText(){

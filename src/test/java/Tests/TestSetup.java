@@ -51,6 +51,13 @@ public abstract class TestSetup {
         db.sync();
         res.checkTrue(db.elementExists(), uniqueID++ + " - Login Attempt Failed (By Click)");
     }
+    
+    public void login(String email, String password) throws IOException{
+        login.loginClick(email, password);
+        db.waitForLoader();
+        db.sync();
+        res.checkTrue(db.elementExists(), uniqueID++ + " - Login Attempt Failed (By Click)");
+    }
 
     public void logout() throws IOException {
         res.checkTrue(db.logout(), uniqueID++ + " - Logout link blocked");

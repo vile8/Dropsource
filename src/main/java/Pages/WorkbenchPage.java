@@ -30,7 +30,7 @@ public class WorkbenchPage extends Page {
     @Override
     public boolean elementExists() {
         //run button
-        return driver.findElements(By.xpath("//div[contains(text(), 'Run')]")).size() > 0;
+        return driver.findElements(By.xpath("//div[text() = 'Run']")).size() > 0;
     }
     
     private boolean loader() {
@@ -79,7 +79,6 @@ public class WorkbenchPage extends Page {
     }
 
     private WebElement btnConfirmDelete() {
-        //return driver.findElement(By.xpath("//button[contains(text(), 'Confirm Delete')]"));
         return driver.findElement(By.xpath("//button[@data-test='confirm-ok-button']"));
     }
     
@@ -92,7 +91,7 @@ public class WorkbenchPage extends Page {
     }
 
     private WebElement btnNext(){
-        return driver.findElement(By.xpath("//button[contains(text(), 'Next')]"));
+        return driver.findElement(By.xpath("//button[text() = 'Next']"));
     }
     
     private WebElement nameYourPage() {
@@ -100,11 +99,11 @@ public class WorkbenchPage extends Page {
     }
 
     private WebElement btnCreate() {
-        return driver.findElement(By.xpath("//button[contains(text(), 'Create')]"));
+        return driver.findElement(By.xpath("//button[text() = 'Create']"));
     }
     
     public boolean btnCreateExists(){
-        return driver.findElements(By.xpath("//button[contains(text(), 'Create')]")).size() > 0;
+        return driver.findElements(By.xpath("//button[text() = 'Create']")).size() > 0;
     }
 
     public boolean pageExists(String pageName){
@@ -124,11 +123,11 @@ public class WorkbenchPage extends Page {
     }
     
     private WebElement btnRename(){
-        return driver.findElement(By.xpath("//button[contains(text(), 'Rename')]"));
+        return driver.findElement(By.xpath("//button[text() = 'Rename']"));
     }
     
     public boolean btnRenameExists(){
-        return driver.findElements(By.xpath("//button[contains(text(), 'Rename')]")).size() > 0;
+        return driver.findElements(By.xpath("//button[text() = 'Rename']")).size() > 0;
     }
     
     private WebElement dragHandle(String pageName){
@@ -154,19 +153,19 @@ public class WorkbenchPage extends Page {
     }
     
     private WebElement run(){
-        return driver.findElement(By.xpath("//div[contains(text(), 'Run')]"));
+        return driver.findElement(By.xpath("//div[text() = 'Run']"));
     }
     
     private WebElement iOSSimulator(){
-        return driver.findElement(By.xpath("//button[contains(text(), 'iOS Simulator')]"));
+        return driver.findElement(By.xpath("//button[text() = 'iOS Simulator']"));
     }
     
     private boolean iOSSimulatorExists(){
-        return driver.findElements(By.xpath("//button[contains(text(), 'iOS Simulator')]")).size() > 0;
+        return driver.findElements(By.xpath("//button[text() = 'iOS Simulator']")).size() > 0;
     }
     
     private WebElement btnBuildCancel(){
-        return driver.findElement(By.xpath("//button[contains(text(), 'Cancel')]"));
+        return driver.findElement(By.xpath("//button[text() = 'Cancel']"));
     }
     
     private WebElement cover(){
@@ -178,7 +177,7 @@ public class WorkbenchPage extends Page {
     }
     
     public boolean btnBuildCancelExists(){
-        return driver.findElements(By.xpath("//button[contains(text(), 'Cancel')]")).size() > 0;
+        return driver.findElements(By.xpath("//button[text() = 'Cancel']")).size() > 0;
     }
     
     private WebElement btnCancel(){
@@ -218,7 +217,7 @@ public class WorkbenchPage extends Page {
     }
     
     private WebElement btnEdit(){
-        return driver.findElement(By.xpath("//button[contains(text(), 'Edit')]"));
+        return driver.findElement(By.xpath("//button[text() = 'Edit']"));
     }
     
     private WebElement nameField(){
@@ -274,7 +273,7 @@ public class WorkbenchPage extends Page {
     }
     
     public boolean failedUpload(){
-        return driver.findElements(By.xpath("//div[contains(text(), 'Upload error. Please retry.')]")).size() > 0;
+        return driver.findElements(By.xpath("//div[text() = 'Upload error. Please retry.']")).size() > 0;
     }
     
     public WebElement btnType(){
@@ -282,7 +281,7 @@ public class WorkbenchPage extends Page {
     }
     
     private WebElement primitivesContainer(){
-        return driver.findElement(By.xpath("//span[contains(text(),'Primitives')]"));
+        return driver.findElement(By.xpath("//span[text() ='Primitives']"));
     }
     
     private WebElement primitive(String type){
@@ -304,7 +303,7 @@ public class WorkbenchPage extends Page {
     private WebElement pageVariableMoreOptions(String name){
         List<WebElement> pvList = pageVariableList();
         for(WebElement pv: pvList){
-            if(pv.findElements(By.xpath(".//span[contains(text(), '" + name + "')]")).size() > 0){
+            if(pv.findElements(By.xpath(".//span[text() = '" + name + "']")).size() > 0){
                 return pv.findElement(By.className("icon-more-options"));
             }
         }
@@ -316,7 +315,7 @@ public class WorkbenchPage extends Page {
     }
     
     private WebElement events(){
-        return driver.findElement(By.xpath("//td[contains(text(), 'events')]"));
+        return driver.findElement(By.xpath("//td[text() = 'events']"));
     }
     
     private List<WebElement> eventList(){
@@ -326,8 +325,8 @@ public class WorkbenchPage extends Page {
     private WebElement btnEventManage(String eventName){
         List<WebElement> eventList = eventList();
         for(WebElement event: eventList){
-            if(event.findElements(By.xpath(".//div[contains(text(), '" + eventName + "')]")).size() > 0){
-                return event.findElement(By.xpath(".//button[contains(text(), 'Manage')]"));
+            if(event.findElements(By.xpath(".//div[text() = '" + eventName + "']")).size() > 0){
+                return event.findElement(By.xpath(".//button[text() = 'Manage']"));
             }
         }
         return null;
@@ -339,20 +338,20 @@ public class WorkbenchPage extends Page {
     
     //left panel
     public boolean lpActionExists(String actionName){
-        return driver.findElements(By.xpath("//button[contains(text(), '" + actionName + "')]")).size() > 0;
+        return driver.findElements(By.xpath("//button[text() = '" + actionName + "']")).size() > 0;
     }
     
     private WebElement lpAction(String actionName){
-        return driver.findElement(By.xpath("//button[contains(text(), '" + actionName + "')]"));
+        return driver.findElement(By.xpath("//button[text() = '" + actionName + "']"));
     }
     
     //right panel    
     public boolean rpActionExists(String actionName){
-        return driver.findElements(By.xpath("//div[contains(text(), '" + actionName + "')]")).size() > 0;
+        return driver.findElements(By.xpath("//div[text() = '" + actionName + "']")).size() > 0;
     }
     
     private WebElement rpAction(String actionName){
-        return driver.findElement(By.xpath("//div[contains(text(), '" + actionName + "')]"));
+        return driver.findElement(By.xpath("//div[text() = '" + actionName + "']"));
     }
     
     private List<WebElement> actionList(){
@@ -391,6 +390,14 @@ public class WorkbenchPage extends Page {
         return apiTab().getAttribute("class").contains("active");
     }
     
+    private WebElement elementTreeTab(){
+        return driver.findElement(By.xpath("//td[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.0.0.0.0.$tree']"));
+    }
+    
+    private boolean elementTreeTabActive(){
+        return elementTreeTab().getAttribute("class").contains("active");
+    }
+    
     private WebElement btnAddAPI(){
         return driver.findElement(By.xpath("//button[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.0.0.1.0.0.0']"));
     }
@@ -424,19 +431,19 @@ public class WorkbenchPage extends Page {
     }
     
     private boolean addingAPIMessageExists(){
-        return driver.findElements(By.xpath("//div[contains(text(), 'Adding to your project...')]")).size() > 0;
+        return driver.findElements(By.xpath("//div[text() = 'Adding to your project...']")).size() > 0;
     }
     
     private boolean refreshAPIMessageExists(){
-        return driver.findElements(By.xpath("//div[contains(text(), 'Refreshing your list of APIs')]")).size() > 0;
+        return driver.findElements(By.xpath("//div[text() = 'Refreshing your list of APIs']")).size() > 0;
     }
     
     public boolean successAPIMessageExists(){
-        return driver.findElements(By.xpath("//div[contains(text(), 'Success!')]")).size() > 0;
+        return driver.findElements(By.xpath("//div[text() = 'Success!']")).size() > 0;
     }
     
     public boolean apiExists(String apiName){
-        return driver.findElements(By.xpath("//span[contains(text(), '" + apiName + "')]")).size() > 0;
+        return driver.findElements(By.xpath("//span[text() = '" + apiName + "']")).size() > 0;
     }
     
     private List<WebElement> apiList(){
@@ -446,7 +453,7 @@ public class WorkbenchPage extends Page {
     private WebElement apiMoreOptions(String apiName){
         List<WebElement> list = apiList();
         for(WebElement api: apiList()){
-            if(api.findElements(By.xpath(".//span[contains(text(), '" + apiName + "')]")).size() > 0){
+            if(api.findElements(By.xpath(".//span[text() = '" + apiName + "']")).size() > 0){
                 return api.findElement(By.className("icon-more-options"));
             }
         }
@@ -457,11 +464,15 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.className("icon-delete"));
     }
     
+    private WebElement elementTreeElement(String elementName){
+        return driver.findElement(By.xpath("//span[text() = '" + elementName + "']"));
+    }
+    
     public boolean pageVariableExists(String name){
         boolean found = false;
         List<WebElement> pvList = pageVariableList();
         for(WebElement pv: pvList){
-            if(pv.findElements(By.xpath(".//span[contains(text(), '" + name + "')]")).size() > 0){
+            if(pv.findElements(By.xpath(".//span[text() = '" + name + "']")).size() > 0){
                 found = true;
                 break;
             }
@@ -472,7 +483,7 @@ public class WorkbenchPage extends Page {
     public boolean correctPageVariableType(String name, String type){
         List<WebElement> pvList = pageVariableList();
         for(WebElement pv: pvList){
-            if(pv.findElements(By.xpath(".//span[contains(text(), '" + name + "')]")).size() > 0){
+            if(pv.findElements(By.xpath(".//span[text() = '" + name + "']")).size() > 0){
                 return pv.findElement(By.className("type")).getText().equals(type);
             }
         }
@@ -675,7 +686,7 @@ public class WorkbenchPage extends Page {
     }
     
     public boolean checkImageExists(String fileName){
-        return driver.findElements(By.xpath("//span[contains(text(), '" + fileName + "')]")).size() > 0;
+        return driver.findElements(By.xpath("//span[text() = '" + fileName + "']")).size() > 0;
     }
     
     public void closeModal(){
@@ -851,5 +862,13 @@ public class WorkbenchPage extends Page {
         wait.animation();
     }
     
+    public void selectElementTreeElement(String elementName){
+        if (!elementTreeTabActive()) {
+            elementTreeTab().click();
+            wait.animation();
+        }
+        elementTreeElement(elementName).click();
+        wait.waitSecs(10);
+    }
     
 }

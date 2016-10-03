@@ -207,9 +207,6 @@ public class Workbench extends TestSetup {
         res.checkTrue(!wb.pageVariableExists(pvDelName), uniqueID++ + " - Page variable (" + pvDelName + ") wasn't deleted successfully");
     }
 
-    //Test is slightly flawed since it checks substring so Go Forward might trigger
-    //inside Go Forward in a Web View.  Will need to make a test tag based off name
-    //similar to the way elements was done in order to accurately test this.
     @Test(groups = {"smoke", "check actions"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void checkActions() throws FileNotFoundException, IOException {
         wb.openEventsModal("Page Loaded");
@@ -255,7 +252,7 @@ public class Workbench extends TestSetup {
         for (String[] search : searches) {
             wb.actionSearch(search[0]);
             res.checkTrue(wb.getIOSActionCount() == (search.length - 2), uniqueID++ + " - Search " + search[0] + " returned (" + wb.getIOSActionCount() + ") results when it should have had (" + (search.length - 2) + ") results");
-            for (int i = 0; i < search.length - 1; i++) {
+            for (int i = 1; i < search.length - 1; i++) {
                 res.checkTrue(wb.rpActionExists(search[i]), uniqueID++ + " - Action (" + search[i] + ") was not found in the list for search (" + search[0] + ")");
             }
             res.checkTrue(!wb.rpActionExists(search[search.length - 1]), uniqueID++ + " - Action (" + search[search.length - 1] + ") was found in the list");
@@ -286,7 +283,6 @@ public class Workbench extends TestSetup {
         res.checkTrue(wb.getNoActionResultsPlaceholderText().equals(expectedText), uniqueID++ + " - No action search results placeholder text was incorrect");
     }
     
-    //need to add checker for API in API list to all 3 upload API tests
     @Test(groups = {"smoke", "add demo api"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void addDemoAPI() throws IOException{
         wb.openAddAPIModal();

@@ -74,7 +74,7 @@ public class Dashboard extends TestSetup {
         driver.switchTo().window(workbench.get(0));
     }
 
-    @Test(groups = {"max projects"}, dependsOnGroups = "delete project", threadPoolSize = 3)
+    @Test(groups = {"max projects"}, dependsOnGroups = {"delete project", "smoke"}, threadPoolSize = 3)
     //@Test(groups = {"max projects"}, threadPoolSize = 3)
     public void createMaxProjects() throws IOException {
         for (int i = 0; i < DropsourceConstants.projectLimit; i++) {
@@ -93,7 +93,7 @@ public class Dashboard extends TestSetup {
         db.closeMaxProjectAlert();
     }
 
-    @Test(groups = {"delete all projects"}, dependsOnGroups = "max projects", threadPoolSize = 3)
+    @Test(groups = {"delete all projects"}, dependsOnGroups = {"max projects", "smoke"}, threadPoolSize = 3)
     //@Test(groups = {"delete all projects"}, threadPoolSize = 3)
     public void deleteAllProjects() throws IOException {
         for (int i = DropsourceConstants.projectLimit - 1; i > -1; i--) {
@@ -116,13 +116,13 @@ public class Dashboard extends TestSetup {
         am.clickProjectsLink();
         res.checkTrue(db.elementExists(), uniqueID++ + " - Projects link didn't load the projects page");
         db.clickDocs();
-        super.switchToNewTab();
+        switchToNewTab();
         res.checkTrue(db.docsLoaded(), uniqueID++ + " - Docs page didn't load successfully");
-        super.tearDownCloseAllTabsExceptDashboard();
+        tearDownCloseAllTabsExceptDashboard();
         db.clickForum();
-        super.switchToNewTab();
+        switchToNewTab();
         res.checkTrue(db.forumLoaded(), uniqueID++ + " - Forum page didn't load successfully");
-        super.tearDownCloseAllTabsExceptDashboard();
+        tearDownCloseAllTabsExceptDashboard();
     }
 
 }

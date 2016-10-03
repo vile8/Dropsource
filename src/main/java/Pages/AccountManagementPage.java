@@ -25,7 +25,7 @@ public class AccountManagementPage extends Page{
     @Override
     public boolean elementExists() {
         //profile panel title
-        return driver.findElements(By.xpath("//span[contains(text(), 'Profile')]")).size() > 0;
+        return driver.findElements(By.xpath("//span[text() = 'Profile']")).size() > 0;
     }
     
     private WebElement name(){
