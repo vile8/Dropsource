@@ -1,9 +1,13 @@
 package Tests;
 
+import Utility.DataReader;
+import Utility.DropsourceConstants;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -40,6 +44,21 @@ public class Elements extends TestSetup{
     @AfterMethod
     public void cleanUp() {
         cleanUpPage();
+    }
+    
+    @DataProvider
+    public Object[][] propertyData() throws FileNotFoundException, IOException{
+        DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "iOSElementProperties.txt");
+        return data.getData();
+    }
+    
+    @Test(dataProvider = "propertyData")
+    public void propertyCheck(String... properties) throws IOException{
+        wb.selectElementTreeElement(properties[0]);
+        wb.openPropertyTab();
+        for(int i = 1; i < properties.length; i++){
+            res.checkTrue(wb.propertyExists(properties[i]), uniqueID++ + " - Property (" + properties[i] + ") not found for element (" + properties[0] + ")");
+        }
     }
     
 }

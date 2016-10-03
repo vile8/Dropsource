@@ -398,6 +398,14 @@ public class WorkbenchPage extends Page {
         return elementTreeTab().getAttribute("class").contains("active");
     }
     
+    private WebElement propertyTab(){
+        return driver.findElement(By.xpath("//td[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.0.0.0.0.$properties']"));
+    }
+    
+    private boolean propertyTabActive(){
+        return elementTreeTab().getAttribute("class").contains("active");
+    }
+    
     private WebElement btnAddAPI(){
         return driver.findElement(By.xpath("//button[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.0.0.1.0.0.0']"));
     }
@@ -466,6 +474,10 @@ public class WorkbenchPage extends Page {
     
     private WebElement elementTreeElement(String elementName){
         return driver.findElement(By.xpath("//span[text() = '" + elementName + "']"));
+    }
+    
+    public boolean propertyExists(String property){
+        return driver.findElements(By.xpath("//div[text() = '" + property + "']")).size() > 0;
     }
     
     public boolean pageVariableExists(String name){
@@ -865,10 +877,12 @@ public class WorkbenchPage extends Page {
     public void selectElementTreeElement(String elementName){
         if (!elementTreeTabActive()) {
             elementTreeTab().click();
-            wait.animation();
         }
         elementTreeElement(elementName).click();
-        wait.waitSecs(10);
+    }
+    
+    public void openPropertyTab(){
+        propertyTab().click();
     }
     
 }

@@ -1,0 +1,16 @@
+Button 1	Background Color	Opacity	Hidden	Enabled	Type	Value	Font	Font Color	Text Alignment	Border Size	Border Color	Corner Radius	Padding
+Segmented Control 1	Opacity	Hidden	Enabled	Segment Type	Segment Organizer	Tint Color	Font	Horizontal Offset	Vertical Offset	Momentary
+Slider 1	Opacity	Hidden	Enabled	Thumb Color	Highlighted Color	Bar Color	Value	Minimum Value	Maximum Value	Continuous
+Stepper 1	Opacity	Hidden	Enabled	Tint Color	Increment Icon	Decrement Icon	Minimum Value	Maximum Value	Value	Step	Auto Repeat	Continuous	Wrap
+Switch 1	Opacity	Hidden	Enabled	Thumb Color	On Tint Color	Value
+Text Field 1	Background Color	Opacity	Hidden	Enabled	Value	Font	Font Color	Text Alignment	Placeholder	Placeholder Font	Placeholder Color	Keyboard Type	Secure Text Entry	Clear Button	Clear Button Color	Border Size	Border Color	Corner Radius	Padding
+Page Controller 1	Background Color	Opacity	Hidden	Enabled	Type	Visible View	View Organizer	View Transition Style	Scroll Direction	Enable Panning	Type	Active Dot Color	Inactive Dot Color	Hide When One Page	Page Control Position
+Scroll View 1	Background Color	Opacity	Hidden	Enabled	Horizontal Offset	Vertical Offset	Scrollbar Style	Horizontal Scrollbar	Vertical Scrollbar	Zoom Minimum	Zoom Maximum	Paging Enabled	Direction Locked	Scroll Enabled	Zoom Enabled	Delay Touches	Cancel Touches	Enable Bounces	Scroll To Top Enabled
+Table 1	Background Color	Opacity	Hidden	Enabled	Type	Separator	Separator Indent	Separator Color
+Table Cell 1	Background Color	Opacity	Enabled	Selection Style	Momentary
+View 1	Background Color	Opacity	Hidden	Enabled
+Image 1	Background Color	Opacity	Hidden	Enabled	Asset	Tintable	Asset Scale
+Web View 1	Background Color	Opacity	Hidden	Enabled	URL	Scales to Fit	Restore Session	Suppress Rendering	Data Links
+Activity Indicator 1	Opacity	Hidden	Indicator Color	Animate	Hides When Stopped
+Label 1	Background Color	Opacity	Hidden	Enabled	Value	Number Of Lines	Line Spacing	Font	Font Color	Text Alignment
+Text View 1	Background Color	Opacity	Hidden	Enabled	Value	Line Spacing	Font	Font Color	Text Alignment	Editable	Selectable	Clears On Insertion	Border Size	Border Color	Corner Radius	Padding
