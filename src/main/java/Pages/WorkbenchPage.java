@@ -95,10 +95,6 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//button[text() = 'Next']"));
     }
     
-    private WebElement nameYourPage() {
-        return driver.findElement(By.xpath("//input[@placeholder='Page Name']"));
-    }
-
     private WebElement btnCreate() {
         return driver.findElement(By.xpath("//button[text() = 'Create']"));
     }
@@ -537,6 +533,30 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.$=1$choosePageName.0.0.2.$name-validation-error=1max-length-64']")).size() > 0;
     }
     
+    private WebElement pageVariableNumberUnderscoreError(){
+        return driver.findElement(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.0.0.2.$name-validation-error=1starts-with-number-or-underscore']"));
+    }
+    
+    public boolean pageVariableNumberUnderscoreErrorExists(){
+        return driver.findElements(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.0.0.2.$name-validation-error=1starts-with-number-or-underscore']")).size() > 0;
+    }
+    
+    private WebElement pageVariableSpecialCharacterError(){
+        return driver.findElement(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.0.0.2.$name-validation-error=1special-characters']"));
+    }
+    
+    public boolean pageVariableSpecialCharacterErrorExists(){
+        return driver.findElements(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.0.0.2.$name-validation-error=1special-characters']")).size() > 0;
+    }
+    
+    private WebElement pageVariableLengthError(){
+        return driver.findElement(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.0.0.2.$name-validation-error=1max-length-64']"));
+    }
+    
+    public boolean pageVariableLengthErrorExists(){
+        return driver.findElements(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.0.0.2.$name-validation-error=1max-length-64']")).size() > 0;
+    }
+    
     public boolean pageVariableExists(String name){
         boolean found = false;
         List<WebElement> pvList = pageVariableList();
@@ -599,7 +619,7 @@ public class WorkbenchPage extends Page {
         wait.animation();
         btnNext().click();
         wait.animation();
-        nameYourPage().sendKeys(pageName);
+        nameField().sendKeys(pageName);
         btnCreate().click();
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && btnCreateExists());
@@ -616,12 +636,10 @@ public class WorkbenchPage extends Page {
         wait.animation();
     }
     
-    public void namePage(String name){
-        nameYourPage().clear();
-        nameYourPage().sendKeys(name);
+    public void nameItem(String name){
+        nameField().clear();
+        nameField().sendKeys(name);
     }
-    
-    
     
     public void renamePage(String pageName, String newPageName){
         if (!pageDrawerActive()) {
@@ -632,8 +650,8 @@ public class WorkbenchPage extends Page {
         action.moveToElement(ellipsis(pageName)).perform();
         btnRenamePage().click();
         wait.animation();
-        nameYourPage().clear();
-        nameYourPage().sendKeys(newPageName);
+        nameField().clear();
+        nameField().sendKeys(newPageName);
         btnRename().click();
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && btnRenameExists());
@@ -797,6 +815,14 @@ public class WorkbenchPage extends Page {
         primitive(type).click();
         btnDone().click();
         btnSave().click();
+        wait.animation();
+    }
+    
+    public void openPageVariableModal(){
+        if (!pageVariableTabActive()) {
+            pageVariableTab().click();
+        }
+        btnAddPageVariable().click();
         wait.animation();
     }
     
@@ -1004,6 +1030,18 @@ public class WorkbenchPage extends Page {
     
     public String getPageLengthErrorText(){
         return pageLengthError().getText();
+    }
+    
+    public String getPageVariableNumberUnderscoreErrorText(){
+        return pageVariableNumberUnderscoreError().getText();
+    }
+    
+    public String getPageVariableSpecialCharacterErrorText(){
+        return pageVariableSpecialCharacterError().getText();
+    }
+    
+    public String getPageVariableLengthErrorText(){
+        return pageVariableLengthError().getText();
     }
     
 }
