@@ -8,6 +8,7 @@ import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -403,7 +404,7 @@ public class WorkbenchPage extends Page {
     }
     
     private boolean propertyTabActive(){
-        return elementTreeTab().getAttribute("class").contains("active");
+        return propertyTab().getAttribute("class").contains("active");
     }
     
     private WebElement btnAddAPI(){
@@ -480,6 +481,62 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//div[text() = '" + property + "']")).size() > 0;
     }
     
+    private WebElement stylesTab(){
+        return driver.findElement(By.xpath("//td[text() = 'styles']"));
+    }
+    
+    private boolean stylesTabActive(){
+        return stylesTab().getAttribute("class").contains("active");
+    }
+    
+    private WebElement constraintsTab(){
+        return driver.findElement(By.xpath("//td[text() = 'constraints']"));
+    }
+    
+    private boolean constraintsTabActive(){
+        return constraintsTab().getAttribute("class").contains("active");
+    }
+    
+    private WebElement heightField(){
+        return driver.findElement(By.xpath("//input[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.2.$constraintsContainer.0.2.1.0.0']"));
+    }
+    
+    private WebElement widthField(){
+        return driver.findElement(By.xpath("//input[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.2.$constraintsContainer.1.2.1.0.0']"));
+    }
+    
+    private WebElement topField(){
+        return driver.findElement(By.xpath("//input[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.2.$constraintsContainer.2.2.1.0.0']"));
+    }
+    
+    private WebElement leftField(){
+        return driver.findElement(By.xpath("//input[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.2.$constraintsContainer.3.2.1.0.0']"));
+    }
+    
+    private WebElement pageNumberUnderscoreError(){
+        return driver.findElement(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.$=1$choosePageName.0.0.2.$name-validation-error=1starts-with-number-or-underscore']"));
+    }
+    
+    public boolean pageNumberUnderscoreErrorExists(){
+        return driver.findElements(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.$=1$choosePageName.0.0.2.$name-validation-error=1starts-with-number-or-underscore']")).size() > 0;
+    }
+    
+    private WebElement pageSpecialCharacterError(){
+        return driver.findElement(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.$=1$choosePageName.0.0.2.$name-validation-error=1special-characters']"));
+    }
+    
+    public boolean pageSpecialCharacterErrorExists(){
+        return driver.findElements(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.$=1$choosePageName.0.0.2.$name-validation-error=1special-characters']")).size() > 0;
+    }
+    
+    private WebElement pageLengthError(){
+        return driver.findElement(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.$=1$choosePageName.0.0.2.$name-validation-error=1max-length-64']"));
+    }
+    
+    public boolean pageLengthErrorExists(){
+        return driver.findElements(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.$=1$choosePageName.0.0.2.$name-validation-error=1max-length-64']")).size() > 0;
+    }
+    
     public boolean pageVariableExists(String name){
         boolean found = false;
         List<WebElement> pvList = pageVariableList();
@@ -547,6 +604,24 @@ public class WorkbenchPage extends Page {
         long timer = System.currentTimeMillis();
         while(System.currentTimeMillis() - timer < 10000 && btnCreateExists());
     }
+    
+    public void goToNamePageModalScreen(){
+        if (!pageDrawerActive()) {
+            pagesDrawer().click();
+            wait.animation();
+        }
+        btnAddPage().click();
+        wait.animation();
+        btnNext().click();
+        wait.animation();
+    }
+    
+    public void namePage(String name){
+        nameYourPage().clear();
+        nameYourPage().sendKeys(name);
+    }
+    
+    
     
     public void renamePage(String pageName, String newPageName){
         if (!pageDrawerActive()) {
@@ -883,6 +958,52 @@ public class WorkbenchPage extends Page {
     
     public void openPropertyTab(){
         propertyTab().click();
+    }
+    
+    public void openStylesTab(){
+        if (!propertyTabActive()) {
+            propertyTab().click();
+        }
+        stylesTab().click();
+    }
+    
+    public void openConstraintsTab(){
+        if (!propertyTabActive()) {
+            propertyTab().click();
+        }
+        constraintsTab().click();
+    }
+    
+    public int getHeightValue(){
+        openConstraintsTab();
+        return Integer.parseInt(heightField().getAttribute("value"));
+    }
+    
+    public int getWidthValue(){
+        openConstraintsTab();
+        return Integer.parseInt(widthField().getAttribute("value"));
+    }
+    
+    public int getTopValue(){
+        openConstraintsTab();
+        return Integer.parseInt(topField().getAttribute("value"));
+    }
+    
+    public int getLeftValue(){
+        openConstraintsTab();
+        return Integer.parseInt(leftField().getAttribute("value"));
+    }
+    
+    public String getPageNumberUnderscoreErrorText(){
+        return pageNumberUnderscoreError().getText();
+    }
+    
+    public String getPageSpecialCharacterErrorText(){
+        return pageSpecialCharacterError().getText();
+    }
+    
+    public String getPageLengthErrorText(){
+        return pageLengthError().getText();
     }
     
 }

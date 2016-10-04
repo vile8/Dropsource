@@ -334,4 +334,48 @@ public class Workbench extends TestSetup {
         res.checkTrue(wb.getAlertText().equals(errorMessage), uniqueID++ + " - Delete API alert text doesn't match expected text");
         wb.confirmDeleteAPI();
     }
+    
+    @Test(groups = {"smoke", "create page errors"}, threadPoolSize = 3)
+    public void createPageErrors() throws IOException{
+        String maxLengthErrorText = "Name must be less than 64 characters long.";
+        String numberUnderscoreErrorText = "Names can't start with a number or underscore.";
+        String specialCharacterErrorText = "Special characters are not allowed.";
+        
+        wb.goToNamePageModalScreen();
+        
+        wb.namePage("1");
+        res.checkTrue(wb.pageNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        res.checkTrue(wb.getPageNumberUnderscoreErrorText().equals(numberUnderscoreErrorText), uniqueID++ + " - Page number/underscore error text did not match expected text");
+        
+        wb.namePage("_");
+        res.checkTrue(wb.pageNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        res.checkTrue(wb.getPageNumberUnderscoreErrorText().equals(numberUnderscoreErrorText), uniqueID++ + " - Page number/underscore error text did not match expected text");
+        
+        wb.namePage("ß");
+        res.checkTrue(wb.pageSpecialCharacterErrorExists(), uniqueID++ + " - Page special character error didn't successfully display");
+        res.checkTrue(wb.getPageSpecialCharacterErrorText().equals(specialCharacterErrorText), uniqueID++ + " - Page special character error text did not match expected text");
+        
+        wb.namePage("ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM");
+        res.checkTrue(wb.pageLengthErrorExists(), uniqueID++ + " - Page max length error didn't successfully display");
+        res.checkTrue(wb.getPageLengthErrorText().equals(maxLengthErrorText), uniqueID++ + " - Page max length error text did not match expected text");
+        
+        wb.namePage("1ß");
+        res.checkTrue(wb.pageNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        res.checkTrue(wb.pageSpecialCharacterErrorExists(), uniqueID++ + " - Page special character error didn't successfully display");
+        
+        wb.namePage("1ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM");
+        res.checkTrue(wb.pageLengthErrorExists(), uniqueID++ + " - Page max length error didn't successfully display");
+        res.checkTrue(wb.pageNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        
+        wb.namePage("ßABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM");
+        res.checkTrue(wb.pageLengthErrorExists(), uniqueID++ + " - Page max length error didn't successfully display");
+        res.checkTrue(wb.pageSpecialCharacterErrorExists(), uniqueID++ + " - Page special character error didn't successfully display");
+        
+        wb.namePage("1ßABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM");
+        res.checkTrue(wb.pageNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        res.checkTrue(wb.pageSpecialCharacterErrorExists(), uniqueID++ + " - Page special character error didn't successfully display");
+        res.checkTrue(wb.pageLengthErrorExists(), uniqueID++ + " - Page max length error didn't successfully display");
+        
+        wb.closeModal();
+    }
 }
