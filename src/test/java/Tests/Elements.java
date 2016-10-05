@@ -89,4 +89,66 @@ public class Elements extends TestSetup{
         res.checkTrue(wb.getLeftValue() == left, uniqueID++ + " - The element (" + elementName + ") did not successfully move right");
     }
     
+    @Parameters("errorElementName")
+    @Test(groups = {"smoke", "check element name errors"}, threadPoolSize = 3)
+    public void checkElementNameErrors(@Optional ("Button 1") String errorElementName) throws IOException{
+        String maxLengthErrorText = "Name must be less than 64 characters long.";
+        String numberUnderscoreErrorText = "Names can't start with a number or underscore.";
+        String specialCharacterErrorText = "Special characters are not allowed.";
+        
+        wb.selectElementTreeElement("Button 1");
+        wb.openRenameElementModal();
+        
+        wb.nameItem("1");
+        res.checkTrue(wb.pageVariableNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        res.checkTrue(wb.getPageVariableNumberUnderscoreErrorText().equals(numberUnderscoreErrorText), uniqueID++ + " - Page number/underscore error text did not match expected text");
+        
+        wb.nameItem("_");
+        res.checkTrue(wb.pageVariableNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        res.checkTrue(wb.getPageVariableNumberUnderscoreErrorText().equals(numberUnderscoreErrorText), uniqueID++ + " - Page number/underscore error text did not match expected text");
+        
+        wb.nameItem("ß");
+        res.checkTrue(wb.pageVariableSpecialCharacterErrorExists(), uniqueID++ + " - Page special character error didn't successfully display");
+        res.checkTrue(wb.getPageVariableSpecialCharacterErrorText().equals(specialCharacterErrorText), uniqueID++ + " - Page special character error text did not match expected text");
+        
+        wb.nameItem("ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM");
+        res.checkTrue(wb.pageVariableLengthErrorExists(), uniqueID++ + " - Page max length error didn't successfully display");
+        res.checkTrue(wb.getPageVariableLengthErrorText().equals(maxLengthErrorText), uniqueID++ + " - Page max length error text did not match expected text");
+        
+        wb.nameItem("1ß");
+        res.checkTrue(wb.pageVariableNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        res.checkTrue(wb.pageVariableSpecialCharacterErrorExists(), uniqueID++ + " - Page special character error didn't successfully display");
+        
+        wb.nameItem("1ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM");
+        res.checkTrue(wb.pageVariableLengthErrorExists(), uniqueID++ + " - Page max length error didn't successfully display");
+        res.checkTrue(wb.pageVariableNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        
+        wb.nameItem("ßABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM");
+        res.checkTrue(wb.pageVariableLengthErrorExists(), uniqueID++ + " - Page max length error didn't successfully display");
+        res.checkTrue(wb.pageVariableSpecialCharacterErrorExists(), uniqueID++ + " - Page special character error didn't successfully display");
+        
+        wb.nameItem("1ßABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLM");
+        res.checkTrue(wb.pageVariableNumberUnderscoreErrorExists(), uniqueID++ + " - Page number/underscore error didn't successfully display");
+        res.checkTrue(wb.pageVariableSpecialCharacterErrorExists(), uniqueID++ + " - Page special character error didn't successfully display");
+        res.checkTrue(wb.pageVariableLengthErrorExists(), uniqueID++ + " - Page max length error didn't successfully display");
+        
+        wb.closeModal();
+    }
+    
+    @Parameters({"oldElementName", "newElementName"})
+    @Test(groups = {"smoke", "rename element"}, threadPoolSize = 3)
+    public void renameElement(@Optional ("Button 1") String oldElementName, @Optional ("New name") String newElementName) throws IOException{
+        wb.renameElement(oldElementName, newElementName);
+        res.checkTrue(wb.getElementName().equals(newElementName), uniqueID++ + " - Element name was not successfully changed (" + newElementName + ")");
+        wb.renameElement(newElementName, oldElementName);
+        res.checkTrue(wb.getElementName().equals(oldElementName), uniqueID++ + " - Element name was not successfully changed (" + oldElementName + ")");
+    }
+    
+    //need to add checkers
+    @Parameters("deleteElement")
+    @Test(groups = {"smoke", "delete element"}, threadPoolSize = 3)
+    public void deleteElement(@Optional ("Button 2") String deleteElement){
+        wb.deleteElement(deleteElement);
+        wb.confirmDeleteAPI();
+    }
 }

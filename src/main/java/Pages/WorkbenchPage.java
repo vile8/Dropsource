@@ -557,6 +557,14 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.xpath("//li[@data-reactid='.0.1.1.$=1$modal-modal.1.1.0.0.0.2.$name-validation-error=1max-length-64']")).size() > 0;
     }
     
+    private WebElement elementMoreOptions(){
+        return driver.findElement(By.xpath("//div[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.0.1.0.1']"));
+    }
+    
+    private WebElement elementName(){
+        return driver.findElement(By.xpath("//div[@data-reactid='.0.0.0.1.$centerRightContainer.0.1.1.0.0.0.0.0']"));
+    }
+    
     public boolean pageVariableExists(String name){
         boolean found = false;
         List<WebElement> pvList = pageVariableList();
@@ -1044,4 +1052,30 @@ public class WorkbenchPage extends Page {
         return pageVariableLengthError().getText();
     }
     
+    public void openRenameElementModal(){
+        openStylesTab();
+        action.moveToElement(elementMoreOptions()).perform();
+        btnRenamePage().click();
+    }
+    
+    public void renameElement(String oldName, String newName){
+        selectElementTreeElement(oldName);
+        openRenameElementModal();
+        nameField().clear();
+        nameField().sendKeys(newName);
+        btnRename().click();
+        wait.animation();
+    }
+    
+    public String getElementName(){
+        openStylesTab();
+        return elementName().getText();
+    }
+    
+    public void deleteElement(String elementName){
+        selectElementTreeElement(elementName);
+        openStylesTab();
+        action.moveToElement(elementMoreOptions()).perform();
+        btnDelPage().click();
+    }
 }
