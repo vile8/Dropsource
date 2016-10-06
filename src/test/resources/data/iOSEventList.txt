@@ -1,0 +1,17 @@
+Elements	Page Loaded	Page Resumed	Page Left
+Segmented Control 1	Value Changed
+Slider 1	Value Changed
+Stepper 1	Value Changed
+Switch 1	Turn On	Turn Off
+Text Field 1	Focused	Unfocused	Value Changed
+Page Controller 1	Page Control Tapped
+Scroll View 1
+Table 1	Refresh Table
+Table Cell 1	Tapped	Cell Loaded
+View 1	View Loaded
+Image 1	Tapped
+Web View 1	Content Began Loading	Content Finished Loading	Content Failed to Load
+Activity Indicator 1
+Label 1	Tapped
+Text View 1	Focused	Unfocused	Value Changed
+Button 1	Tapped

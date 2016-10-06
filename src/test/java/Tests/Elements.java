@@ -4,6 +4,7 @@ import Utility.DataReader;
 import Utility.DropsourceConstants;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -149,8 +150,32 @@ public class Elements extends TestSetup{
     public void deleteElement(@Optional ("Button 2") String deleteElement) throws IOException{
         wb.deleteElement(deleteElement);
         String alertText = "Deleting an element will delete this element, any of its children, and disconnect this element from any request";
-        res.checkTrue(wb.getAlertText().equals(alertText), uniqueID++ + " - Alert text doesn't match expected");
+        boolean failed = false;
+        String reason = "";
+        try{
+            res.checkTrue(wb.getAlertText().equals(alertText), uniqueID++ + " - Alert text doesn't match expected");
+        }catch(AssertionError e){
+            reason = e.toString();
+            failed = true;
+        }
         wb.confirmDeleteAPI();
         res.checkTrue(!wb.elementTreeElementExists(deleteElement), uniqueID++ + " - Element (" + deleteElement + ") was not successfully deleted");
+        if(failed)fail(reason);
+    }
+    
+    @DataProvider
+    public Object[][] eventsList() throws FileNotFoundException, IOException{
+        DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "iOSEventList.txt");
+        return data.getData();
+    }
+    
+    @Test(groups = {"smoke", "check element events"}, dataProvider = "eventsList", threadPoolSize = 3)
+    public void checkElementEvents(String... events) throws IOException{
+        wb.selectElementTreeElement(events[0]);
+        ArrayList<String> eventNames = wb.getEventList();
+        for(int i = 1; i < events.length; i++){
+            res.checkTrue(eventNames.contains(events[i]), uniqueID++ + " - Expected event (" + events[i] + ") did not exist in the event list");
+        }
+        res.checkTrue(eventNames.size() == events.length - 1, uniqueID++ + " - Actual number of events (" + eventNames.size() + ") doesn't match expected number of events (" + events.length + ")");
     }
 }

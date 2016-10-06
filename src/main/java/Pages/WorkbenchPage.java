@@ -8,7 +8,6 @@ import java.awt.event.InputEvent;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -311,7 +310,7 @@ public class WorkbenchPage extends Page {
         return driver.findElements(By.className("draggable-element"));
     }
     
-    private WebElement events(){
+    private WebElement eventsTab(){
         return driver.findElement(By.xpath("//td[text() = 'events']"));
     }
     
@@ -457,7 +456,7 @@ public class WorkbenchPage extends Page {
     
     private WebElement apiMoreOptions(String apiName){
         List<WebElement> list = apiList();
-        for(WebElement api: apiList()){
+        for(WebElement api: list){
             if(api.findElements(By.xpath(".//span[text() = '" + apiName + "']")).size() > 0){
                 return api.findElement(By.className("icon-more-options"));
             }
@@ -877,14 +876,14 @@ public class WorkbenchPage extends Page {
         return actionList().size();
     }
     
-    public void openEventsTab(){
+    public void openCanvasEventsTab(){
         canvas().click();
         canvas().click();
-        events().click();
+        eventsTab().click();
     }
     
     public void openEventsModal(String event){
-        openEventsTab();
+        openCanvasEventsTab();
         btnEventManage(event).click();
         wait.animation();
     }
@@ -1082,5 +1081,22 @@ public class WorkbenchPage extends Page {
         action.moveToElement(elementMoreOptions()).perform();
         btnDelPage().click();
         wait.animation();
+    }
+    
+    public void openEventsTab(){
+        if (!propertyTabActive()) {
+            propertyTab().click();
+        }
+        eventsTab().click();
+    }
+    
+    public ArrayList<String> getEventList(){
+        openEventsTab();
+        ArrayList<String> eventNames = new ArrayList<>();
+        List<WebElement> events = eventList();
+        for(WebElement event:events){
+            eventNames.add(event.findElement(By.xpath(".//div")).getText());
+        }
+        return eventNames;
     }
 }
