@@ -144,11 +144,13 @@ public class Elements extends TestSetup{
         res.checkTrue(wb.getElementName().equals(oldElementName), uniqueID++ + " - Element name was not successfully changed (" + oldElementName + ")");
     }
     
-    //need to add checkers
     @Parameters("deleteElement")
     @Test(groups = {"smoke", "delete element"}, threadPoolSize = 3)
-    public void deleteElement(@Optional ("Button 2") String deleteElement){
+    public void deleteElement(@Optional ("Button 2") String deleteElement) throws IOException{
         wb.deleteElement(deleteElement);
+        String alertText = "Deleting an element will delete this element, any of its children, and disconnect this element from any request";
+        res.checkTrue(wb.getAlertText().equals(alertText), uniqueID++ + " - Alert text doesn't match expected");
         wb.confirmDeleteAPI();
+        res.checkTrue(!wb.elementTreeElementExists(deleteElement), uniqueID++ + " - Element (" + deleteElement + ") was not successfully deleted");
     }
 }

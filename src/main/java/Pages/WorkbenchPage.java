@@ -473,6 +473,10 @@ public class WorkbenchPage extends Page {
         return driver.findElement(By.xpath("//span[text() = '" + elementName + "']"));
     }
     
+    public boolean elementTreeElementExists(String elementName){
+        return driver.findElements(By.xpath("//span[text() = '" + elementName + "']")).size() > 0;
+    }
+    
     public boolean propertyExists(String property){
         return driver.findElements(By.xpath("//div[text() = '" + property + "']")).size() > 0;
     }
@@ -1077,5 +1081,6 @@ public class WorkbenchPage extends Page {
         openStylesTab();
         action.moveToElement(elementMoreOptions()).perform();
         btnDelPage().click();
+        wait.animation();
     }
 }
