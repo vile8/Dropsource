@@ -31,37 +31,28 @@ public class Login extends TestSetup{
     @Test(groups = {"login", "smoke"}, threadPoolSize = 3)
     public void ClickLoginTest() throws IOException{
         login.loginClick(DropsourceConstants.loginEmail, DropsourceConstants.loginPassword);
-        
         db.waitForLoader();
         db.sync();
-        
         res.checkTrue(db.elementExists(), uniqueID++ + " - Login Attempt (By Click)");
-        
         db.logout();
         login.sync();
-        
         res.checkTrue(login.elementExists(), uniqueID++ + " - Logout Attempt");
     }
     
     @Test(groups = {"login", "smoke"}, threadPoolSize = 3)
     public void EnterLoginTest() throws IOException{
         login.loginEnter(DropsourceConstants.loginEmail, DropsourceConstants.loginPassword);
-        
         db.waitForLoader();
         db.sync();
-        
         res.checkTrue(db.elementExists(), uniqueID++ + " - Login Attempt (By Click)");
-        
         db.logout();
         login.sync();
-        
         res.checkTrue(login.elementExists(), uniqueID++ + " - Logout Attempt");
     }
     
     @DataProvider
     public Object[][] loginData() throws FileNotFoundException, IOException{
-        DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "LoginErrors.txt");
-        return data.getData();
+        return new DataReader(DropsourceConstants.dataSheetLocation + "LoginErrors.txt").getData();
     }
     
     @Test(groups = "loginErrors", dataProvider = "loginData", threadPoolSize = 3)

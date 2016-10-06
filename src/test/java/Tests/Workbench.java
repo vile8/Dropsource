@@ -106,8 +106,7 @@ public class Workbench extends TestSetup {
 
     @DataProvider
     public Object[][] iOSElements() throws FileNotFoundException, IOException {
-        DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "iOSElements.txt");
-        return data.getData();
+        return new DataReader(DropsourceConstants.dataSheetLocation + "iOSElements.txt").getData();
     }
 
     //Checks that expected elements are there, not that unexpected elements aren't there
@@ -132,8 +131,7 @@ public class Workbench extends TestSetup {
 
     @DataProvider
     public Object[][] searchElements() throws FileNotFoundException, IOException {
-        DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "SearchElements.txt");
-        return data.getData();
+        return new DataReader(DropsourceConstants.dataSheetLocation + "SearchElements.txt").getData();
     }
 
     @Test(groups = {"smoke", "search"}, dataProvider = "searchElements", threadPoolSize = 3)

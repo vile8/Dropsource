@@ -50,8 +50,7 @@ public class Elements extends TestSetup{
     
     @DataProvider
     public Object[][] propertyData() throws FileNotFoundException, IOException{
-        DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "iOSElementProperties.txt");
-        return data.getData();
+        return new DataReader(DropsourceConstants.dataSheetLocation + "iOSElementProperties.txt").getData();
     }
     
     //checks that expected properties are there
@@ -165,8 +164,7 @@ public class Elements extends TestSetup{
     
     @DataProvider
     public Object[][] eventsList() throws FileNotFoundException, IOException{
-        DataReader data = new DataReader(DropsourceConstants.dataSheetLocation + "iOSEventList.txt");
-        return data.getData();
+        return new DataReader(DropsourceConstants.dataSheetLocation + "iOSEventList.txt").getData();
     }
     
     @Test(groups = {"smoke", "check element events"}, dataProvider = "eventsList", threadPoolSize = 3)
@@ -176,6 +174,6 @@ public class Elements extends TestSetup{
         for(int i = 1; i < events.length; i++){
             res.checkTrue(eventNames.contains(events[i]), uniqueID++ + " - Expected event (" + events[i] + ") did not exist in the event list");
         }
-        res.checkTrue(eventNames.size() == events.length - 1, uniqueID++ + " - Actual number of events (" + eventNames.size() + ") doesn't match expected number of events (" + events.length + ")");
+        res.checkTrue(eventNames.size() == events.length - 1, uniqueID++ + " - Actual number of events (" + eventNames.size() + ") for (" + events[0] + ") doesn't match expected number of events (" + (events.length - 1) + ")");
     }
 }

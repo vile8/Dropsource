@@ -3,7 +3,7 @@ Segmented Control 1	Value Changed
 Slider 1	Value Changed
 Stepper 1	Value Changed
 Switch 1	Turn On	Turn Off
-Text Field 1	Focused	Unfocused	Value Changed
+Text Field 1	Focused	Unfocused	Value Changed	Returned
 Page Controller 1	Page Control Tapped
 Scroll View 1
 Table 1	Refresh Table
