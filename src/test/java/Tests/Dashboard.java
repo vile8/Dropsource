@@ -38,7 +38,7 @@ public class Dashboard extends TestSetup {
 
     @Parameters("projectName")
     @Test(groups = {"smoke", "create project"}, threadPoolSize = 3)
-    public void createIOSProject(@Optional("Test Project") String projectName) throws IOException {
+    public void createProject(@Optional("Test Project") String projectName) throws IOException {
         db.btnCreateNewProjectClick();
         res.checkTrue(!db.projectLimitReachedExists(), uniqueID++ + " - Project limit error appeared");
         db.createBlankProject(projectName);

@@ -29,7 +29,7 @@ public class Login extends TestSetup{
     }
     
     @Test(groups = {"login", "smoke"}, threadPoolSize = 3)
-    public void ClickLoginTest() throws IOException{
+    public void clickLoginTest() throws IOException{
         login.loginClick(DropsourceConstants.loginEmail, DropsourceConstants.loginPassword);
         db.waitForLoader();
         db.sync();
@@ -40,7 +40,7 @@ public class Login extends TestSetup{
     }
     
     @Test(groups = {"login", "smoke"}, threadPoolSize = 3)
-    public void EnterLoginTest() throws IOException{
+    public void enterLoginTest() throws IOException{
         login.loginEnter(DropsourceConstants.loginEmail, DropsourceConstants.loginPassword);
         db.waitForLoader();
         db.sync();
