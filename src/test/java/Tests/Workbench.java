@@ -67,7 +67,6 @@ public class Workbench extends TestSetup {
     @Test(groups = {"smoke", "create page"}, dependsOnGroups = "todo", threadPoolSize = 3)
     public void addPage(@Optional("i1") String pageName) throws IOException {
         wb.addPage(pageName);
-        res.checkTrue(!wb.btnCreateExists(), uniqueID++ + " - Create page modal never closed");
         res.checkTrue(wb.pageExists(pageName), uniqueID++ + " - Page (" + pageName + ") was not created successfully");
     }
 
@@ -75,7 +74,6 @@ public class Workbench extends TestSetup {
     @Test(groups = {"smoke", "delete page"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void deletePage(@Optional("delete name") String deletePageName) throws IOException {
         wb.addPage(deletePageName);
-        res.checkTrue(!wb.btnCreateExists(), uniqueID++ + " - Create page modal never closed");
         res.checkTrue(wb.pageExists(deletePageName), uniqueID++ + " - Page (" + deletePageName + ") was not created successfully");
         wb.deletePage(deletePageName);
         String confirmationText = "Deleting a page will delete this page, it's elements, events, and requests, as well as all references to this page in other requests and events";
@@ -88,10 +86,8 @@ public class Workbench extends TestSetup {
     @Test(groups = {"smoke", "rename page"}, dependsOnGroups = "create page", threadPoolSize = 3)
     public void renamePage(@Optional("i3") String pageName3, @Optional("rename name") String newPageName) throws IOException {
         wb.addPage(pageName3);
-        res.checkTrue(!wb.btnCreateExists(), uniqueID++ + " - Create page modal never closed");
         res.checkTrue(wb.pageExists(pageName3), uniqueID++ + " - Page (" + pageName3 + ") was not created successfully");
         wb.renamePage(pageName3, newPageName);
-        res.checkTrue(!wb.btnRenameExists(), uniqueID++ + " - Rename page modal never closed");
         res.checkTrue(wb.pageExists(newPageName), uniqueID++ + " - Page (" + newPageName + ") was not renamed successfully");
     }
 
